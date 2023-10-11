@@ -1,4 +1,4 @@
-package org.spring.dev.company.controller.free;
+package org.spring.dev.company.controller.freelancer;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.freelancer.FreelancerDto;
@@ -19,27 +19,13 @@ public class FreelancerContoller {
         return "freelancer/join";
     }
 
-    // DB에 있는지 확인
-    @PostMapping("/emailCheck")
-    public @ResponseBody int emailCheck(@RequestParam("email") String email){
-
-        return freelancerService.emailCheck(email);
-    }
-    @PostMapping("/phoneCheck")
-    public @ResponseBody int phoneCheck(@RequestParam("phone") String phone){
-
-        return freelancerService.phoneCheck(phone);
-    }
-
-
-
     @PostMapping("/join")
     public String postFreeJoin(@ModelAttribute FreelancerDto freelancerDto){
         Long rs = freelancerService.freelancerJoin(freelancerDto);
-        if(rs !=1){
-            return "free/join";
+        if(rs !=0){
+            return "freelancer/login";
         }
-        return "member/login";
+        return "freelancer/join";
     }
 
     @GetMapping("/detail/{id}")
@@ -48,5 +34,20 @@ public class FreelancerContoller {
         model.addAttribute("freeDto",freelancerDto);
         return "freelancer/detail";
     }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable("id")Long freeId, Model model){
+        FreelancerDto freelancerDto = freelancerService.freeDetail(freeId);
+        model.addAttribute("freeDto",freelancerDto);
+        return "freelancer/update";
+    }
+
+    @PostMapping("/update/{freeId}")
+    public String updateFree(@ModelAttribute FreelancerDto freelancerDto,Model model){
+        FreelancerDto freelancerDto1 = freelancerService.updateFree(freelancerDto);
+        model.addAttribute("freeDto",freelancerDto1);
+        return "freelancer/detail";
+    }
+
 
 }

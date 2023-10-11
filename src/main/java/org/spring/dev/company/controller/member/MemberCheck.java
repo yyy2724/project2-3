@@ -28,8 +28,6 @@ public class MemberCheck {
 
     @PostMapping("/phoneCheck")
     public @ResponseBody int phoneCheck(@RequestParam("phone") String phone){
-
         return memberService.phoneNumCheck(phone);
-
     }
 }

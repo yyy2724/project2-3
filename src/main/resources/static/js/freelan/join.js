@@ -45,57 +45,24 @@ $(document).ready(function () {
                 alert("에러입니다");
             }
         });
-        $.ajax({
-            url: "/free/emailCheck", //Controller에서 요청 받을 주소
-            type: 'post', //POST 방식으로 전달
-            data: { "email": email },
-            success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
-                if (cnt != 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
-                    alert("사용중인 이메일입니다.");
-                    $('#mail').focus();
-                    // 폼 전송 중단
-                    event.preventDefault();
-                    return false;
-                }
-            },
-            error: function () {
-                alert("에러입니다");
-            }
-        });
+
         $.ajax({
                 url: "/join/phoneCheck",
                 type: 'post',
                 data: { "phone": phone },
                 success: function (cnt) {
                     if (cnt != 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
-                                        alert("사용중인 전화번호입니다.");
-                                        $('#phone').focus();
-                                        // 폼 전송 중단
-                                        event.preventDefault();
-                                        return false;
-                                    }
-                },
-                error: function () {
-                    alert("에러입니다");
-                }
-            });
-        $.ajax({
-            url: "/free/phoneCheck",
-            type: 'post',
-            data: { "phone": phone },
-            success: function (cnt) {
-                if (cnt != 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
                     alert("사용중인 전화번호입니다.");
                     $('#phone').focus();
                     // 폼 전송 중단
                     event.preventDefault();
                     return false;
+                    }
+                },
+                error: function () {
+                    alert("에러입니다");
                 }
-            },
-            error: function () {
-                alert("에러입니다");
-            }
-        });
+            });
         if (!validatePassword(password)) {
             alert("비밀번호는 알파벳, 특수문자, 숫자가 최소 하나씩 포함되어야하고 8자리 이상이어야합니다");
             // 폼 전송 중단

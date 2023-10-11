@@ -4,8 +4,12 @@ import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.entity.member.MemberEntity;
+import org.spring.dev.company.repository.freelancer.FreelancerRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.repository.member.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +24,22 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FreelancerRepository freelancerRepository;
 
     public int emailCheck(String email) {
 
-        int rs = memberRepository.findByEmail(email);
-        return rs;
+        int memberRs = memberRepository.findByEmail(email);
+        int freeRs = freelancerRepository.findByEmail(email);
+        if (memberRs == 0){
+            if (freeRs == 1){
+                return 1;
+            } else if (freeRs == 0) {
+                return 0;
+            }
+        }else if (memberRs == 1){
+            return 1;
+        }
+        return 0;
     }
 
     public int nickNameCheck(String nickName) {
@@ -35,9 +50,18 @@ public class MemberService {
     }
 
     public int phoneNumCheck(String phone) {
-        int rs = memberRepository.findByPhone(phone);
-
-        return rs;
+        int memberRs = memberRepository.findByPhone(phone);
+        int freeRs = freelancerRepository.findByPhone(phone);
+        if (memberRs == 0){
+            if (freeRs == 1){
+                return 1;
+            } else if (freeRs == 0) {
+                return 0;
+            }
+        }else if (memberRs == 1){
+            return 1;
+        }
+        return 0;
     }
 
     @Transactional
@@ -188,5 +212,26 @@ public class MemberService {
         }
         Long rs = 0L;
         return rs;
+    }
+
+    public Page<MemberDto> pageMemberList(Pageable pageable, String subject, String search) {
+
+        Page<MemberEntity> memberEntities = null;
+
+        if (subject == null){
+            memberEntities = memberRepository.findAll(pageable);
+        }else if (subject.equals("name")) {
+            memberEntities = memberRepository.findByNameContains(pageable,search);
+        } else if (subject.equals("email")) {
+            memberEntities = memberRepository.findByEmailContains(pageable,search);
+        } else if (subject.equals("phone")){
+            memberEntities = memberRepository.findByPhoneContains(pageable,search);
+        } else {
+            memberEntities = memberRepository.findAll(pageable);
+        }
+
+        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
+
+        return memberDtos;
     }
 }

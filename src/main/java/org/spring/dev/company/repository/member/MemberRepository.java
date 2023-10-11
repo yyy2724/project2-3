@@ -1,6 +1,8 @@
 package org.spring.dev.company.repository.member;
 
 import org.spring.dev.company.entity.member.MemberEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +43,10 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Modifying
     @Query("UPDATE MemberEntity m SET m.password = :password WHERE m.email = :email")
     void updateUserPassword1(String email, String password);
+
+    Page<MemberEntity> findByNameContains(Pageable pageable, String search);
+
+    Page<MemberEntity> findByEmailContains(Pageable pageable, String search);
+
+    Page<MemberEntity> findByPhoneContains(Pageable pageable, String search);
 }
