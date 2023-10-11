@@ -17,9 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        MemberEntity memberEntity = loginRepository.findByEmail(email).orElseThrow(()->{
-           throw new UsernameNotFoundException("이메일 존재하지 않습니다.");
-        });
+        MemberEntity memberEntity = loginRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("이메일 존재하지 않습니다."));
 
         return new MyUserDetails(memberEntity);
     }
