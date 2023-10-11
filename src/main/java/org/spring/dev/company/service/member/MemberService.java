@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.entity.member.MemberEntity;
+import org.spring.dev.company.repository.freelancer.FreelancerRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.repository.member.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,11 +21,22 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FreelancerRepository freelancerRepository;
 
     public int emailCheck(String email) {
 
-        int rs = memberRepository.findByEmail(email);
-        return rs;
+        int memberRs = memberRepository.findByEmail(email);
+        int freeRs = freelancerRepository.findByEmail(email);
+        if (memberRs == 0){
+            if (freeRs == 1){
+                return 1;
+            } else if (freeRs == 0) {
+                return 0;
+            }
+        }else if (memberRs == 1){
+            return 1;
+        }
+        return 0;
     }
 
     public int nickNameCheck(String nickName) {
@@ -35,9 +47,18 @@ public class MemberService {
     }
 
     public int phoneNumCheck(String phone) {
-        int rs = memberRepository.findByPhone(phone);
-
-        return rs;
+        int memberRs = memberRepository.findByPhone(phone);
+        int freeRs = freelancerRepository.findByPhone(phone);
+        if (memberRs == 0){
+            if (freeRs == 1){
+                return 1;
+            } else if (freeRs == 0) {
+                return 0;
+            }
+        }else if (memberRs == 1){
+            return 1;
+        }
+        return 0;
     }
 
     @Transactional

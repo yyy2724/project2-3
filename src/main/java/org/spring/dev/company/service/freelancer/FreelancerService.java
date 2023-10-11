@@ -32,16 +32,24 @@ public class FreelancerService {
                 Optional.ofNullable(freelancerRepository.findById(freeId).orElseThrow(()->{
                     return new IllegalArgumentException("아이디를 찾을 수 없습니다.");
                 }));
-        return null;
+
+        return FreelancerDto.builder()
+                .id(freelancerEntity.get().getId())
+                .email(freelancerEntity.get().getEmail())
+                .name(freelancerEntity.get().getName())
+                .phone(freelancerEntity.get().getPhone())
+                .grade(freelancerEntity.get().getGrade())
+                .gender(freelancerEntity.get().getGender())
+                .birth(freelancerEntity.get().getBirth())
+                .career(freelancerEntity.get().getCareer())
+                .CreateTime(freelancerEntity.get().getCreateTime())
+                .UpdateTime(freelancerEntity.get().getUpdateTime())
+                .postcode(freelancerEntity.get().getPostcode())
+                .address(freelancerEntity.get().getAddress())
+                .detailAddress(freelancerEntity.get().getDetailAddress())
+                .extraAddress(freelancerEntity.get().getExtraAddress())
+                .is_display(freelancerEntity.get().getIs_display())
+                .build();
     }
 
-    public int emailCheck(String email) {
-        int rs;
-        return rs = freelancerRepository.findByEmail(email);
-    }
-
-    public int phoneCheck(String phone) {
-        int rs;
-        return rs = freelancerRepository.findByPhone(phone);
-    }
 }
