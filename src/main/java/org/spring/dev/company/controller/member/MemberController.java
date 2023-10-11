@@ -1,4 +1,156 @@
 package org.spring.dev.company.controller.member;
 
+import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.dto.member.MemberDto;
+import org.spring.dev.company.service.member.EmailService;
+import org.spring.dev.company.service.member.MemberService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+
+@RequestMapping("/member")
+@RequiredArgsConstructor
+@Controller
 public class MemberController {
+
+    private final MemberService memberService;
+    private final EmailService emailService;
+
+    @GetMapping("/join")
+    public String join(){
+
+        return "member/join";
+    }
+
+    @PostMapping("/join")
+    public String memberJoin(@ModelAttribute MemberDto memberDto){
+//        System.out.println(memberDto.getEmail());
+        Long rs = memberService.memberJoin(memberDto);
+        if (rs == 0){
+            return "/";
+        }
+
+        return "member/login";
+    }
+
+
+    @GetMapping("/m")
+    public String m(){
+        return "member/m";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detailMamber(@PathVariable("id") Long memberId, Model model){
+
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto",memberDto);
+        return "member/detail";
+    }
+
+    @GetMapping("/up/{id}")
+    public String updateMember(@PathVariable("id")Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto",memberDto);
+        return "member/update";
+    }
+
+    @GetMapping("/findPw")
+    public String findPwPage(){
+
+        return "member/findPw";
+    }
+
+//    @GetMapping("/check/findPw")
+//    public @ResponseBody Map<String, Boolean> findPw(String email, String name){
+//        Map<String, Boolean> json = new HashMap<>();
+//        boolean pwFindCheck = memberService.userEmailCheck(email, name);
+//
+//        System.out.println(pwFindCheck);
+//        json.put("check", pwFindCheck);
+//        return json;
+//    }
+//
+
+    @ResponseBody
+    @PostMapping("/check")
+    public int sendEmail(HttpServletRequest request, String email){
+        HttpSession session = request.getSession();
+        emailService.mailSend(session, email);
+        return 123;
+    }
+
+    @ResponseBody
+    @PostMapping("/emailCheck")
+    public boolean emailCertification(HttpServletRequest request, String email, String inputCode){
+        HttpSession session = request.getSession();
+
+        boolean result = emailService.emailCertification(session, email, Integer.parseInt(inputCode));
+
+//        return emailService.emailCertification(session, email, Integer.parseInt(inputCode));
+        return result;
+    }
+
+    // 비번 찾기 - 새로운 비번 설정
+    @PostMapping("/checkOk")
+    public String checkOk(String email,String password){
+        emailService.updatePassword(email, password);
+
+        return "member/login";
+    }
+    @PostMapping("/checkOk1")
+    public void checkOk1(String email,String password){
+        emailService.updatePassword(email, password);
+
+    }
+
+    @GetMapping("/checkOk")
+    public String checkOk(@RequestParam(value = "email") String email, Model model){
+
+        System.out.println(email + "이메일");
+        model.addAttribute("email", email);
+
+
+        return "member/checkOk";
+    }
+
+
+    @PostMapping("/update/{id}")
+    public String upMember(@ModelAttribute MemberDto memberDto, Model model){
+        MemberDto memberDto1 = memberService.updateMember(memberDto);
+        model.addAttribute("memberDto",memberDto);
+        return "member/detail";
+    }
+
+    @PostMapping("/disabled")
+    public String disMember(@ModelAttribute MemberDto memberDto){
+
+        Long rs = memberService.disabledMember(memberDto);
+        if (rs!=0){
+            return "/index";
+        }
+        return "member/detail";
+    }
+
+
+
+    // 멤버리스트 가져오기(매니저만)
+//    public String memberList(@PageableDefault(page = 0, size = 10, sort = "id",
+//            direction = Sort.Direction.DESC) Pageable pageable,
+//                             @RequestParam(value = "subject", required = false) String subject,
+//                             @RequestParam(value = "search", required = false) String search,
+//                             Model model){
+//
+//        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+//    }
+
+
 }
+
+
+
+
+
