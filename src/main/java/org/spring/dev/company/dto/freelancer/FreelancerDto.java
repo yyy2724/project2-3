@@ -1,9 +1,12 @@
-package org.spring.dev.company.dto.member;
+package org.spring.dev.company.dto.freelancer;
 
 import lombok.*;
 import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.entity.util.GenderEntity;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Builder
@@ -11,21 +14,21 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberDto {
+public class FreelancerDto {
 
     private Long id;
 
     private String name;
 
-    private String email;
+    private String birth;
 
-    private String nickName;
+    private String email;
 
     private String phone;
 
     private String password;
 
-    private String birth;
+    private String career;
 
     private String postcode;
 
@@ -39,18 +42,10 @@ public class MemberDto {
 
     private GenderEntity gender;
 
-    private String position;
-
     private int is_display;
 
     private LocalDateTime CreateTime;
 
     private LocalDateTime UpdateTime;
-
-    private boolean matching;
-
-    public MemberDto(boolean matching) {
-        this.matching = matching;
-    }
-
 }
+

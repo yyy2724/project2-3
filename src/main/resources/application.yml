@@ -1,19 +1,34 @@
 server:
-  port: 8023
+  port: 8095
 
+# git 올릴때 빼고 올릴것
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yyy042352@gmail.com
+    password: bylpukfcosdgawln
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+  # 여기까지
+
+
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-    username: admin
-    password: '00000000'
-
-  #spring:
-  #  datasource:
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
-  #    url: jdbc:mysql://localhost:3306/project02
-  #    username: root
-  #    password:
+    #    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+    #    username: admin
+    #    password: '00000000'
+    url: jdbc:mysql://localhost:3306/project02
+    username: root
+    password: 1234
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -33,3 +48,10 @@ spring:
     #    suffix: .html
     enabled: true
 
+
+  # application-oauth2.yml 로그인 어스관련
+  profiles:
+    include: oauth2
+  # 여기까지
+
+  spring.main.allow-bean-definition-overriding: true

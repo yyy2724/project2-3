@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호찾기</title>
+</head>
+<body>
+<form th:action="@{/member/checkOk}" method="post">
+    아이디  <input type="text" th:value="${email}"  name="email" id="email" class="email" readonly>
+    비밀번호 <input type="password" name="password" id="password" class="password" >
+    <input type="submit" class="btn">
+</form>
+</body>
+</html>
