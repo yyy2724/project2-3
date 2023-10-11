@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/board/detail.js}" defer></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="detail">
+            <table class="detail-table" border="1">
+                <tr>
+                    <td class="td-title"><span th:text="${board.title}"></span></td>
+                </tr>
+                <tr>
+                    <td><span>작성자</span><span th:text="${board.writer}"></span></td>
+                </tr>
+                <tr>
+                    <td><span>작성일자</span><span
+                            th:text="${#temporals.format(board.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+                </tr>
+                <tr>
+                    <td><span>게시기간</span><span th:text="${board.startDate}"></span><span th:text="${board.endDate}"></span></td>
+                </tr>
+                <tr>
+                    <td><span>조회수</span><span th:text="${board.hit}"></span></td>
+                </tr>
+                <tr>
+                    <td><span>첨부파일</span>
+                        <span th:if="${board.isFile}==1">
+                            <a th:href="@{/download/board/{file}(file=${board.getFileEntities().get(0).getNewName()})}"
+                               th:download="${board.getFileEntities().get(0).getOldName()}"
+                               th:text="${board.getFileEntities().get(0).getOldName()}"></a>
+                        </span>
+                        <span th:unless="${board.isFile}==1">비어있음</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span th:utext="${board.content}"></span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <a th:href="@{/board/delete/{id}(id=${board.id})}">삭제</a>
+                        <a th:href="@{/board/update/{id}(id=${board.id})}">수정</a>
+                        <a th:href="@{/board/list}">목록</a>
+                    </td>
+                </tr>
+            </table>
+
+
+            <div class="reply-write">
+                <form th:action="@{/reply/write}" method="post">
+                    <ul>
+                        <li>
+                            <input type="hidden" readonly name="boardId" id="boardId" th:value="${board.id}">
+                        </li>
+                        <li>
+                            <textarea name="content" style=" resize: none;" id="content" cols="30" rows="1"  placeholder="내용작성"></textarea>
+                        </li>
+                        <li>
+                            <input type="text" name="writer" id="writer" placeholder="작성자입력">
+                        </li>
+                        <li>
+                            <input type="button" value="댓글작성" id="replyBtn" >
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+            <div class="reply-list">
+                <table class="list-table">
+                    <tbody id="replyData">
+                    <tr th:each="reply: ${replyList}" th:class="reply+${reply.id}">
+                        <td th:class="list">
+                            <span th:text="${reply.boardId}"></span><br>
+                            <span th:text="${reply.writer}"></span><br>
+                            <span th:text="${reply.content}"></span><br>
+                            <span th:text="${#temporals.format(reply.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span><br>
+                            <span>
+                                <button type="button" th:value="${reply.id}" th:onclick="showUpdate(event, [[${reply.id}]])">수정</button>
+                                <button type="button" th:value="${reply.id}" id="replyDeleteBtn" th:onclick="'replyDelete(' + ${reply.id} + ')'">삭제</button>
+                            </span>
+
+                        </td>
+                        <!-- 댓글 수정 부분 -->
+                        <td th:class="update" style="display: none;">
+                            <form th:action="@{/reply/update}" method="patch" th:object="${replyDto}">
+                                <!-- 댓글 ID를 숨겨진 필드로 추가 -->
+                                <input type="hidden" readonly th:value="${reply.id}" name="id">
+                                <!-- 댓글이 속한 게시글 ID도 추가 -->
+                                <input type="hidden" readonly th:value="${reply.boardId}" name="boardId"><br>
+                                <!-- 작성자와 내용을 수정할 수 있는 입력 필드 -->
+                                <textarea th:text="${reply.writer}" name="writer" id="updateWriter"></textarea><br>
+                                <textarea th:text="${reply.content}" name="content" id="updateContent"></textarea><br>
+                                <span th:text="${#temporals.format(reply.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span><br>
+                                <span>
+                                    <!-- 수정 버튼을 클릭할 때 replyUpdate 함수 호출 -->
+                                    <input type="button" value="수정" id="replyUpdateBtn" th:onclick="'replyUpdate(' + ${reply.id} + ')'">
+                                    <!-- 취소 버튼 클릭할 때 hideUpdate 함수 호출 -->
+                                    <button type="button" th:value="${reply.id}" th:onclick="hideUpdate(event,[[${reply.id}]])">취소</button>
+                                </span>
+                            </form>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+</html>
