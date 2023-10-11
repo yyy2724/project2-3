@@ -2,8 +2,8 @@
 function email_check() {
     const email = $('#mail').val(); //id값이 "id"인 입력란의 값을 저장
     const regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    let memberEmail;
-    let freeEmail;
+    let memberEmail = 0;
+    let freeEmail = 0;
     if (!regExpEm.test(email)) {
         $('.email_expression').css("display", "inline-block");
     } else {
@@ -13,7 +13,6 @@ function email_check() {
             type: 'post', //POST 방식으로 전달
             data: { "email": email },
             success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
-                memberEmail = cnt;
                 if (cnt == 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
                     $('.member_ok').css("display", "inline-block");
                     $('.member_already').css("display", "none");
@@ -26,32 +25,6 @@ function email_check() {
                 alert("에러입니다");
             }
         });
-        $.ajax({
-            url: "/free/emailCheck", //Controller에서 요청 받을 주소
-            type: 'post', //POST 방식으로 전달
-            data: { "email": email },
-            success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
-                freeEmail = cnt;
-                if (cnt == 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
-                    $('.member_ok').css("display", "inline-block");
-                    $('.member_already').css("display", "none");
-                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
-                    $('.member_already').css("display", "inline-block");
-                    $('.member_ok').css("display", "none");
-                }
-            },
-            error: function () {
-                alert("에러입니다");
-            }
-        });
-        // 이메일 둘중 하나라도 1일경우 true -> 사용중인 이메일표시
-        if (memberEmail || freeEmail) {
-            $('.member_already').css("display", "inline-block");
-            $('.member_ok').css("display", "none");
-        } else {
-            $('.member_ok').css("display", "inline-block");
-            $('.member_already').css("display", "none");
-        }
     }
 }
 function nickNameCheck() {
@@ -76,52 +49,32 @@ function nickNameCheck() {
 }
 function phoneCheck() {
     const phone = $('#phone').val();
-    let memberPhone;
-    let freePhone;
-    $.ajax({
+    let memberPhone = 0;
+    let freePhone = 0;
+    const validatePone = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+    if (!validatePone.test(phone)) {
+            $('.phone_expression').css("display", "inline-block");
+        } else {
+            $('.phone_expression').css("display", "none");
+        $.ajax({
         url: "/join/phoneCheck",
         type: 'post',
         data: { "phone": phone },
         success: function (cnt) {
-            memberPhone = cnt;
-            if (cnt == 0) {
-                $('.phone_ok').css("display", "inline-block");
-                $('.phone_already').css("display", "none");
-            } else {
+            if (cnt == 1) {
                 $('.phone_already').css("display", "inline-block");
                 $('.phone_ok').css("display", "none");
+            } else {
+                $('.phone_ok').css("display", "inline-block");
+                $('.phone_already').css("display", "none");
             }
+            console.log('memer-> ' + memberPhone);
         },
         error: function () {
             alert("에러입니다");
         }
     });
-    $.ajax({
-        url: "/free/phoneCheck",
-        type: 'post',
-        data: { "phone": phone },
-        success: function (cnt) {
-            freePhone = cnt;
-            if (cnt == 0) {
-                $('.phone_ok').css("display", "inline-block");
-                $('.phone_already').css("display", "none");
-            } else {
-                $('.phone_already').css("display", "inline-block");
-                $('.phone_ok').css("display", "none");
-            }
-        },
-        error: function () {
-            alert("에러입니다");
-        }
-    });
-    if (memberPhone || freePhone) {
-        $('.phone_already').css("display", "inline-block");
-        $('.phone_ok').css("display", "none");
-    } else {
-        $('.phone_ok').css("display", "inline-block");
-        $('.phone_already').css("display", "none");
     }
-
 }
 function checkPws() {
     const pw = $('#password').val();
