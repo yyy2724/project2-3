@@ -1,6 +1,7 @@
 package org.spring.dev.company.dto.member;
 
 import lombok.*;
+import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.entity.util.GenderEntity;
 
@@ -53,4 +54,17 @@ public class MemberDto {
         this.matching = matching;
     }
 
+    public static MemberDto toMemberDto(MemberEntity memberEntity) {
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId(memberEntity.getId());
+        memberDto.setEmail(memberEntity.getEmail());
+        memberDto.setName(memberEntity.getName());
+        memberDto.setNickName(memberEntity.getNickName());
+        memberDto.setPhone(memberEntity.getPhone());
+        memberDto.setGrade(memberEntity.getGrade());
+        memberDto.setCreateTime(memberEntity.getCreateTime());
+        memberDto.setUpdateTime(memberEntity.getUpdateTime());
+
+        return memberDto;
+    }
 }

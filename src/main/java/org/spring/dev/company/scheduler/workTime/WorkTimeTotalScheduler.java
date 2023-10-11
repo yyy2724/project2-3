@@ -21,22 +21,22 @@ import java.util.Optional;
 public class WorkTimeTotalScheduler {
 
     private final WorkTimeRepository workTimeRepository;
-        @Transactional
-        @Scheduled(fixedRate = 500000)
-        public void myScheduledTask() {
-
-           String date = LocalDate.now().minusDays(1).toString();
-           System.out.println(date);
-           WorkTimeEntity workTimeEntity = Optional.ofNullable(workTimeRepository.getDayTime(date))
-                   .orElseThrow(() -> {
-                       throw new IllegalArgumentException("null값 입니다.");
-                   });
-
-           if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null){
-               Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
-               long workTimeTotal =  total.toMinutes();
-//               workTimeEntity.setTotal((int) workTimeTotal);
-               workTimeRepository.updateWorkTotalTime(workTimeTotal, date);
-           }
-        }
+//        @Transactional
+//        @Scheduled(fixedRate = 500000)
+//        public void myScheduledTask() {
+//
+//           String date = LocalDate.now().minusDays(1).toString();
+//           System.out.println(date);
+//           WorkTimeEntity workTimeEntity = Optional.ofNullable(workTimeRepository.getDayTime(date))
+//                   .orElseThrow(() -> {
+//                       throw new IllegalArgumentException("null값 입니다.");
+//                   });
+//
+//           if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null){
+//               Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
+//               long workTimeTotal =  total.toMinutes();
+////               workTimeEntity.setTotal((int) workTimeTotal);
+//               workTimeRepository.updateWorkTotalTime(workTimeTotal, date);
+//           }
+//        }
 }
