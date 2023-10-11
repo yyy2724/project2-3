@@ -23,9 +23,9 @@ public class FreelancerContoller {
     public String postFreeJoin(@ModelAttribute FreelancerDto freelancerDto){
         Long rs = freelancerService.freelancerJoin(freelancerDto);
         if(rs !=0){
-            return "member/login";
+            return "freelancer/login";
         }
-        return "free/join";
+        return "freelancer/join";
     }
 
     @GetMapping("/detail/{id}")
@@ -35,8 +35,19 @@ public class FreelancerContoller {
         return "freelancer/detail";
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable("id")Long freeId, Model model){
+        FreelancerDto freelancerDto = freelancerService.freeDetail(freeId);
+        model.addAttribute("freeDto",freelancerDto);
+        return "freelancer/update";
+    }
 
-
+    @PostMapping("/update/{freeId}")
+    public String updateFree(@ModelAttribute FreelancerDto freelancerDto,Model model){
+        FreelancerDto freelancerDto1 = freelancerService.updateFree(freelancerDto);
+        model.addAttribute("freeDto",freelancerDto1);
+        return "freelancer/detail";
+    }
 
 
 }
