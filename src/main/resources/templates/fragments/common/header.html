@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div id="header" class="header" th:fragment="headerFragment">
+    <div class="nav">
+        <div class="left-nav">
+            <a th:href="@{/}"><img th:src="@{/images/worktime/logo.png}" alt="HOME"></a>
+        </div>
+        <div class="right-nav">
+            <ul>
+                <li><a th:href="@{/}"><img th:src="@{/images/worktime/zoom.png}" alt="검색" class="zoom"></a></li>
+                <li><a th:href="@{/}"><img th:src="@{/images/worktime/list.png}" alt="리스트" class="list"></a></li>
+<!--                추후 security설정 요함-->
+                <li><a th:href="@{/login/login}">로그인</a></li>
+                <li><a th:href="@{/member/join}">회원가입</a></li>
+<!--                로그인 시 회원 이름 보이게-->
+                <li><span></span>님</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</html>
