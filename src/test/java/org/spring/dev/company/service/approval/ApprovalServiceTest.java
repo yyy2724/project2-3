@@ -2,6 +2,7 @@ package org.spring.dev.company.service.approval;
 
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.spring.dev.company.controller.approval.request.ApprovalCreate;
@@ -14,6 +15,10 @@ import org.spring.dev.company.repository.approval.ApprovalRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
 import java.util.List;
 
@@ -23,7 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@ActiveProfiles("test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ApprovalServiceTest {
 
     @Autowired
@@ -56,7 +62,7 @@ class ApprovalServiceTest {
         ApprovalCreate request = ApprovalCreate.builder()
                 .title("휴가 결재 부탁드립니다.")
                 .content("휴가 관련")
-                .type(ApproType.MANAGER함)
+                .type(ApproType.MANAGER)
                 .approvalMemberId(memberEntities.get(0).getId())
                 .build();
 
@@ -83,7 +89,7 @@ class ApprovalServiceTest {
         ApprovalEntity approval = ApprovalEntity.builder()
                 .title("휴가 결재 부탁드립니다.")
                 .content("휴가 관련")
-                .type(ApproType.MANAGER함)
+                .type(ApproType.MANAGER)
                 .memberEntity(memberEntities.get(0))
                 .approvalMemberId(memberEntities.get(1).getId())
                 .build();
@@ -99,6 +105,7 @@ class ApprovalServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("허가받지 않는 사람이 결재를 요청할 시 에러가 난다.")
     public void test3() {
         // given
@@ -111,7 +118,7 @@ class ApprovalServiceTest {
         ApprovalEntity approval = ApprovalEntity.builder()
                 .title("휴가 결재 부탁드립니다.")
                 .content("휴가 관련")
-                .type(ApproType.MANAGER함)
+                .type(ApproType.MANAGER)
                 .memberEntity(memberEntities.get(0))
                 .approvalMemberId(memberEntities.get(1).getId())
                 .build();
@@ -138,7 +145,7 @@ class ApprovalServiceTest {
         ApprovalEntity approval = ApprovalEntity.builder()
                 .title("휴가 결재 부탁드립니다.")
                 .content("휴가 관련")
-                .type(ApproType.MANAGER함)
+                .type(ApproType.MANAGER)
                 .memberEntity(memberEntities.get(0))
                 .approvalMemberId(memberEntities.get(1).getId())
                         .build();

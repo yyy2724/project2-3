@@ -18,6 +18,10 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+application.yml
+
+application-oauth2.yml
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
