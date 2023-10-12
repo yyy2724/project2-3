@@ -42,11 +42,7 @@ public class ApprovalService {
 
             ApprovalEntity approval = approvalRepository.findById(approvalId).orElseThrow(ApprovalException::new);
 
-            if (member.getId().equals(approval.getApprovalMemberId())) {
                 approval.approval(approval, request);
-            } else {
-                throw new IllegalArgumentException("접근할 권한이 없습니다.");
-            }
         }
 
         public List<ApprovalResponse> List () {
@@ -65,4 +61,11 @@ public class ApprovalService {
             return ApprovalResponse.of(approval);
         }
 
+    public List<ApprovalResponse> list() {
+        List<ApprovalEntity> approvals = approvalRepository.findAll();
+
+        return approvals.stream()
+                .map(ApprovalResponse::of)
+                .collect(Collectors.toList());
     }
+}

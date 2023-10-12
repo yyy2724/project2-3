@@ -43,6 +43,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+	testCompileOnly "org.projectlombok:lombok"
+	testAnnotationProcessor "org.projectlombok:lombok"
+
 //	layout
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 }

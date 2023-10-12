@@ -1,6 +1,3 @@
-server:
-  port: 8023
-
 # git 올릴때 빼고 올릴것
 spring:
   mail:
@@ -54,4 +51,29 @@ spring:
     include: oauth2
   # 여기까지
 
-  spring.main.allow-bean-definition-overriding: true
+# spring.main.allow-bean-definition-overriding: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/project01
+    username: root
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: never
