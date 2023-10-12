@@ -1,0 +1,41 @@
+@import url(/css/common/reset.css);
+
+.header{
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+.header .nav{
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-bottom: 2px solid #c5c5c5;
+}
+
+.header .nav .left-nav{
+    padding-left: 15px;
+}
+
+.header .nav .right-nav>ul{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.header .nav .right-nav>ul>li{
+    padding: 10px;
+}
+.header .nav .right-nav>ul>li a{
+    font-size: 20px;
+    padding: 10px;
+}
+.header .nav .right-nav>ul>li img{
+    width: 35px;
+    height: 35px;
+}
