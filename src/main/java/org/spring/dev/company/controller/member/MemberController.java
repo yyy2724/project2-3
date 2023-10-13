@@ -274,42 +274,83 @@ public class MemberController {
 
         return "redirect:/";
     }
-        @GetMapping("/freeDetail/{memberId}")
-        public String freeDetail (@PathVariable("memberId") Long memberId, Model model){
-            MemberDto memberDto = memberService.detailMember(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "freelancer/detail";
+
+    @GetMapping("/freeDetail/{memberId}")
+    public String freeDetail(@PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "freelancer/detail";
+    }
+
+    @GetMapping("/freeUp/{memberId}")
+    public String freeUp(@PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "freelancer/update";
+    }
+
+    @PostMapping("/freeUpdate/{memberId}")
+    public String freeUpdate(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto1 = memberService.freeUpdate(memberDto, memberId);
+        model.addAttribute("memberDto", memberDto1);
+        return "freelancer/detail";
+    }
+
+
+    @GetMapping("/companyDetail/{memberId}")
+    public String companyDetail(@PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto = memberService.companyDetail(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "company/detail";
+    }
+
+    @GetMapping("/companyUp/{memberId}")
+    public String companyUp(@PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto = memberService.companyDetail(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "company/update";
+    }
+
+
+    //    여기부터 LIST
+    @GetMapping("/freeList")
+    public String freeList(@PageableDefault(page = 0, size = 10, sort = "id",
+            direction = Sort.Direction.DESC) Pageable pageable,
+                           @RequestParam(value = "subject", required = false) String subject,
+                           @RequestParam(value = "search", required = false) String search,
+                           Model model) {
+
+        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+
+
+        Long totalCount = memberList.getTotalElements();
+        int pagesize = memberList.getSize();
+        int nowPage = memberList.getNumber();
+        int totalPage = memberList.getTotalPages();
+        int blockNum = 3;
+
+        int startPage =
+                (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage
+                        ? (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+
+        int endPage =
+                (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+
+        for (int i = startPage; i <= endPage; i++) {
+            System.out.println(i + " , ");
         }
 
-        @GetMapping("/freeUp/{memberId}")
-        public String freeUp (@PathVariable("memberId") Long memberId, Model model){
-            MemberDto memberDto = memberService.detailMember(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "freelancer/update";
-        }
-
-        @PostMapping("/freeUpdate/{memberId}")
-        public String freeUpdate (@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model){
-            MemberDto memberDto1 = memberService.freeUpdate(memberDto, memberId);
-            model.addAttribute("memberDto", memberDto1);
-            return "freelancer/detail";
-        }
-
-        @GetMapping("/companyDetail/{memberId}")
-        public String companyDetail (@PathVariable("memberId") Long memberId, Model model){
-            MemberDto memberDto = memberService.companyDetail(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "company/detail";
-        }
-
-        @GetMapping("/companyUp/{memberId}")
-        public String companyUp (@PathVariable("memberId") Long memberId, Model model){
-            MemberDto memberDto = memberService.companyDetail(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "company/update";
-        }
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+//        model.addAttribute("postVo", postList);
 
 
+        model.addAttribute("freeList", memberList);
+
+
+        return "freelancer/freeLancerList";
+    }
 
 
 }

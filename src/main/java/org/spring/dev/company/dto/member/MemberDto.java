@@ -62,10 +62,14 @@ public class MemberDto {
     public static MemberDto toMemberDto(MemberEntity memberEntity) {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(memberEntity.getId());
-        memberDto.setEmail(memberEntity.getEmail());
         memberDto.setName(memberEntity.getName());
+        memberDto.setEmail(memberEntity.getEmail());
         memberDto.setPhone(memberEntity.getPhone());
         memberDto.setGrade(memberEntity.getGrade());
+        memberDto.setCareer(memberEntity.getCareer());
+        memberDto.setCompanyName(memberEntity.getCompanyName());
+        memberDto.setBusinessNumber(memberEntity.getBusinessNumber());
+        memberDto.setIs_display(memberEntity.getIs_display());
         memberDto.setCreateTime(memberEntity.getCreateTime());
         memberDto.setUpdateTime(memberEntity.getUpdateTime());
 
