@@ -161,8 +161,8 @@ public class MemberController {
 
 
     @PostMapping("/update/{id}")
-    public String upMember(@ModelAttribute MemberDto memberDto, Model model){
-        MemberDto memberDto1 = memberService.updateMember(memberDto);
+    public String upMember(@ModelAttribute MemberDto memberDto, Model model, @PathVariable("id") Long memberId){
+        MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
         model.addAttribute("memberDto",memberDto1);
         return "member/detail";
     }
@@ -306,6 +306,13 @@ public class MemberController {
         MemberDto memberDto = memberService.companyDetail(memberId);
         model.addAttribute("memberDto", memberDto);
         return "company/update";
+    }
+
+    @PostMapping("/companyUpdate/{memberId}")
+    public String companyUpdate(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model){
+        MemberDto memberDto1 = memberService.companyUpdate(memberDto, memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "company/detail";
     }
 
 }

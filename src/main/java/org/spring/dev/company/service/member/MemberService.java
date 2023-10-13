@@ -8,7 +8,6 @@ import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.repository.member.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,9 +116,9 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberDto updateMember(MemberDto memberDto) {
+    public MemberDto updateMember(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> memberEntity =
-                Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(IllegalArgumentException::new));
+                Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new));
 
 
         MemberEntity memberEntity1 = memberEntity.get();
@@ -319,6 +318,34 @@ public class MemberService {
                 .extraAddress(optionalMemberEntity.get().getExtraAddress())
                 .companyName(optionalMemberEntity.get().getCompanyName())
                 .businessNumber(optionalMemberEntity.get().getBusinessNumber())
+                .build();
+    }
+
+    public MemberDto companyUpdate(MemberDto memberDto, Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity
+                = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+                    return new IllegalArgumentException("아이디가 없습니다.");
+        }));
+        MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setPhone(memberDto.getPhone());
+        memberEntity.setCompanyName(memberDto.getCompanyName());
+        memberEntity.setBusinessNumber(memberDto.getBusinessNumber());
+        memberEntity.setPostcode(memberDto.getPostcode());
+        memberEntity.setAddress(memberDto.getAddress());
+        memberEntity.setDetailAddress(memberDto.getDetailAddress());
+        memberEntity.setExtraAddress(memberDto.getExtraAddress());
+
+        return MemberDto.builder()
+                .id(memberEntity.getId())
+                .name(memberEntity.getName())
+                .email(memberEntity.getEmail())
+                .phone(memberEntity.getPhone())
+                .postcode(memberEntity.getPostcode())
+                .address(memberEntity.getAddress())
+                .detailAddress(memberEntity.getDetailAddress())
+                .extraAddress(memberEntity.getExtraAddress())
+                .companyName(memberEntity.getCompanyName())
+                .businessNumber(memberEntity.getBusinessNumber())
                 .build();
     }
 }
