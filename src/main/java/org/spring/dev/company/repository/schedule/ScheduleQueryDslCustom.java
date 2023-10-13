@@ -3,7 +3,6 @@ package org.spring.dev.company.repository.schedule;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.apache.groovy.parser.antlr4.util.StringUtils;
 import org.spring.dev.company.dto.schedule.ScheduleDto;
 import org.spring.dev.company.entity.schedule.QScheduleEntity;
 import org.spring.dev.company.entity.schedule.ScheduleEntity;
@@ -16,7 +15,7 @@ import static org.springframework.util.StringUtils.hasText;
 
 @Repository
 @RequiredArgsConstructor
-public class ScheduleRepositoryImpl implements ScheduleRepository {
+public class ScheduleQueryDslCustom implements ScheduleQueryDsl {
 
     private final JPAQueryFactory jpaQueryFactory;
 

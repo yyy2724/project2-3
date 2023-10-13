@@ -9,11 +9,10 @@
 }
 
 h1.title {
-    width: inherit;
-    display: flex;
-    font-weight: bold;
-    color: #454863;
-    padding: 10px;
+    text-align: center;
+    background-color: #3788d8;
+    color: #ffffff;
+    padding: 10px 0;
 }
 
 #calendar {
@@ -25,6 +24,7 @@ h1.title {
 .container .workCalendar{
     position: fixed;
     left: 300px;
+    top: 150px;
 }
 
 #calendarBox {

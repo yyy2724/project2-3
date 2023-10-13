@@ -6,10 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <title>개인일정</title>
-    <link rel="stylesheet" th:href="@{/css/workTime/workTime.css}">
+    <link rel="stylesheet" th:href="@{/css/schedule/schedule.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-    <script th:src="@{/js/workTime/workTime.js}" defer="defer"></script>
+    <script th:src="@{/js/schedule/schedule.js}" defer="defer"></script>
 </head>
 <th:block layout:fragment="container">
 <body>
@@ -19,9 +19,6 @@
     <!--내용 채우기-->
     <div class="workCalendar">
       <div id="content">
-          <h1 class="title">
-              근무기록
-          </h1>
         <div id='calendar-container'>
             <div id='calendar'>
 
@@ -65,8 +62,6 @@
                 <a href="#none" class="btn-close">닫기</a>
             </div>
         </div>
-
-        
       </div>
     </div>
 

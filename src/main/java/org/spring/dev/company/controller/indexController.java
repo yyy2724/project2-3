@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class indexController {
 
-    //    main 페이지
     /*
     추후 멤버정보 가져오는거 수정필요
      */

@@ -3,7 +3,139 @@
 @import url(/css/common/sidebar.css);
 
 body{
-    padding-top: 90px;
-    padding-left: 200px;
     position: fixed;
+}
+.box{
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    min-height: 100%;
+    gap: 50px;
+}
+/* left */
+.left{
+    flex-direction: column;
+    width: 550px;
+    height: 920px;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-between;
+}
+.left .work{
+    width: inherit;
+    height: 450px;
+    border: 2px solid yellow;
+}
+.left .notice{
+    width: inherit;
+    height: 450px;
+    border: 2px solid yellow;
+}
+/* middle */
+.middle{
+    width: 800px;
+    height: 920px;
+    border: 2px solid yellow;
+}
+/* calendar */
+.middle .calendar .modal{
+    position: fixed;
+    background-color: #eaeaf07b;
+    top:0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+    display: none;
+}
+/* right */
+.right{
+    width: 200px;
+    height: 920px;
+    /* border: 2px solid green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* mail */
+.right .mail{
+    width: inherit;
+    height: 80px;
+    justify-content: flex-start;
+    border: 2px solid red;
+}
+/* chat-bot */
+.right .chat{
+    width: inherit;
+    height: 80px;
+    justify-content: flex-end;
+    border: 2px solid red;
+}
+
+
+/* modal design중 */
+.modal-header{
+    display: flex;
+    flex-direction: column;
+}
+.modal-header .exit{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+.modal-header .exit button{
+    width: 100px;
+    height: 25px;
+    cursor: pointer;
+}
+.modal-body{
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.modal-body .form-group{
+    display: flex;
+    flex-direction: column;
+}
+.modal-body .form-group .content{
+    font-size: 20px;
+    padding: 10px;
+}
+.modal-body .form-group .date .col-form-label{
+    padding-left: 10px;
+}
+.modal-content{
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-top: 50px solid #454863;
+}
+.modal .modal-content .modal-footer .btn{
+    padding: 10px;
+    background-color: #454863;
+    width: 150px;
+    border-radius: 10px;
+    transition: all 0.5s;
+    color: white;
+    font-size: 22px;
+}
+.modal .modal-content .modal-footer .btn:hover{
+    background-color: #45486355;
+    font-weight: bold;
+}
+
+/* input공통 */
+input{
+    text-align: center;
+    font-size: 18px;
 }
