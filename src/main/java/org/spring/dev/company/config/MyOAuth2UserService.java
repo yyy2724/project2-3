@@ -1,10 +1,9 @@
 package org.spring.dev.company.config;
 
-import org.spring.dev.company.entity.freelancer.FreelancerEntity;
+
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
-import org.spring.dev.company.repository.freelancer.FreelancerRepository;
-import org.spring.dev.company.repository.member.LoginRepository;
+
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,8 +29,6 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Autowired
-    private FreelancerRepository freelancerRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

@@ -3,7 +3,6 @@ package org.spring.dev.company.config;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.spring.dev.company.entity.freelancer.FreelancerEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +19,6 @@ public class MyUserDetails implements UserDetails, OAuth2User {
 
     @Autowired
     private MemberEntity memberEntity;
-    @Getter
-    @Autowired
-    private  FreelancerEntity freelancerEntity;
 
     private Map<String, Object> attributes;
 

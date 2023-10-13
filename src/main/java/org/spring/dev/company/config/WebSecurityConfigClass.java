@@ -2,7 +2,6 @@ package org.spring.dev.company.config;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.spring.dev.company.entity.freelancer.FreelancerEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

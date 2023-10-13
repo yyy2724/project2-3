@@ -38,13 +38,6 @@ public class MemberService {
         return memberRs;
     }
 
-    public int nickNameCheck(String nickName) {
-
-        int rs = memberRepository.findByNickName(nickName);
-
-        return rs;
-    }
-
     public int phoneNumCheck(String phone) {
         int memberRs = memberRepository.findByPhone(phone);
 
@@ -76,6 +69,9 @@ public class MemberService {
                 .birth(memberEntity.get().getBirth())
                 .phone(memberEntity.get().getPhone())
                 .postcode(memberEntity.get().getPostcode())
+                .businessNumber(memberEntity.get().getBusinessNumber())
+                .career(memberEntity.get().getCareer())
+                .companyName(memberEntity.get().getCompanyName())
                 .address(memberEntity.get().getAddress())
                 .detailAddress(memberEntity.get().getDetailAddress())
                 .extraAddress(memberEntity.get().getExtraAddress())
@@ -267,5 +263,62 @@ public class MemberService {
     public Long companyJoin(MemberDto memberDto) {
         MemberEntity memberEntity = MemberEntity.toCompany(memberDto, passwordEncoder);
         return  memberRepository.save(memberEntity).getId();
+    }
+
+    public int companyNameCheck(String companyName) {
+        int rs = memberRepository.findByCompanyName(companyName);
+        return rs;
+    }
+
+    public int businessNumberCheck(String businessNumber) {
+        int rs = memberRepository.findByBusinessNumber(businessNumber);
+        return rs;
+    }
+
+    public MemberDto freeUpdate(MemberDto memberDto) {
+        Optional<MemberEntity> optionalMemberEntity
+                = Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(IllegalAccessError::new));
+
+        MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setBirth(memberDto.getBirth());
+        memberEntity.setPhone(memberDto.getPhone());
+        memberEntity.setCareer(memberDto.getCareer());
+        memberEntity.setAddress(memberDto.getAddress());
+        memberEntity.setDetailAddress(memberDto.getDetailAddress());
+        memberEntity.setExtraAddress(memberDto.getExtraAddress());
+
+        memberRepository.save(memberEntity);
+        return MemberDto.builder()
+                .id(memberEntity.getId())
+                .name(memberEntity.getName())
+                .birth(memberEntity.getBirth())
+                .email(memberEntity.getEmail())
+                .phone(memberEntity.getPhone())
+                .postcode(memberEntity.getPostcode())
+                .address(memberEntity.getAddress())
+                .detailAddress(memberEntity.getDetailAddress())
+                .extraAddress(memberEntity.getExtraAddress())
+                .career(memberEntity.getCareer())
+                .build();
+    }
+
+    public MemberDto companyDetail(Long memberId){
+        Optional<MemberEntity> optionalMemberEntity
+                = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+                    return new IllegalArgumentException("아이디가 없습니다.");
+        }));
+
+        return MemberDto.builder()
+                .id(optionalMemberEntity.get().getId())
+                .name(optionalMemberEntity.get().getName())
+                .email(optionalMemberEntity.get().getEmail())
+                .phone(optionalMemberEntity.get().getPhone())
+                .postcode(optionalMemberEntity.get().getPostcode())
+                .address(optionalMemberEntity.get().getAddress())
+                .detailAddress(optionalMemberEntity.get().getDetailAddress())
+                .extraAddress(optionalMemberEntity.get().getExtraAddress())
+                .companyName(optionalMemberEntity.get().getCompanyName())
+                .businessNumber(optionalMemberEntity.get().getBusinessNumber())
+                .build();
     }
 }

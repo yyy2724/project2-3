@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +35,10 @@ public class MemberController {
     }
 
 
-    @GetMapping("/adminJoin")
+    @GetMapping("/join")
     public String adminJoin(){
 
-        return "member/adminJoin";
+        return "member/join";
     }
 
     @PostMapping("/adminJoin")
@@ -235,6 +236,11 @@ public class MemberController {
     public String pwChangePost(@ModelAttribute MemberDto memberDto, Model model){
         MemberDto memberDto1 = memberService.passwordChange(memberDto);
         model.addAttribute("memberDto",memberDto1);
+        if (!memberDto1.getCareer().equals("")){
+            return "freelancer/detail";
+        }else if (!memberDto1.getCompanyName().equals("")){
+            return "company/detail";
+        }
         return "member/detail";
     }
 
@@ -267,7 +273,40 @@ public class MemberController {
 
     }
 
+    @GetMapping("/freeDetail/{memberId}")
+    public String freeDetail(@PathVariable("memberId") Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "freelancer/detail";
+    }
 
+    @GetMapping("/freeUp/{memberId}")
+    public String freeUp(@PathVariable("memberId") Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "freelancer/update";
+    }
+
+    @PostMapping("/freeUpdate")
+    public String freeUpdate(@ModelAttribute MemberDto memberDto, Model model){
+        MemberDto memberDto1 = memberService.freeUpdate(memberDto);
+        model.addAttribute("memberDto", memberDto1);
+        return "freelancer/detail";
+    }
+
+    @GetMapping("/companyDetail/{memberId}")
+    public String companyDetail(@PathVariable("memberId") Long memberId, Model model){
+        MemberDto memberDto = memberService.companyDetail(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "company/detail";
+    }
+
+    @GetMapping("/companyUp/{memberId}")
+    public String companyUp(@PathVariable("memberId")Long memberId, Model model){
+        MemberDto memberDto = memberService.companyDetail(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "company/update";
+    }
 
 }
 

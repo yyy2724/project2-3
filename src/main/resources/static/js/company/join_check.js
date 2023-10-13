@@ -16,7 +16,21 @@ function companyCheck(){
     });
 }
 function businessNumberCheck(){
-    const businessNumber = $('#businessNumber')
+    const businessNumber = $('#businessNumber').val();
+    $.ajax({
+            url: "join/businessNumberCheck",
+            type: 'post',
+            data: {"businessNumber":businessNumber},
+            success: function(cnt){
+                if(cnt == 0){
+                    $('.businessNumber_ok').css("display", "inline-block");
+                    $('.businessNumber_already').css("display", "none");
+                }else {
+                    $('.businessNumber_already').css("display", "inline-block");
+                    $('.businessNumber_ok').css("display", "none");
+                }
+            }
+        });
 }
 function email_check() {
     const email = $('#mail').val(); //id값이 "id"인 입력란의 값을 저장
