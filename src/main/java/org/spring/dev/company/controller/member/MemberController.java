@@ -49,7 +49,7 @@ public class MemberController {
             return "member/join";
         }
 
-        return "login/login";
+        return "member/login";
     }
 
     @GetMapping("/freeJoin")
@@ -63,7 +63,7 @@ public class MemberController {
         if (rs == 0) {
             return "freelancer/join";
         }
-        return "login/login";
+        return "member/login";
     }
 
     @GetMapping("/companyJoin")
@@ -77,7 +77,7 @@ public class MemberController {
         if (rs == 0) {
             return "company/join";
         }
-        return "login/login";
+        return "member/login";
     }
 
     @GetMapping("/m")
@@ -162,11 +162,12 @@ public class MemberController {
 
 
     @PostMapping("/update/{id}")
-    public String upMember(@ModelAttribute MemberDto memberDto, Model model) {
-        MemberDto memberDto1 = memberService.updateMember(memberDto);
+    public String upMember(@ModelAttribute MemberDto memberDto, Model model, @PathVariable("id") Long memberId) {
+        MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
         model.addAttribute("memberDto", memberDto1);
         return "member/detail";
     }
+
 
     @PostMapping("/disabled")
     public String disMember(@ModelAttribute MemberDto memberDto) {
@@ -231,15 +232,11 @@ public class MemberController {
         return "member/pwChange";
     }
 
-    @PostMapping("/pwChange")
-    public String pwChangePost(@ModelAttribute MemberDto memberDto, Model model) {
-        MemberDto memberDto1 = memberService.passwordChange(memberDto);
+    @PostMapping("/pwChange/{memberId}")
+    public String pwChangePost(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
         model.addAttribute("memberDto", memberDto1);
-        if (!memberDto1.getCareer().equals("")) {
-            return "freelancer/detail";
-        } else if (!memberDto1.getCompanyName().equals("")) {
-            return "company/detail";
-        }
+
         return "member/detail";
     }
 
@@ -292,12 +289,13 @@ public class MemberController {
         return "freelancer/update";
     }
 
-    @PostMapping("/freeUpdate")
-    public String freeUpdate(@ModelAttribute MemberDto memberDto, Model model) {
-        MemberDto memberDto1 = memberService.freeUpdate(memberDto);
+    @PostMapping("/freeUpdate/{memberId}")
+    public String freeUpdate(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto1 = memberService.freeUpdate(memberDto, memberId);
         model.addAttribute("memberDto", memberDto1);
         return "freelancer/detail";
     }
+
 
     @GetMapping("/companyDetail/{memberId}")
     public String companyDetail(@PathVariable("memberId") Long memberId, Model model) {
@@ -312,12 +310,6 @@ public class MemberController {
         model.addAttribute("memberDto", memberDto);
         return "company/update";
     }
-
-
-
-
-
-
 
 
     //    여기부터 LIST

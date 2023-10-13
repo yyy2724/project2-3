@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>마이페이지</title>
+    <title>프리렌서마이페이지</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/member/modal.js}"></script>
     <script th:src="@{/js/member/nameChange.js}"></script>
@@ -32,6 +32,10 @@
     </li>
     <li>
         <span>성별</span>
+        <span th:text="${memberDto.career}"></span>
+    </li>
+    <li>
+        <span>경력사항</span>
         <span th:text="${memberDto.gender}"></span>
     </li>
     <li>
@@ -73,8 +77,8 @@
         <div class="content">
 
             <form th:href="@{/freelancer/disabled}" method="post">
-                <input type="hidden" name="id" class="memberId" readonly th:value="${freeDto.id}">
-                비활성화할 이메일이 <span th:text="${freeDto.email}"></span>가 맞는지 확인부탁드립니다.
+                <input type="hidden" name="id" class="memberId" readonly th:value="${memberDto.id}">
+                비활성화할 이메일이 <span th:text="${memberDto.email}"></span>가 맞는지 확인부탁드립니다.
                 <input type="submit" value="회원비활성화">
             </form>
         </div>
@@ -83,7 +87,7 @@
 <div id="deleteCon" class="deleteCon">
 
 </div>
-<input type="hidden" id="is_display" th:value="${freeDto.is_display}">
+<input type="hidden" id="is_display" th:value="${memberDto.is_display}">
 <div id="modalCon" class="deleteModal">
     <div class="modal-window2">
 
@@ -91,9 +95,9 @@
         <span id="closeBtn" class="close-area2">X</span>
         <div class="content2">
 
-            <form th:href="@{/member/delete/{freeId}(freeId=${freeDto.id})}" method="post">
-                <input type="hidden" name="id" class="freeId" readonly th:value="${freeDto.name}">
-                삭제하실려는 이메일이 <span th:text="${freeDto.email}"></span>가 맞는지 확인부탁드립니다.
+            <form th:href="@{/member/delete/{freeId}(freeId=${memberDto.id})}" method="post">
+                <input type="hidden" name="id" class="freeId" readonly th:value="${memberDto.name}">
+                삭제하실려는 이메일이 <span th:text="${memberDto.email}"></span>가 맞는지 확인부탁드립니다.
                 <input type="submit" value="회원삭제">
             </form>
         </div>

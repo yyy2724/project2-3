@@ -14,7 +14,6 @@
 
 <body>
     <form th:action="@{/member/update/{memberId}(memberId=${memberDto.id})}" method="post">
-        <input type="hidden" name="id" th:value="${memberDto.id}">
         <ul>
             <li>
                 <label for="mail">이메일</label>
@@ -27,12 +26,6 @@
             <li>
                 <label for="birth">생년월일</label>
                 <input type="date" name="birth" id="birth" th:value="${memberDto.birth}">
-            </li>
-            <li>
-                <label for="nickName">닉네임</label>
-                <input type="text" name="nickName" id="nickName" th:value="${memberDto.nickName}">
-                <span class="nick_ok">사용 가능한 닉네임입니다.</span>
-                <span class="nick_already">이미 사용중인 닉네임입니다.</span>
             </li>
             <li>
                 <label for="phone">전화번호</label>

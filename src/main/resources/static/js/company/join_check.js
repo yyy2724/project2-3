@@ -17,6 +17,9 @@ function companyCheck(){
 }
 function businessNumberCheck(){
     const businessNumber = $('#businessNumber').val();
+    var businessNumberEx = /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/;
+    if (!businessNumberEx.test(businessNumber)){
+
     $.ajax({
             url: "join/businessNumberCheck",
             type: 'post',
@@ -31,6 +34,9 @@ function businessNumberCheck(){
                 }
             }
         });
+    } else {
+         $('.businessNumber_expression').css("display", "inline-block");
+    }
 }
 function email_check() {
     const email = $('#mail').val(); //id값이 "id"인 입력란의 값을 저장
