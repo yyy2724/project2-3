@@ -76,7 +76,6 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "member_matching")
     private boolean matching;
 
-
     public static MemberEntity toMember(MemberDto memberDto, PasswordEncoder passwordEncoder) {
 
         MemberEntity memberEntity = new MemberEntity();

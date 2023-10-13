@@ -20,23 +20,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WorkTimeTotalScheduler {
 
-    private final WorkTimeRepository workTimeRepository;
-//        @Transactional
-//        @Scheduled(fixedRate = 500000)
-//        public void myScheduledTask() {
-//
-//           String date = LocalDate.now().minusDays(1).toString();
-//           System.out.println(date);
-//           WorkTimeEntity workTimeEntity = Optional.ofNullable(workTimeRepository.getDayTime(date))
-//                   .orElseThrow(() -> {
-//                       throw new IllegalArgumentException("null값 입니다.");
-//                   });
-//
-//           if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null){
-//               Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
-//               long workTimeTotal =  total.toMinutes();
-////               workTimeEntity.setTotal((int) workTimeTotal);
-//               workTimeRepository.updateWorkTotalTime(workTimeTotal, date);
-//           }
-//        }
+    private final WorkTimeService workTimeService;
+    @Transactional
+    //cron 표현식 매일 오전 09:00 실행
+//        @Scheduled(cron = "0 00 09 * * ?")
+    @Scheduled(fixedRate = 500000)
+    public void myScheduledTask() {
+        workTimeService.doWorkTotalcal();
+    }
+
 }

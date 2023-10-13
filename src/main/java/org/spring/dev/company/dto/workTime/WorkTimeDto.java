@@ -1,6 +1,7 @@
 package org.spring.dev.company.dto.workTime;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,17 +26,18 @@ public class WorkTimeDto {
 
     private Integer total;
 
+    @JsonIgnore
     private MemberEntity memberEntity;
 
     private LocalDateTime CreateTime;
 
     private LocalDateTime UpdateTime;
 
-    private int is_display;
+    private Integer is_display;
 
     private WorkType workType;
 
-    public static WorkTimeDto toDto(WorkTimeEntity workTimeEntity){
+    public static WorkTimeDto toDto(WorkTimeEntity workTimeEntity) {
         return WorkTimeDto.builder()
                 .id(workTimeEntity.getId())
                 .workTimeStart(workTimeEntity.getWorkTimeStart())
