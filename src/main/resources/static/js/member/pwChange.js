@@ -7,7 +7,7 @@ function passCheck() {
         data: { "id": id, "password": pw },
         success: function (cnt) {
             if (cnt == true) {
-                console.log(cnt);
+                alert("비밀번호가 일치합니다.");
                 $('#password').attr('readonly', true);
             } else {
                 alert("비밀번호가 일치하지 않습니다.");
