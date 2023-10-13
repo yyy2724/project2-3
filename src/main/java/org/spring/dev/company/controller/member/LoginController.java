@@ -51,24 +51,24 @@ public class LoginController {
 
     }
 
-    @GetMapping("/oauth2add")
-    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails,Model model){
-
-        System.out.println("myUserDetails " + myUserDetails);
-
-        Long memberId = myUserDetails.getMemberEntity().getId();
-
-        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getMemberEntity());
-        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getMemberEntity().getId());
-
-        MemberDto memberDto = loginService.loginUpdateOk(memberId);
-
-        System.out.println("memberDto " + memberDto);
-        model.addAttribute("member", memberDto);
-
-        return "/member/oauth2add";
-
-    }
+//    @GetMapping("/oauth2add")
+//    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails,Model model){
+//
+//        System.out.println("myUserDetails " + myUserDetails);
+//
+//        Long memberId = myUserDetails.getMemberEntity().getId();
+//
+//        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getMemberEntity());
+//        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getMemberEntity().getId());
+//
+//        MemberDto memberDto = loginService.loginUpdateOk(memberId);
+//
+//        System.out.println("memberDto " + memberDto);
+//        model.addAttribute("member", memberDto);
+//
+//        return "/member/oauth2add";
+//
+//    }
 
     @PostMapping("/oauth2add")
     public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, MemberDto memberDto){

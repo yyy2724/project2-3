@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <form th:action="@{/free/update/{freeId}(freeId=${freeDto.id})}" method="post">
+    <form th:action="@{/freelancer/update/{freeId}(freeId=${freeDto.id})}" method="post">
         <input type="hidden" name="id" th:value="${freeDto.id}">
         <ul>
             <li>

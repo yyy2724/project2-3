@@ -20,38 +20,46 @@ public class MemberEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "member_id" )
     private Long id;
 
-    @Column(name = "member_name")
+    @Column(name = "member_name",nullable = false)
     private String name;
 
     @Column(name = "member_birth")
     private String birth;
 
-    @Column(name = "member_email")
+    @Column(name = "member_email",nullable = false)
     private String email;
 
-    @Column(name = "member_nick")
-    private String nickName;
-
-    @Column(name = "member_phone")
+    @Column(name = "member_phone",nullable = false)
     private String phone;
 
-    @Column(name = "member_password")
+    @Column(name = "member_password",nullable = false)
     private String password;
 
-    @Column(name = "member_postcode")
+    @Column(name = "member_postcode",nullable = false)
     private String postcode;
 
-    @Column(name = "member_address")
+    @Column(name = "member_address",nullable = false)
     private String address;
 
-    @Column(name = "member_detailAddress")
+    @Column(name = "member_detailAddress",nullable = false)
     private String detailAddress;
 
-    @Column(name = "member_extraAddress")
+    @Column(name = "member_extraAddress",nullable = false)
     private String extraAddress;
+
+    // 프리렌서 관련
+    @Column(name = "member_career", nullable = true)
+    private String career;
+
+    //회사 관련
+    @Column(name = "company_name", nullable = true)
+    private String companyName;
+    // 사업자번호
+    @Column(name = "business_number", nullable = true)
+    private String businessNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_grade")
@@ -61,10 +69,6 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "member_gender")
     private GenderEntity gender;
 
-    // 직책
-    @Column(name = "member_position")
-    private String position;
-
     @Column(name = "member_matching")
     private boolean matching;
 
@@ -73,7 +77,6 @@ public class MemberEntity extends BaseEntity {
 
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setName(memberDto.getName());
-        memberEntity.setNickName(memberDto.getNickName());
         memberEntity.setEmail(memberDto.getEmail());
         memberEntity.setPhone(memberDto.getPhone());
         memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
@@ -82,10 +85,45 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setAddress(memberDto.getAddress());
         memberEntity.setDetailAddress(memberDto.getDetailAddress());
         memberEntity.setExtraAddress(memberDto.getExtraAddress());
-        memberEntity.setGrade(ApproType.INTERN);
+        memberEntity.setGrade(ApproType.STAFF);
         memberEntity.setGender(memberDto.getGender());
         memberEntity.setIs_display(memberDto.getIs_display());
         return memberEntity;
     }
 
+    public static MemberEntity toFree(MemberDto memberDto, PasswordEncoder passwordEncoder) {
+
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setName(memberDto.getName());
+        memberEntity.setEmail(memberDto.getEmail());
+        memberEntity.setPhone(memberDto.getPhone());
+        memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        memberEntity.setCareer(memberDto.getCareer());
+        memberEntity.setBirth(memberDto.getBirth());
+        memberEntity.setPostcode(memberDto.getPostcode());
+        memberEntity.setAddress(memberDto.getAddress());
+        memberEntity.setDetailAddress(memberDto.getDetailAddress());
+        memberEntity.setExtraAddress(memberDto.getExtraAddress());
+        memberEntity.setGrade(ApproType.FREELANCER);
+        memberEntity.setGender(memberDto.getGender());
+        memberEntity.setIs_display(1);
+        return memberEntity;
+    }
+
+    public static MemberEntity toCompany(MemberDto memberDto, PasswordEncoder passwordEncoder) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setName(memberDto.getName());
+        memberEntity.setEmail(memberDto.getEmail());
+        memberEntity.setPhone(memberDto.getPhone());
+        memberEntity.setCompanyName(memberDto.getCompanyName());
+        memberEntity.setBusinessNumber(memberDto.getBusinessNumber());
+        memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        memberEntity.setPostcode(memberDto.getPostcode());
+        memberEntity.setAddress(memberDto.getAddress());
+        memberEntity.setDetailAddress(memberDto.getDetailAddress());
+        memberEntity.setExtraAddress(memberDto.getExtraAddress());
+        memberEntity.setGrade(ApproType.COMPANY);
+        memberEntity.setIs_display(1);
+        return memberEntity;
+    }
 }
