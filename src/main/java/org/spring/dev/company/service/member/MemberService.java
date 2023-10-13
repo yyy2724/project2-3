@@ -342,9 +342,11 @@ public class MemberService {
         return rs;
     }
 
-    public MemberDto freeUpdate(MemberDto memberDto) {
+    public MemberDto freeUpdate(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
-                = Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(IllegalAccessError::new));
+                = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+                    return new IllegalArgumentException("아이디가 없습니다.");
+        }));
 
         MemberEntity memberEntity = optionalMemberEntity.get();
         memberEntity.setBirth(memberDto.getBirth());

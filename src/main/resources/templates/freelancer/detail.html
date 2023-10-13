@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>마이페이지</title>
+    <title>프리렌서마이페이지</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/member/modal.js}"></script>
     <script th:src="@{/js/member/nameChange.js}"></script>
@@ -32,6 +32,10 @@
     </li>
     <li>
         <span>성별</span>
+        <span th:text="${memberDto.career}"></span>
+    </li>
+    <li>
+        <span>경력사항</span>
         <span th:text="${memberDto.gender}"></span>
     </li>
     <li>

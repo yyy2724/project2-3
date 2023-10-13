@@ -63,7 +63,7 @@ public class MemberController {
         if (rs == 0) {
             return "freelancer/join";
         }
-        return "login/login";
+        return "member/login";
     }
 
     @GetMapping("/companyJoin")
@@ -77,7 +77,7 @@ public class MemberController {
         if (rs == 0) {
             return "company/join";
         }
-        return "login/login";
+        return "member/login";
     }
 
     @GetMapping("/m")
@@ -288,9 +288,9 @@ public class MemberController {
             return "freelancer/update";
         }
 
-        @PostMapping("/freeUpdate")
-        public String freeUpdate (@ModelAttribute MemberDto memberDto, Model model){
-            MemberDto memberDto1 = memberService.freeUpdate(memberDto);
+        @PostMapping("/freeUpdate/{memberId}")
+        public String freeUpdate (@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model){
+            MemberDto memberDto1 = memberService.freeUpdate(memberDto, memberId);
             model.addAttribute("memberDto", memberDto1);
             return "freelancer/detail";
         }
