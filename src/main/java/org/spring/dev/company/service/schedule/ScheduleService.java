@@ -7,6 +7,7 @@ import org.spring.dev.company.entity.schedule.ScheduleEntity;
 import org.spring.dev.company.repository.schedule.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,20 +16,30 @@ public class ScheduleService {
 
     private ScheduleRepository scheduleRepostory;
 
-    public ScheduleDto getScheduleDetail() {
+    public List<ScheduleDto> getScheduleDetail(ScheduleDto scheduleDto) {
+        List<ScheduleDto> scheduleDtoList = new ArrayList<ScheduleDto>();
+        List<ScheduleEntity> scheduleEntityList = scheduleRepostory.findScheduleSearch(scheduleDto);
 
-        List<ScheduleEntity> scheduleEntityList = scheduleRepostory.findAllSchedule();
-
-        for (ScheduleEntity scheduleEntity: scheduleEntityList) {
-            System.out.println(scheduleEntity.getId());
-            System.out.println(scheduleEntity.getContent());
-            System.out.println(scheduleEntity.getType());
-            System.out.println(scheduleEntity.getColor());
-            System.out.println(scheduleEntity.getMemberId());
-            System.out.println(scheduleEntity.getEndDateTime());
-            System.out.println(scheduleEntity.getStartDateTime());
+        //비어있지 않다면
+        if(!scheduleEntityList.isEmpty())
+            for (ScheduleEntity scheduleEntity: scheduleEntityList) {
+                scheduleDtoList.add(ScheduleDto.toDto(scheduleEntity));
+        }else{
+                // throw 발생시켜서 에러 처리
+            return null;
         }
+        return scheduleDtoList;
+    }
 
-        return null;
+
+    //스케줄 생성
+    public ScheduleDto postSchedule(ScheduleDto scheduleDto) {
+
+        ScheduleEntity scheduleEntity = scheduleRepostory.insertSchedule(scheduleDto);
+
+
+
+        return scheduleDto;
+
     }
 }
