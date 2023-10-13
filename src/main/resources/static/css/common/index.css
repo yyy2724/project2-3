@@ -3,7 +3,60 @@
 @import url(/css/common/sidebar.css);
 
 body{
-    padding-top: 90px;
-    padding-left: 200px;
     position: fixed;
+}
+.box{
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    min-height: 100%;
+    gap: 50px;
+}
+/* left */
+.left{
+    flex-direction: column;
+    width: 550px;
+    height: 920px;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-between;
+}
+.left .work{
+    width: inherit;
+    height: 450px;
+    border: 2px solid yellow;
+}
+.left .notice{
+    width: inherit;
+    height: 450px;
+    border: 2px solid yellow;
+}
+/* middle */
+.middle{
+    width: 800px;
+    height: 920px;
+    border: 2px solid yellow;
+}
+/* right */
+.right{
+    width: 200px;
+    height: 920px;
+    /* border: 2px solid green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* mail */
+.right .mail{
+    width: inherit;
+    height: 80px;
+    justify-content: flex-start;
+    border: 2px solid red;
+}
+/* chat-bot */
+.right .chat{
+    width: inherit;
+    height: 80px;
+    justify-content: flex-end;
+    border: 2px solid red;
 }

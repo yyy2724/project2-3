@@ -49,6 +49,7 @@
                             <li>
                                 <a th:href="@{/pay/{memberId}}">월급내역</a>
                             </li>
+                            <!--security 프리랜서 권한 부여-->
                             <li>
                                 <a th:href="@{/}">일정관리</a>
                             </li>
@@ -69,10 +70,10 @@
                     <li><a href="#">결재</a>
                         <ul class="small">
                             <li>
-                                <a th:href="@{/}">결재하기</a>
+                                <a th:href="@{/api/v1/approval/create}">결재하기</a>
                             </li>
                             <li>
-                                <a th:href="@{/}">결재내역</a>
+                                <a th:href="@{/api/v1/approval}">결재내역</a>
                             </li>
                             <li>
                                 <a th:href="@{/}">결재승인</a>
@@ -88,6 +89,9 @@
                             </li>
                             <li>
                                 <a th:href="@{/}">근무기록</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">조직도</a>
                             </li>
                         </ul>
                     </li>
