@@ -49,4 +49,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     Page<MemberEntity> findByEmailContains(Pageable pageable, String search);
 
     Page<MemberEntity> findByPhoneContains(Pageable pageable, String search);
+
+    @Query("SELECT COUNT(:memberId) FROM MemberEntity m WHERE m.password = :password")
+    Long findByMemberPassword(Long memberId, String password);
 }

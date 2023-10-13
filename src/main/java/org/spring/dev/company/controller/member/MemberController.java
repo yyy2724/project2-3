@@ -129,7 +129,7 @@ public class MemberController {
     @PostMapping("/update/{id}")
     public String upMember(@ModelAttribute MemberDto memberDto, Model model){
         MemberDto memberDto1 = memberService.updateMember(memberDto);
-        model.addAttribute("memberDto",memberDto);
+        model.addAttribute("memberDto",memberDto1);
         return "member/detail";
     }
 
@@ -189,6 +189,29 @@ public class MemberController {
         return "member/memberList";
 
     }
+
+    // 비밀번호 변경
+    @GetMapping("/pwChange/{memberId}")
+    public String pwChange(@PathVariable("memberId")Long id, Model model){
+        MemberDto memberDto = memberService.detailMember(id);
+        model.addAttribute("memberDto",memberDto);
+        return "member/pwChange";
+    }
+    @PostMapping("/pwChange")
+    public String pwChangePost(@ModelAttribute MemberDto memberDto, Model model){
+        MemberDto memberDto1 = memberService.passwordChange(memberDto);
+        model.addAttribute("memberDto",memberDto1);
+        return "member/detail";
+    }
+
+    @PostMapping("/passCheck")
+    public @ResponseBody boolean passwordCheck(@RequestParam("id") Long memberId, @RequestParam("password") String password){
+
+        boolean rs = memberService.passwordCheck(memberId,password);
+        System.out.println(rs);
+        return rs;
+    }
+
 }
 
 

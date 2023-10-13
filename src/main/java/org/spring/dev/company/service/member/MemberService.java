@@ -234,4 +234,45 @@ public class MemberService {
 
         return memberDtos;
     }
+
+    public MemberDto passwordChange(MemberDto memberDto) {
+        Optional<MemberEntity> optionalMemberEntity
+                = Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(IllegalArgumentException::new));
+
+        MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+
+        memberRepository.save(memberEntity);
+        return MemberDto.builder()
+                .id(memberEntity.getId())
+                .name(memberEntity.getName())
+                .nickName(memberEntity.getNickName())
+                .email(memberEntity.getEmail())
+                .password(memberEntity.getPassword())
+                .birth(memberEntity.getBirth())
+                .phone(memberEntity.getPhone())
+                .postcode(memberEntity.getPostcode())
+                .address(memberEntity.getAddress())
+                .detailAddress(memberEntity.getDetailAddress())
+                .extraAddress(memberEntity.getExtraAddress())
+                .gender(memberEntity.getGender())
+                .grade(memberEntity.getGrade())
+                .position(memberEntity.getPosition())
+                .CreateTime(memberEntity.getCreateTime())
+                .is_display(memberEntity.getIs_display())
+                .build();
+    }
+
+    public boolean passwordCheck(Long memberId, String password) {
+        Optional<MemberEntity> optionalMemberEntity
+                = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new));
+
+        if (optionalMemberEntity.isPresent()){
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            return passwordEncoder.matches(password, memberEntity.getPassword());
+        }else {
+            return false;
+        }
+
+    }
 }
