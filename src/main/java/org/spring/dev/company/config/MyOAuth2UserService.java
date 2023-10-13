@@ -1,6 +1,10 @@
 package org.spring.dev.company.config;
 
 import org.spring.dev.company.entity.member.MemberEntity;
+
+import org.spring.dev.company.entity.member.MemberEntity;
+import org.spring.dev.company.entity.util.ApproType;
+
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

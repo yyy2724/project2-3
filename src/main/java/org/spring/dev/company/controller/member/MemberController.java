@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,23 +29,23 @@ public class MemberController {
     private final EmailService emailService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
 
         return "member/login";
     }
 
 
-    @GetMapping("/adminJoin")
-    public String adminJoin(){
+    @GetMapping("/join")
+    public String adminJoin() {
 
-        return "member/adminJoin";
+        return "member/join";
     }
 
     @PostMapping("/adminJoin")
-    public String memberJoin(@ModelAttribute MemberDto memberDto){
+    public String memberJoin(@ModelAttribute MemberDto memberDto) {
 //        System.out.println(memberDto.getEmail());
         Long rs = memberService.memberJoin(memberDto);
-        if (rs == 0){
+        if (rs == 0) {
             return "member/join";
         }
 
@@ -52,55 +53,55 @@ public class MemberController {
     }
 
     @GetMapping("/freeJoin")
-    public String freeJoin(){
+    public String freeJoin() {
         return "freelancer/join";
     }
 
     @PostMapping("/freeJoin")
-    public String freeJoinPost(@ModelAttribute MemberDto memberDto){
+    public String freeJoinPost(@ModelAttribute MemberDto memberDto) {
         Long rs = memberService.freeJoin(memberDto);
-        if (rs == 0){
+        if (rs == 0) {
             return "freelancer/join";
         }
         return "login/login";
     }
 
     @GetMapping("/companyJoin")
-    public String companyJoin(){
+    public String companyJoin() {
         return "company/join";
     }
 
     @PostMapping("/companyJoin")
-    public String companyJoinPost(@ModelAttribute MemberDto memberDto){
+    public String companyJoinPost(@ModelAttribute MemberDto memberDto) {
         Long rs = memberService.companyJoin(memberDto);
-        if (rs == 0){
+        if (rs == 0) {
             return "company/join";
         }
         return "login/login";
     }
 
     @GetMapping("/m")
-    public String m(){
+    public String m() {
         return "member/m";
     }
 
     @GetMapping("/detail/{id}")
-    public String detailMamber(@PathVariable("id") Long memberId, Model model){
+    public String detailMamber(@PathVariable("id") Long memberId, Model model) {
 
         MemberDto memberDto = memberService.detailMember(memberId);
-        model.addAttribute("memberDto",memberDto);
+        model.addAttribute("memberDto", memberDto);
         return "member/detail";
     }
 
     @GetMapping("/up/{id}")
-    public String updateMember(@PathVariable("id")Long memberId, Model model){
+    public String updateMember(@PathVariable("id") Long memberId, Model model) {
         MemberDto memberDto = memberService.detailMember(memberId);
-        model.addAttribute("memberDto",memberDto);
+        model.addAttribute("memberDto", memberDto);
         return "member/update";
     }
 
     @GetMapping("/findPw")
-    public String findPwPage(){
+    public String findPwPage() {
 
         return "member/findPw";
     }
@@ -118,7 +119,7 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/check")
-    public int sendEmail(HttpServletRequest request, String email){
+    public int sendEmail(HttpServletRequest request, String email) {
         HttpSession session = request.getSession();
         emailService.mailSend(session, email);
         return 123;
@@ -126,7 +127,7 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/emailCheck")
-    public boolean emailCertification(HttpServletRequest request, String email, String inputCode){
+    public boolean emailCertification(HttpServletRequest request, String email, String inputCode) {
         HttpSession session = request.getSession();
 
         boolean result = emailService.emailCertification(session, email, Integer.parseInt(inputCode));
@@ -137,19 +138,20 @@ public class MemberController {
 
     // 비번 찾기 - 새로운 비번 설정
     @PostMapping("/checkOk")
-    public String checkOk(String email,String password){
+    public String checkOk(String email, String password) {
         emailService.updatePassword(email, password);
 
         return "member/login";
     }
+
     @PostMapping("/checkOk1")
-    public void checkOk1(String email,String password){
+    public void checkOk1(String email, String password) {
         emailService.updatePassword(email, password);
 
     }
 
     @GetMapping("/checkOk")
-    public String checkOk(@RequestParam(value = "email") String email, Model model){
+    public String checkOk(@RequestParam(value = "email") String email, Model model) {
 
         System.out.println(email + "이메일");
         model.addAttribute("email", email);
@@ -160,24 +162,21 @@ public class MemberController {
 
 
     @PostMapping("/update/{id}")
-    public String upMember(@ModelAttribute MemberDto memberDto, Model model){
+    public String upMember(@ModelAttribute MemberDto memberDto, Model model) {
         MemberDto memberDto1 = memberService.updateMember(memberDto);
-        model.addAttribute("memberDto",memberDto1);
+        model.addAttribute("memberDto", memberDto1);
         return "member/detail";
     }
 
     @PostMapping("/disabled")
-    public String disMember(@ModelAttribute MemberDto memberDto){
+    public String disMember(@ModelAttribute MemberDto memberDto) {
 
         Long rs = memberService.disabledMember(memberDto);
-        if (rs!=0){
+        if (rs != 0) {
             return "/index";
         }
         return "member/detail";
     }
-
-
-
 
 
     // 멤버리스트 가져오기(매니저만, 모든권한) -> 프리렌서들꺼는 못보게 / 모든 수정 삭제 가능?? 관지자 창에서 보이게 ->
@@ -188,7 +187,7 @@ public class MemberController {
             direction = Sort.Direction.DESC) Pageable pageable,
                              @RequestParam(value = "subject", required = false) String subject,
                              @RequestParam(value = "search", required = false) String search,
-                             Model model){
+                             Model model) {
 
         Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
 
@@ -226,30 +225,35 @@ public class MemberController {
 
     // 비밀번호 변경
     @GetMapping("/pwChange/{memberId}")
-    public String pwChange(@PathVariable("memberId")Long id, Model model){
+    public String pwChange(@PathVariable("memberId") Long id, Model model) {
         MemberDto memberDto = memberService.detailMember(id);
-        model.addAttribute("memberDto",memberDto);
+        model.addAttribute("memberDto", memberDto);
         return "member/pwChange";
     }
+
     @PostMapping("/pwChange")
-    public String pwChangePost(@ModelAttribute MemberDto memberDto, Model model){
+    public String pwChangePost(@ModelAttribute MemberDto memberDto, Model model) {
         MemberDto memberDto1 = memberService.passwordChange(memberDto);
-        model.addAttribute("memberDto",memberDto1);
+        model.addAttribute("memberDto", memberDto1);
+        if (!memberDto1.getCareer().equals("")) {
+            return "freelancer/detail";
+        } else if (!memberDto1.getCompanyName().equals("")) {
+            return "company/detail";
+        }
         return "member/detail";
     }
 
     @PostMapping("/passCheck")
-    public @ResponseBody boolean passwordCheck(@RequestParam("id") Long memberId, @RequestParam("password") String password){
+    public @ResponseBody boolean passwordCheck(@RequestParam("id") Long memberId, @RequestParam("password") String password) {
 
-        boolean rs = memberService.passwordCheck(memberId,password);
+        boolean rs = memberService.passwordCheck(memberId, password);
         System.out.println(rs);
         return rs;
     }
 
 
-
     @GetMapping("/oauth2add")
-    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
 
         System.out.println("myUserDetails " + myUserDetails);
 
@@ -273,9 +277,42 @@ public class MemberController {
 
         return "redirect:/";
     }
+        @GetMapping("/freeDetail/{memberId}")
+        public String freeDetail (@PathVariable("memberId") Long memberId, Model model){
+            MemberDto memberDto = memberService.detailMember(memberId);
+            model.addAttribute("memberDto", memberDto);
+            return "freelancer/detail";
+        }
 
+        @GetMapping("/freeUp/{memberId}")
+        public String freeUp (@PathVariable("memberId") Long memberId, Model model){
+            MemberDto memberDto = memberService.detailMember(memberId);
+            model.addAttribute("memberDto", memberDto);
+            return "freelancer/update";
+        }
 
-}
+        @PostMapping("/freeUpdate")
+        public String freeUpdate (@ModelAttribute MemberDto memberDto, Model model){
+            MemberDto memberDto1 = memberService.freeUpdate(memberDto);
+            model.addAttribute("memberDto", memberDto1);
+            return "freelancer/detail";
+        }
+
+        @GetMapping("/companyDetail/{memberId}")
+        public String companyDetail (@PathVariable("memberId") Long memberId, Model model){
+            MemberDto memberDto = memberService.companyDetail(memberId);
+            model.addAttribute("memberDto", memberDto);
+            return "company/detail";
+        }
+
+        @GetMapping("/companyUp/{memberId}")
+        public String companyUp (@PathVariable("memberId") Long memberId, Model model){
+            MemberDto memberDto = memberService.companyDetail(memberId);
+            model.addAttribute("memberDto", memberDto);
+            return "company/update";
+        }
+
+    }
 
 
 

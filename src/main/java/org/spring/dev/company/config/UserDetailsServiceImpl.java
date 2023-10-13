@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     // DB 테이블에 사용자 정보 == 입력받은(Form)정보를 비교 -> 일치하면 -> User, UserDetails
+
     private final MemberRepository memberRepository;
 
     @Override
