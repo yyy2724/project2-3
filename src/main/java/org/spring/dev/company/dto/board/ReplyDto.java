@@ -2,6 +2,7 @@ package org.spring.dev.company.dto.board;
 
 import lombok.*;
 import org.spring.dev.company.entity.board.BoardEntity;
+import org.spring.dev.company.entity.board.ReplyEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 
 import javax.persistence.Column;
@@ -30,4 +31,16 @@ public class ReplyDto {
     private BoardEntity boardEntity;
     private MemberEntity memberEntity;
 
+    public static ReplyDto toReplyDto(ReplyEntity replyEntity) {
+        ReplyDto replyDto = new ReplyDto();
+        replyDto.setId(replyEntity.getId());
+        replyDto.setWriter(replyEntity.getWriter());
+        replyDto.setContent(replyEntity.getContent());
+        replyDto.setBoardEntity(replyEntity.getBoardEntity());
+        replyDto.setMemberEntity(replyEntity.getMemberEntity());
+        replyDto.setCreateTime(replyEntity.getCreateTime());
+        replyDto.setUpdateTime(replyEntity.getUpdateTime());
+
+        return  replyDto;
+    }
 }

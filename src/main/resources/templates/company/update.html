@@ -4,17 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>수정수정</title>
-    <script th:src="@{/js/member/address.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/member/address.js}"></script>
     <script th:src="@{/js/member/join_check.js}"></script>
     <script th:src="@{/js/member/nameChange.js}"></script>
 </head>
 
 <body>
-    <form th:action="@{/member/companyUpdate/{member(memberId=${memberDto.id})}" method="post">
-        <input type="hidden" name="id" th:value="${memberDto.id}">
+    <form th:action="@{/member/companyUpdate/{memberId}(memberId=${memberDto.id})}" method="post">
         <ul>
             <li>
                 <label for="mail">이메일</label>

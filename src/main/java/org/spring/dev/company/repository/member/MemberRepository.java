@@ -48,10 +48,12 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
     Page<MemberEntity> findByPhoneContains(Pageable pageable, String search);
 
+
     Optional<MemberEntity> findByEmail(String email);
 
     @Query("SELECT COUNT(*) FROM MemberEntity m WHERE m.companyName = :companyName")
     int findByCompanyName(String companyName);
     @Query("SELECT COUNT(*) FROM MemberEntity m WHERE m.businessNumber = :businessNumber")
     int findByBusinessNumber(String businessNumber);
+
 }

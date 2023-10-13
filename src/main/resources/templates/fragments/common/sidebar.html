@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div id="sidebar" class="sidebar" th:fragment="sidebarFragment">
+    <div class="side">
+        <div class="admin">
+    <!--security 관리자 권한 부여-->
+            <ul>
+                <li><span>관리자</span></li>
+            </ul>
+        </div>
+        <div class="freelancer">
+    <!--security 프리랜서 권한 부여-->
+            <ul>
+                <li><span>프리랜서</span></li>
+            </ul>
+        </div>
+        <div class="company">
+    <!--security 회사 권한 부여-->
+            <ul>
+                <li><span>회사</span></li>
+            </ul>
+        </div>
+        <div class="sideBar">
+            <div class="sideBar-sec">
+                <ul class="big">
+                    <li><a href="#">내 정보</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/member/detail}">마이페이지</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/member/update}">수정하기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">월급내역</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">근무/근태</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/work}">출근/퇴근</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/work}">근무기록</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/pay/{memberId}}">월급내역</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">일정관리</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">공지사항</a>
+                        <ul class="small">
+                            <li>
+                                <!--security 관리자 권한 부여-->
+                                <a th:href="@{/board/write}">작성하기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/list}">보러가기</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#">결재</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/}">결재하기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">결재내역</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">결재승인</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--security 관리자 권한 부여-->
+                    <li><a href="#">직원관리</a>
+                        <ul class="small">
+                            <!--직원목록에 들어가면 정산하기-->
+                            <li>
+                                <a th:href="@{/member/memberList}">직원목록</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">근무기록</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--security 프리랜서 권한 부여-->
+                    <li><a href="#">공고</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/}">공고지원</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">지원내역</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--security 회사 권한 부여-->
+                    <li><a href="#">공고</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/}">공고올리기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">공고요청</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

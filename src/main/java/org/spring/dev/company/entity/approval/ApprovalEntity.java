@@ -1,5 +1,6 @@
 package org.spring.dev.company.entity.approval;
 
+import lombok.AccessLevel;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.entity.util.BaseEntity;
@@ -9,10 +10,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "c_approval")
 public class ApprovalEntity extends BaseEntity {
 
@@ -27,35 +29,49 @@ public class ApprovalEntity extends BaseEntity {
     @Column(name = "approval_content")
     private String content;
 
-    @Enumerated(EnumType.ORDINAL) // 숫자지정 위함
+    @Enumerated(EnumType.STRING)
     @Column(name = "approval_type")
     private ApproType type;
 
     // n:1 한명의 회원이 여러개의 결재문서
-    @JoinColumn(name = "memberEntity")
     @ManyToOne
     private MemberEntity memberEntity;
 
     @Enumerated(EnumType.STRING)
     private ApprovalStatus status;
 
-    @Column(name = "approval_member_id")
-    private Long approvalMemberId;
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus;
+
+    private LocalDateTime start;
+
+    private LocalDateTime end;
+
 
     @Builder
-    private ApprovalEntity(Long id, String title, String content, ApproType type, MemberEntity memberEntity, ApprovalStatus status, Long approvalMemberId) {
+    private ApprovalEntity(Long id, String title, String content, ApproType type, MemberEntity memberEntity, ApprovalStatus status, ProjectStatus projectStatus, LocalDateTime start, LocalDateTime end) {
         this.title = title;
         this.content = content;
         this.type = type;
         this.memberEntity = memberEntity;
         this.status = status;
-        this.approvalMemberId = approvalMemberId;
+        this.projectStatus = projectStatus != null ? ProjectStatus.COMPLETE : ProjectStatus.INCOMPLETE;
+        this.start = start;
+        this.end = end;
     }
 
-    public void approval(ApprovalEntity approval, String request) {
-        if (request.equals("APPROVAL")) approval.status = ApprovalStatus.APPROVAL;
+    public void approval(ApprovalEntity approval, String request, LocalDateTime start) {
+        if (request.equals("APPROVAL")) {
+            approval.start = start;
+            approval.status = ApprovalStatus.APPROVAL;
+        }
 
         if (request.equals("UNAUTHORIZED")) approval.status = ApprovalStatus.UNAUTHORIZED;
+    }
+
+    public void complete(LocalDateTime end) {
+        this.end = end;
+        this.projectStatus = ProjectStatus.COMPLETE;
     }
 
 }
