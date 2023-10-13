@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.board.BoardDto;
 import org.spring.dev.company.entity.board.BoardEntity;
 import org.spring.dev.company.entity.board.FileEntity;
+import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.board.BoardRepository;
 import org.spring.dev.company.repository.board.FileRepository;
+import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,15 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public void boardWrite(BoardDto boardDto) throws IOException {
+
+//        MemberEntity memberEntity = memberRepository.findByEmail2(email).orElseThrow(()->{
+//            throw new IllegalArgumentException("아이디가 존재하지 않습니다.");
+//        });
+
 
         if(boardDto.getBoardFile().isEmpty()){
 
@@ -38,6 +46,7 @@ public class BoardService {
                     .endDate(boardDto.getEndDate())
                     .hit(0)
                     .isFile(0)
+//                    .memberEntity(memberEntity)
                     .build();
             Long boardId = boardRepository.save(boardEntity).getId();
             boardRepository.findById(boardId).orElseThrow(()->{
@@ -62,6 +71,7 @@ public class BoardService {
                     .endDate(boardDto.getEndDate())
                     .hit(0)
                     .isFile(1)
+//                    .memberEntity(memberEntity)
                     .build();
             Long boardId = boardRepository.save(boardEntity).getId();
             boardRepository.findById(boardId).orElseThrow(()->{

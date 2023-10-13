@@ -1,0 +1,9 @@
+@import ("/css/common/reset.css");
+
+.show {
+    display: block;
+}
+
+.hide{
+    display: none;
+}

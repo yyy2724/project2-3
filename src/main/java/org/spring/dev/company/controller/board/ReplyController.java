@@ -1,11 +1,17 @@
 package org.spring.dev.company.controller.board;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.board.ReplyDto;
+import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.service.board.BoardService;
 import org.spring.dev.company.service.board.ReplyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -13,12 +19,23 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReplyController {
 
-    private final BoardService boardService;
     private final ReplyService replyService;
 
+
+
     @PostMapping("/write")
-    public @ResponseBody ReplyDto write(@ModelAttribute ReplyDto replyDto)  {
-        return replyService.write(replyDto);
+    public ResponseEntity<Integer> write(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                                         @RequestBody ReplyDto replyDto){
+//        String email = myUserDetails.getUsername();
+//        int replyRs = replyService.write(replyDto, email);
+        int replyRs = replyService.write(replyDto);
+        return new ResponseEntity<>(replyRs, HttpStatus.OK);
+    }
+
+    @GetMapping("/list/{boardId}")
+    public ResponseEntity<List<ReplyDto>> memberList(@PathVariable("boardId") Long boardId){
+        List<ReplyDto> replyDtos = replyService.replyFindAll(boardId);
+        return new ResponseEntity<>(replyDtos,HttpStatus.OK);
     }
 
     @PatchMapping("/update/{id}")
@@ -28,10 +45,16 @@ public class ReplyController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteReply(@PathVariable Long id) {
-        replyService.replyDelete(id);
+    public ResponseEntity<String> deleteReply(@PathVariable("id") Long id) {
+        replyService.delete(id);
         return ResponseEntity.ok("success");
     }
+
+
+
+
+
+
 
 
 }

@@ -6,12 +6,13 @@ import org.spring.dev.company.entity.board.BoardEntity;
 import org.spring.dev.company.entity.board.ReplyEntity;
 import org.spring.dev.company.repository.board.BoardRepository;
 import org.spring.dev.company.repository.board.ReplyRepository;
+import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,45 +20,33 @@ public class ReplyService {
 
     private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;
+    private final MemberRepository memberRepository;
 
-    @Transactional
-    public ReplyDto write(ReplyDto replyDto) {
-        boardRepository.findById(replyDto.getBoardId()).orElseThrow(() -> {
-            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+
+    public Integer write(ReplyDto replyDto) {
+
+        BoardEntity boardEntity = boardRepository.findById(replyDto.getBoardId()).orElseThrow(()->{
+            throw new IllegalArgumentException("게시글 아이디가 존재하지 않습니다.");
         });
 
-        BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setId(replyDto.getBoardId());
-
-        ReplyDto replyDto1 = ReplyDto.builder()
-                .boardEntity(boardEntity)
+        ReplyEntity replyEntity = ReplyEntity.builder()
+                .id(replyDto.getId())
                 .content(replyDto.getContent())
                 .writer(replyDto.getWriter())
-                .build();
-
-        ReplyEntity replyEntity = ReplyEntity.builder()
-                .boardEntity(replyDto1.getBoardEntity())
-                .writer(replyDto1.getWriter())
-                .content(replyDto1.getContent())
-                .boardEntity(replyDto1.getBoardEntity())
+                .boardEntity(boardEntity)
                 .build();
 
         Long replyId = replyRepository.save(replyEntity).getId();
-        ReplyEntity replyEntity1 = replyRepository.findById(replyId).orElseThrow(() -> {
-            throw new IllegalArgumentException("댓글이 존재하지 않습니다.");
-        });
+        Optional<ReplyEntity> replyEntityOptional = replyRepository.findById(replyId);
+        if(replyEntityOptional.isPresent()){
+            return 0;
+        } return 1;
 
-        return ReplyDto.builder()
-                .id(replyEntity1.getId())
-                .content(replyEntity1.getContent())
-                .writer(replyEntity1.getWriter())
-                .boardId(replyEntity1.getBoardEntity().getId())
-                .createTime(replyEntity1.getCreateTime())
-                .build();
     }
 
-    @Transactional
+
     public List<ReplyDto> list(Long id) {
+
         BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(() -> {
             throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
         });
@@ -70,6 +59,7 @@ public class ReplyService {
                     .id(replyEntity.getId())
                     .writer(replyEntity.getWriter())
                     .content(replyEntity.getContent())
+                    .memberEntity(replyEntity.getMemberEntity())
                     .createTime(replyEntity.getCreateTime())
                     .boardId(replyEntity.getBoardEntity().getId())
                     .build();
@@ -78,12 +68,11 @@ public class ReplyService {
 
         return replyDtoList;
 
+//        return replyEntityList.stream().map(ReplyDto::toReplyDto).collect(Collectors.toList());
+
     }
 
-
-    @Transactional
     public ResponseEntity<ReplyEntity> update(Long id, ReplyDto replyDto) {
-
 
         ReplyEntity replyEntity = replyRepository.findById(replyDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
@@ -100,15 +89,42 @@ public class ReplyService {
         replyEntity.setWriter(replyDto.getWriter());
 
         return ResponseEntity.ok(replyRepository.save(replyEntity));
+
     }
 
-    @Transactional
-    public void replyDelete(Long id) {
+
+    public void delete(Long id) {
 
         ReplyEntity replyEntity = replyRepository.findById(id).orElseThrow(() -> {
             throw new IllegalArgumentException("댓글이 존재하지 않습니다.");
         });
 
         replyRepository.delete(replyEntity);
+
+    }
+
+    public List<ReplyDto> replyFindAll(Long boardId) {
+
+        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> {
+            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+        });
+
+        List<ReplyDto> replyDtoList = new ArrayList<>();
+        List<ReplyEntity> replyEntityList = replyRepository.findAllByBoardEntityOrderByIdDesc(boardEntity);
+
+
+        for (ReplyEntity replyEntity : replyEntityList) {
+            ReplyDto replyDto = ReplyDto.builder()
+                    .id(replyEntity.getId())
+                    .writer(replyEntity.getWriter())
+                    .content(replyEntity.getContent())
+                    .memberEntity(replyEntity.getMemberEntity())
+                    .createTime(replyEntity.getCreateTime())
+                    .boardId(replyEntity.getBoardEntity().getId())
+                    .build();
+            replyDtoList.add(replyDto);
+        }
+
+        return replyDtoList;
     }
 }
