@@ -2,7 +2,7 @@ package org.spring.dev.company.config;
 
 import lombok.AllArgsConstructor;
 import org.spring.dev.company.entity.member.MemberEntity;
-import org.spring.dev.company.repository.member.LoginRepository;
+import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     // DB 테이블에 사용자 정보 == 입력받은(Form)정보를 비교 -> 일치하면 -> User, UserDetails
-    private final LoginRepository loginRepository;
+
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        MemberEntity memberEntity = loginRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("이메일 존재하지 않습니다."));
+        MemberEntity memberEntity = memberRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("이메일 존재하지 않습니다."));
 
         return new MyUserDetails(memberEntity);
     }
+
+
 }

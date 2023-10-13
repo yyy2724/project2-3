@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/member/modal.css}">
+    <h1><span th:text="${memberDto.name}"></span>님 페이지</h1>
+</head>
+
+<body>
+<ul>
+    <li>
+        <span>회사명</span>
+        <span th:text="${memberDto.companyName}"></span>
+    </li>
+    <li>
+        <span>사업자등록번호</span>
+        <span th:text="${memberDto.businessNumber}"></span>
+    </li>
+    <li>
+        <span>대표</span>
+        <span th:text="${memberDto.name}"></span>
+    </li>
+    <li>
+        <span>이메일</span>
+        <span th:text="${memberDto.email}"></span>
+    </li>
+    <li>
+        <span>전화번호</span>
+        <span th:text="${memberDto.phone}"></span>
+    </li>
+    <li>
+        <span>우편번호</span>
+        <span th:text="${memberDto.postcode}"></span>
+    </li>
+    <li>
+        <span>주소</span>
+        <span th:text="${memberDto.address}"></span>
+    </li>
+    <li>
+        <span>상세주소</span>
+        <span th:text="${memberDto.detailAddress}"></span>
+        <span th:text="${memberDto.extraAddress}"></span>
+    </li>
+    <li>
+        <span>가입날짜</span>
+        <span th:text="${memberDto.CreateTime}"></span>
+    </li>
+    <li>
+        <a th:href="@{/member/freeUp/{memberId}(memberId=${memberDto.id})}">회원정보 수정</a>
+    </li>
+    <li>
+        <a th:href="@{/member/disabled/{memberId}(memberId=${memberDto.id})}">비활성화</a>
+    </li>
+    <li>
+        <a th:href="@{/member/pwChange/{memberId}(memberId=${memberDto.id})}">비밀번호 변경</a>
+    </li>
+    <li>
+        <div class="disabledCon" id="disabledCon">
+        </div>
+    </li>
+</ul>
+
+</body>
+</html>

@@ -21,21 +21,19 @@
                     <span>필수입력사항</span>
                 </div>
 
-                <form th:action="@{/member/oauth2add}" method="post">
+                <form th:action="@{/freelancer/oauth2add}" method="post">
                     <ul>
-                        <input type="hidden" name="id" th:value="${memberDto.id}" readonly class="readonly">
-                        <input type="hidden" name="email" th:value="${memberDto.email}" readonly class="readonly">
-                        <input type="hidden" name="password" th:value="${memberDto.password}" class="readonly">
-                        <input type="hidden" name="name" th:value="${memberDto.name}" readonly class="readonly">
-                        <input type="hidden" name="grade" th:value="${memberDto.grade}" readonly class="readonly">
-                        <input type="hidden" name="is_display" th:value="1" readonly class="readonly">
+                        <input type="hidden" name="id" th:value="${freelancer.id}" readonly class="readonly">
+                        <input type="hidden" name="email" th:value="${freelancer.email}" readonly class="readonly">
+                        <input type="hidden" name="password" th:value="${freelancer.password}" class="readonly">
+                        <input type="hidden" name="name" th:value="${freelancer.name}" readonly class="readonly">
 
                         <li>
                             <label for="birth">
                                 생일
                                 <span>*</span>
                             </label>
-                            <input type="text" name="birth" id="birth"  >
+                            <input type="text" name="birth" id="birth" th:value="${freelancer.birth}" >
                             <div></div>
                         </li>
 
@@ -44,7 +42,7 @@
                                 휴대폰
                                 <span>*</span>
                             </label>
-                            <input type="text" name="phone" id="phone"  >
+                            <input type="text" name="phone" id="phone" th:value="${freelancer.phone}" >
                             <div></div>
                         </li>
 
@@ -54,7 +52,7 @@
                                 우편번호
                                 <span>*</span>
                             </label>
-                            <input type="text" name="postcode" id="postcode"  >
+                            <input type="text" name="postcode" id="postcode" th:value="${freelancer.postcode}" >
                             <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
                             <div></div>
                         </li>
@@ -63,7 +61,7 @@
                                 주소
                                 <span>*</span>
                             </label>
-                            <input type="text" name="address" id="address"  >
+                            <input type="text" name="address" id="address" th:value="${freelancer.address}" >
                             <div></div>
                         </li>
                         <li>
@@ -71,8 +69,8 @@
                                 상세주소
                                 <span>*</span>
                             </label>
-                            <input type="text" name="detailAddress" id="detailAddress" >
-                            <input type="text" name="extraAddress" id="extraAddress"  >
+                            <input type="text" name="detailAddress" id="detailAddress" th:value="${freelancer.detailAddress}" >
+                            <input type="text" name="extraAddress" id="extraAddress" th:value="${freelancer.extraAddress}" >
                             <div></div>
                         </li>
 
@@ -89,10 +87,9 @@
                                 이력
                                 <span>*</span>
                             </label>
-                            <input type="text" name="career" id="career" >
+                            <input type="text" name="career" id="career" th:value="${freelancer.career}" >
                             <div></div>
                         </li>
-
                     </ul>
                     <div class="go-update">
                         <input type="submit" value="추가하기">

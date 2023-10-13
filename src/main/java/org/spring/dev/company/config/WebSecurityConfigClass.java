@@ -1,5 +1,6 @@
 package org.spring.dev.company.config;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true) //특정 주소로 접근하면 권한 및 인증을 미리 체크 하겠다
@@ -29,8 +31,15 @@ import java.io.IOException;
 public class WebSecurityConfigClass {
 
 
+
     /*private final AuthenticationFailureHandler   customAuthenticationFailureHandler;*/
     private final CustomAuthenticationHandler   customAuthenticationFailureHandler;
+
+    @Bean
+    public MemberEntity memberEntity() {
+        // Create and return an instance of FreelancerEntity
+        return new MemberEntity();
+    }
 
 //    @Bean
 //    public AuthenticationFailureHandler authenticationFailureHandler() {
@@ -43,8 +52,12 @@ public class WebSecurityConfigClass {
         return new BCryptPasswordEncoder();
     }
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+
         // POST -> 웹페이지 보안 공격
         http.csrf().disable();
 
@@ -72,9 +85,9 @@ public class WebSecurityConfigClass {
                                 MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
                                 MemberEntity memberEntity = myUserDetails.getMemberEntity();
 
-                                if (memberEntity.getPostcode() == null) {
+                                if (Objects.equals(memberEntity.getPostcode(), "*")) {
                                     System.out.println("여긴가?");
-                                    response.sendRedirect("/login/oauth2add");
+                                    response.sendRedirect("/member/oauth2add");
                                 } else {
                                     System.out.println("틀렸네...");
                                     response.sendRedirect("/member/m");
@@ -97,9 +110,9 @@ public class WebSecurityConfigClass {
                                 MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
                                 MemberEntity memberEntity = myUserDetails.getMemberEntity();
 
-                                if (memberEntity.getPostcode() == null) {
+                                if (Objects.equals(memberEntity.getPostcode(), "*")) {
                                     System.out.println("여긴가?");
-                                    response.sendRedirect("/login/oauth2add");
+                                    response.sendRedirect("/member/oauth2add");
                                 } else {
                                     System.out.println("틀렸네...");
                                     response.sendRedirect("/member/m");

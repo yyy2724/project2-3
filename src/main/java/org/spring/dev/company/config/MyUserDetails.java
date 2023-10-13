@@ -40,6 +40,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         return memberEntity.getEmail();
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
