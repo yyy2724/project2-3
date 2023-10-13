@@ -3,6 +3,7 @@ package org.spring.dev.company.controller.approval;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.controller.approval.request.ApprovalCreate;
+import org.spring.dev.company.controller.approval.request.ApprovalSearch;
 import org.spring.dev.company.dto.approval.response.ApprovalResponse;
 import org.spring.dev.company.service.approval.ApprovalService;
 
@@ -32,8 +33,8 @@ public class ApprovalController {
     }
 
     @GetMapping("/api/v1/approval")
-    public List<ApprovalResponse> list() {
-        return approvalService.list();
+    public List<ApprovalResponse> list(@ModelAttribute ApprovalSearch approvalSearch) {
+        return approvalService.list(approvalSearch.toServiceRequest());
     }
 
     @GetMapping("/api/v1/approval/{approvalId}")
