@@ -349,6 +349,7 @@ public class MemberService {
         }));
 
         MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setName(memberDto.getName());
         memberEntity.setBirth(memberDto.getBirth());
         memberEntity.setPhone(memberDto.getPhone());
         memberEntity.setCareer(memberDto.getCareer());
