@@ -34,7 +34,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none # DDL?? ??
+      ddl-auto: update # DDL?? ??
     properties:
       hibernate:
         show_sql: true
@@ -57,27 +57,27 @@ spring:
 
 # spring.main.allow-bean-definition-overriding: true
 
----
-spring:
-  config:
-    activate:
-      on-profile: test
-
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/project01
-    username: root
-    password:
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-  sql:
-    init:
-      mode: never
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: test
+#
+#
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/project02
+#    username: root
+#    password:
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#  sql:
+#    init:
+#      mode: never

@@ -2,6 +2,8 @@ package org.spring.dev.company.entity.util;
 
 public enum ApproType {
 
-    INTERN, STAFF, ASSISTANT, MANAGER, HUMAN , FREELANCER
+
+    FREELANCER, ADMIN, COMPANY, STAFF
+
     // 0 1 2
 }

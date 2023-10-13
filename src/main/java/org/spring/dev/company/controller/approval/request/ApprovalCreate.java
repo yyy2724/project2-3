@@ -16,23 +16,16 @@ public class ApprovalCreate {
 
     private String content;
 
-    private ApproType type;
-
-    private Long approvalMemberId;
-
     @Builder
-    public ApprovalCreate(String title, String content, ApproType type,Long approvalMemberId) {
+    public ApprovalCreate(String title, String content) {
         this.title = title;
         this.content = content;
-        this.type = type;
-        this.approvalMemberId = approvalMemberId;
     }
 
     public ApprovalServiceCreate toServiceRequest() {
         return ApprovalServiceCreate.builder()
                 .title(title)
                 .content(content)
-                .type(type)
                 .build();
     }
 }

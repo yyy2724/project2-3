@@ -1,8 +1,10 @@
 package org.spring.dev.company.config;
 
 import org.spring.dev.company.entity.member.MemberEntity;
+
+import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
-import org.spring.dev.company.repository.member.LoginRepository;
+
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,14 +23,13 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
     // Google사용자 정보를 받아서 DB에 저장
     // google -> email, 비밀번호는 임의로, role: Member -> sec_member08 저장
 
+
     @Autowired
-    private LoginRepository loginRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MemberRepository memberRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -105,32 +106,19 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
             nickName = "nickname";
 
 
-
         }
 
-        Optional<MemberEntity> optionalMemberEntity = loginRepository.findByEmail(email);
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(email);
         if (optionalMemberEntity.isPresent()) {
             // 구글 로그인 정보가 있으면 // 그정보 -> UserDetail에 저장
             return new MyUserDetails(optionalMemberEntity.get()); // 등록된 사용자 인증
         }
 
 
-        MemberEntity memberEntity = loginRepository.save(MemberEntity.builder()
-                .name(name)
-                .birth(null)
-                .phone(null)
-                .email(email)
-                .nickName(nickName)
-                .postcode(null)
-                .address(null)
-                .detailAddress(null)
-                .extraAddress(null)
-                .password(passwordEncoder.encode(password))
-                .grade(ApproType.INTERN)
-                .gender(null)
-                .position(null)
-                .build());
+        MemberEntity memberEntity = memberRepository.save(MemberEntity.toOauth(email, name, passwordEncoder.encode(password)));
         return new MyUserDetails(memberEntity, oAuth2User.getAttributes());
+
 
     }
 

@@ -49,9 +49,9 @@
                         </thead>
                         <tbody>
 
-                        <li sec:authorize="hasAnyRole('MANAGER')">
+                        <li sec:authorize="hasAnyRole('ADMIN')">
                             <tr th:each="member:${memberList}">
-                                <th:block th:unless="${member.grade.toString()} == 'FREELANCER'">
+                                <th:block th:unless="${member.grade.toString()} == 'COMPANY'">
                                 <td th:text="${member.id}"></td>
                                 <td th:text="${member.email}"></td>
                                 <td th:text="${member.name}"></td>
@@ -65,7 +65,7 @@
                                 <td>
                                     <!--                                <a th:href="@{/member/delete/{id}(id=${member.id})}">삭제</a>-->
                                     <!--                                <a th:href="@{/member/update/{id}(id=${member.id})}">수정</a>-->
-                                    <a th:href="@{/member/detail/{id}(id=${member.id})}">상세보기</a>
+                                    <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">상세보기</a>
                                 </td>
                                 </th:block>
                             </tr>
@@ -76,9 +76,9 @@
                              프리랜서들을 확인 할 수 있게 해야하는데
                              아직 권한을 매니저, 프리랜서 2개만 만들어 놔서
                              프리렌서들이 프리렌서들 확인할 수 있게 해놓음-->
-                        <li sec:authorize="hasAnyRole('INTERN','STAFF','ASSISTANT')">
+                        <li sec:authorize="hasAnyRole('COMPANY')">
                             <tr th:each="member:${memberList}">
-                                <th:block th:if="${member.grade.toString()} == 'FREELANCER'">
+                                <th:block th:if="${member.grade.toString()} == 'COMPANY'">
                                     <td th:text="${member.id}"></td>
                                     <td th:text="${member.email}"></td>
                                     <td th:text="${member.name}"></td>
@@ -92,7 +92,8 @@
                                     <td>
                                         <!--                                <a th:href="@{/member/delete/{id}(id=${member.id})}">삭제</a>-->
                                         <!--                                <a th:href="@{/member/update/{id}(id=${member.id})}">수정</a>-->
-                                        <a th:href="@{/member/detail/{id}(id=${member.id})}">상세보기</a></td>
+                                        <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">상세보기</a>
+                                    </td>
                                 </th:block>
                             </tr>
                         </li>
@@ -161,7 +162,7 @@
             </div>
         </div>
     </div>
-
+</div>
 </body>
 </html>
 

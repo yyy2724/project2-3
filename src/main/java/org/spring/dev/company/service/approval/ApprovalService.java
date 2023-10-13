@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.approval.response.ApprovalResponse;
 import org.spring.dev.company.entity.approval.ApprovalEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
+import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.exception.ApprovalException;
 import org.spring.dev.company.exception.MemberNotFound;
 import org.spring.dev.company.repository.approval.ApprovalRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.service.approval.request.ApprovalServiceCreate;
+import org.spring.dev.company.service.approval.request.ApprovalServiceSearch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,48 +27,55 @@ public class ApprovalService {
 
     private final MemberRepository memberRepository;
 
+    // 결재 생성
     @Transactional
     public void create(Long id, ApprovalServiceCreate create) {
 
         MemberEntity member = memberRepository.findById(id).orElseThrow(MemberNotFound::new);
 
-        ApprovalEntity approval = create.toEntity(id);
+        ApprovalEntity approval = create.toEntity(member);
 
         approvalRepository.save(approval);
     }
 
+    // 결재 승인, 미승인
+    @Transactional
+    public void approval(Long memberId, Long approvalId, String request, LocalDateTime start) {
 
-        @Transactional
-        public void approval (Long memberId, Long approvalId, String request){
+        MemberEntity member = memberRepository.findById(memberId).orElseThrow(MemberNotFound::new);
 
-            MemberEntity member = memberRepository.findById(memberId).orElseThrow(MemberNotFound::new);
+        ApprovalEntity approval = approvalRepository.findById(approvalId).orElseThrow(ApprovalException::new);
 
-            ApprovalEntity approval = approvalRepository.findById(approvalId).orElseThrow(ApprovalException::new);
+        if (approval.getType().equals(member.getGrade())) {
+            approval.approval(approval, request, start);
 
-                approval.approval(approval, request);
-        }
+        } else throw new IllegalArgumentException("결재 권한이 없습니다.");
 
-        public List<ApprovalResponse> List () {
+    }
 
-            List<ApprovalEntity> approval = approvalRepository.findAll();
+    // 결재 리스트
+    public List<ApprovalResponse> list(ApprovalServiceSearch search) {
 
-            return approval.stream()
-                    .map(ApprovalResponse::of)
-                    .collect(Collectors.toList());
-        }
-
-        public ApprovalResponse get (Long id){
-
-            ApprovalEntity approval = approvalRepository.findById(id).orElseThrow(ApprovalException::new);
-
-            return ApprovalResponse.of(approval);
-        }
-
-    public List<ApprovalResponse> list() {
-        List<ApprovalEntity> approvals = approvalRepository.findAll();
-
-        return approvals.stream()
+        return approvalRepository.getList(search).stream()
                 .map(ApprovalResponse::of)
                 .collect(Collectors.toList());
     }
+
+    // 결재 디테일
+    public ApprovalResponse get(Long id) {
+
+        ApprovalEntity approval = approvalRepository.findById(id).orElseThrow(ApprovalException::new);
+
+        return ApprovalResponse.of(approval);
+    }
+
+    // 프로젝트 완료
+    @Transactional
+    public void projectComplete(Long id, String complete, LocalDateTime end) {
+        ApprovalEntity approval = approvalRepository.findById(id).orElseThrow(ApprovalException::new);
+
+        if (complete.equals("COMPLETE")) approval.complete(end);
+    }
+
+
 }

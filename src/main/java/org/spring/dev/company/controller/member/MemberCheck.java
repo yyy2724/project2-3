@@ -19,15 +19,20 @@ public class MemberCheck {
 
     }
 
-    @PostMapping("/nickCheck")
-    public @ResponseBody int nickCheck(@RequestParam("nickName") String nickName){
-
-        return memberService.nickNameCheck(nickName);
-
-    }
 
     @PostMapping("/phoneCheck")
     public @ResponseBody int phoneCheck(@RequestParam("phone") String phone){
         return memberService.phoneNumCheck(phone);
     }
+
+    @PostMapping("/companyCheck")
+    public @ResponseBody int companyCheck(@RequestParam("companyName") String companyName){
+        return memberService.companyNameCheck(companyName);
+    }
+
+    @PostMapping("/businessNumberCheck")
+    public @ResponseBody int businessNumberCheck(@RequestParam("businessNumber") String businessNumber){
+        return memberService.businessNumberCheck(businessNumber);
+    }
+
 }

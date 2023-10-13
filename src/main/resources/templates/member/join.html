@@ -10,13 +10,13 @@
     <script th:src="@{/js/member/join_check.js}"></script>
     <script th:src="@{/js/member/join.js}"></script>
     <script th:src="@{/js/member/address.js}"></script>
-    <script th:src="@{/js/member/findPw2.js}"></script>
+    <script th:src="@{/js/member/emailCheck.js}"></script>
     <link rel="stylesheet" th:href="@{/css/member/join.css}">
 </head>
 
 <body>
 
-    <form th:action="@{/member/join}" id="joinForm" method="post">
+    <form th:action="@{/member/adminJoin}" id="adminJoinForm" method="post">
         <span>이메일: </span>
         <input type="text" id="mail" name="email" oninput="email_check()">
         <span class="member_ok">사용 가능한 이메일입니다.</span>
@@ -37,11 +37,6 @@
         <span>비밀번호확인:</span>
         <input type="password" id="checkPw" name="checkPw" oninput="check_pw()">
         <span class="password_already">비밀번호가 일치하지 않습니다.</span>
-
-        <span>닉네임: </span>
-        <input type="text" id="nickName" name="nickName" oninput="nickNameCheck()">
-        <span class="nick_ok">사용 가능한 닉네임입니다.</span>
-        <span class="nick_already">이미 사용중인 닉네임입니다.</span>
 
         <span>전화번호: </span>
         <input type="text" id="phone" name="phone" oninput="phoneCheck()">
