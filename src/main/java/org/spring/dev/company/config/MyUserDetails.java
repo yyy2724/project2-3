@@ -18,11 +18,9 @@ import java.util.Map;
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails, OAuth2User {
 
-    @Autowired
-    private MemberEntity memberEntity;
     @Getter
     @Autowired
-    private  FreelancerEntity freelancerEntity;
+    private MemberEntity memberEntity;
 
     private Map<String, Object> attributes;
 

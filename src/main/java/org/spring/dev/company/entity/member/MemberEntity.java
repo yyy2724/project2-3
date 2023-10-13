@@ -18,6 +18,7 @@ import javax.persistence.*;
 @Table(name = "c_member")
 public class MemberEntity extends BaseEntity {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id" )
@@ -32,7 +33,7 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "member_email",nullable = false)
     private String email;
 
-    @Column(name = "member_nick",nullable = false)
+    @Column(name = "member_nick",nullable = true)
     private String nickName;
 
     @Column(name = "member_phone",nullable = false)
@@ -91,4 +92,36 @@ public class MemberEntity extends BaseEntity {
         return memberEntity;
     }
 
+    public static MemberEntity toOauth(String email, String name, String password) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setName(name);
+        memberEntity.setEmail(email);
+        memberEntity.setPhone("*");
+        memberEntity.setPassword(password);
+        memberEntity.setBirth("*");
+        memberEntity.setPostcode("*");
+        memberEntity.setAddress("*");
+        memberEntity.setDetailAddress("*");
+        memberEntity.setExtraAddress("*");
+        memberEntity.setGrade(ApproType.FREELANCER);
+        memberEntity.setIs_display(1);
+        return memberEntity;
+    }
+
+    public static MemberEntity toupdate(MemberDto memberDto, PasswordEncoder passwordEncoder) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDto.getId());
+        memberEntity.setName(memberDto.getName());
+        memberEntity.setEmail(memberDto.getEmail());
+        memberEntity.setPhone(memberDto.getPhone());
+        memberEntity.setPassword(memberDto.getPassword());
+        memberEntity.setBirth(memberDto.getBirth());
+        memberEntity.setPostcode(memberDto.getPostcode());
+        memberEntity.setAddress(memberDto.getAddress());
+        memberEntity.setDetailAddress(memberDto.getDetailAddress());
+        memberEntity.setExtraAddress(memberDto.getExtraAddress());
+        memberEntity.setGrade(memberDto.getGrade());
+        memberEntity.setIs_display(1);
+        return memberEntity;
+    }
 }

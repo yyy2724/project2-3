@@ -206,23 +206,23 @@ public class MemberController {
 
         System.out.println("myUserDetails " + myUserDetails);
 
-        Long freeId = myUserDetails.getFreelancerEntity().getId();
+        Long id = myUserDetails.getMemberEntity().getId();
 
-        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getFreelancerEntity());
-        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getFreelancerEntity().getId());
+        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getMemberEntity());
+        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getMemberEntity().getId());
 
-        MemberDto memberDto = MemberService.memberUpdateOk(freeId);
+        MemberDto memberDto = memberService.memberUpdateOk(id);
 
-        System.out.println("freelancerDto " + freelancerDto);
-        model.addAttribute("freelancer", freelancerDto);
+        System.out.println("memberDto " + memberDto);
+        model.addAttribute("memberDto", memberDto);
 
-        return "freelancer/oauth2add";
+        return "member/oauth2add";
 
     }
 
     @PostMapping("/oauth2add")
-    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, FreelancerDto freelancerDto){
-        int rs = freelancerService.freeUpdate(freelancerDto);
+    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, MemberDto memberDto){
+        int rs = memberService.memberUpdate(memberDto);
 
 
         return "redirect:/";

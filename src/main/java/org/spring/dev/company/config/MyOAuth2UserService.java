@@ -118,20 +118,7 @@ public class MyOAuth2UserService extends DefaultOAuth2UserService {
         }
 
 
-        MemberEntity memberEntity = memberRepository.save(MemberEntity.builder()
-                .name(name)
-                .birth(null)
-                .phone(null)
-                .email(email)
-                .postcode(null)
-                .address(null)
-                .detailAddress(null)
-                .extraAddress(null)
-                .password(passwordEncoder.encode(password))
-                .grade(ApproType.FREELANCER)
-                .gender(null)
-                .career(null)
-                .build());
+        MemberEntity memberEntity = memberRepository.save(MemberEntity.toOauth(email, name, passwordEncoder.encode(password)));
         return new MyUserDetails(memberEntity, oAuth2User.getAttributes());
 
 

@@ -56,32 +56,32 @@ public class FreelancerContoller {
 
 
 
-    @GetMapping("/oauth2add")
-    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-
-        System.out.println("myUserDetails " + myUserDetails);
-
-        Long freeId = myUserDetails.getFreelancerEntity().getId();
-
-        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getFreelancerEntity());
-        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getFreelancerEntity().getId());
-
-        FreelancerDto freelancerDto = freelancerService.freeUpdateOk(freeId);
-
-        System.out.println("freelancerDto " + freelancerDto);
-        model.addAttribute("freelancer", freelancerDto);
-
-        return "freelancer/oauth2add";
-
-    }
-
-    @PostMapping("/oauth2add")
-    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, FreelancerDto freelancerDto){
-        int rs = freelancerService.freeUpdate(freelancerDto);
-
-
-        return "redirect:/";
-    }
+//    @GetMapping("/oauth2add")
+//    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+//
+//        System.out.println("myUserDetails " + myUserDetails);
+//
+//        Long freeId = myUserDetails.getFreelancerEntity().getId();
+//
+//        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getFreelancerEntity());
+//        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getFreelancerEntity().getId());
+//
+//        FreelancerDto freelancerDto = freelancerService.freeUpdateOk(freeId);
+//
+//        System.out.println("freelancerDto " + freelancerDto);
+//        model.addAttribute("freelancer", freelancerDto);
+//
+//        return "freelancer/oauth2add";
+//
+//    }
+//
+//    @PostMapping("/oauth2add")
+//    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, FreelancerDto freelancerDto){
+//        int rs = freelancerService.freeUpdate(freelancerDto);
+//
+//
+//        return "redirect:/";
+//    }
 
 
 

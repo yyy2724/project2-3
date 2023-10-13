@@ -2,7 +2,9 @@ package org.spring.dev.company.service.member;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.dto.freelancer.FreelancerDto;
 import org.spring.dev.company.dto.member.MemberDto;
+import org.spring.dev.company.entity.freelancer.FreelancerEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.freelancer.FreelancerRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
@@ -234,5 +236,79 @@ public class MemberService {
         Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
 
         return memberDtos;
+    }
+
+
+
+    @Transactional
+    public MemberDto memberUpdateOk(Long id) {
+        // MemberEntity id 확인
+        Optional<MemberEntity> optionalMemberEntity =
+                Optional.ofNullable(memberRepository.findById(id).orElseThrow(() -> {
+                    return new IllegalArgumentException("수정할 아이디가 없습니다.");
+                }));
+
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
+        if (optionalMemberEntity.isPresent()) {
+
+            MemberDto memberDto = MemberDto.builder()
+                    .id(memberEntity.getId())
+                    .name(memberEntity.getName())
+                    .birth(memberEntity.getBirth())
+                    .email(memberEntity.getEmail())
+                    .career(memberEntity.getCareer())
+                    .phone(memberEntity.getPhone())
+                    .postcode(memberEntity.getPostcode())
+                    .address(memberEntity.getAddress())
+                    .detailAddress(memberEntity.getDetailAddress())
+                    .extraAddress(memberEntity.getExtraAddress())
+                    .grade(memberEntity.getGrade())
+                    .gender(memberEntity.getGender())
+                    .password(passwordEncoder.encode(memberEntity.getPassword()))
+                    .build();
+            return memberDto;
+        }
+
+        return null;
+
+    }
+
+    @Transactional
+    public int memberUpdate(MemberDto memberDto) {
+        Optional<MemberEntity>  optionalMemberEntity=
+                Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(() -> {
+                    return new IllegalArgumentException("수정할 아이디가 없습니다.");
+                }));
+
+        MemberEntity memberEntity = MemberEntity.toupdate(memberDto, passwordEncoder);
+//                .id(memberDto.getId())
+//                .name(memberDto.getName())
+//                .birth(memberDto.getBirth())
+//                .email(memberDto.getEmail())
+//                .career(memberDto.getCareer())
+//                .phone(memberDto.getPhone())
+//                .postcode(memberDto.getPostcode())
+//                .address(memberDto.getAddress())
+//                .detailAddress(memberDto.getDetailAddress())
+//                .extraAddress(memberDto.getExtraAddress())
+//                .grade(memberDto.getGrade())
+//                .gender(memberDto.getGender())
+//                .password(passwordEncoder.encode(memberDto.getPassword()))
+//                .build();
+
+
+        Long id = memberRepository.save(memberEntity).getId();
+
+        Optional<MemberEntity> optionalMemberEntity2=
+                Optional.ofNullable(memberRepository.findById(id).orElseThrow(() -> {
+                    return new IllegalArgumentException("수정 아이디가 없습니다.");
+                }));
+
+        if(optionalMemberEntity2.isPresent()){
+            // 수정이 정상 실행
+            return 1;
+        }
+        return 0;
     }
 }
