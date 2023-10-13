@@ -1,6 +1,7 @@
 package org.spring.dev.company.dto.member;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.entity.util.GenderEntity;

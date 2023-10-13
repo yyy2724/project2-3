@@ -17,6 +17,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails, OAuth2User {
 
+    @Getter
     @Autowired
     private MemberEntity memberEntity;
 

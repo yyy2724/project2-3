@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true) //특정 주소로 접근하면 권한 및 인증을 미리 체크 하겠다
@@ -84,9 +85,9 @@ public class WebSecurityConfigClass {
                                 MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
                                 MemberEntity memberEntity = myUserDetails.getMemberEntity();
 
-                                if (memberEntity.getPostcode() == null) {
+                                if (Objects.equals(memberEntity.getPostcode(), "*")) {
                                     System.out.println("여긴가?");
-                                    response.sendRedirect("/login/oauth2add");
+                                    response.sendRedirect("/member/oauth2add");
                                 } else {
                                     System.out.println("틀렸네...");
                                     response.sendRedirect("/member/m");
@@ -109,9 +110,9 @@ public class WebSecurityConfigClass {
                                 MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
                                 MemberEntity memberEntity = myUserDetails.getMemberEntity();
 
-                                if (memberEntity.getPostcode() == null) {
+                                if (Objects.equals(memberEntity.getPostcode(), "*")) {
                                     System.out.println("여긴가?");
-                                    response.sendRedirect("/login/oauth2add");
+                                    response.sendRedirect("/member/oauth2add");
                                 } else {
                                     System.out.println("틀렸네...");
                                     response.sendRedirect("/member/m");

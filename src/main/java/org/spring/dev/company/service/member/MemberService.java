@@ -24,13 +24,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public static MemberDto memberUpdateOk(Long freeId) {
-
-        return null;
-
-    }
-
-
     public int emailCheck(String email) {
 
         int memberRs = memberRepository.findByEmail1(email);
@@ -132,7 +125,6 @@ public class MemberService {
         memberEntity1.setExtraAddress(memberDto.getExtraAddress());
 
 
-
         Long upId = memberRepository.save(memberEntity1).getId();
 
         if (upId != 0) {
@@ -153,7 +145,7 @@ public class MemberService {
                     .is_display(memberEntity1.getIs_display())
                     .build();
         }
-            return MemberDto.builder()
+        return MemberDto.builder()
                 .id(memberEntity1.getId())
                 .name(memberEntity1.getName())
                 .email(memberEntity1.getEmail())
@@ -171,7 +163,6 @@ public class MemberService {
                 .CreateTime(memberEntity1.getCreateTime())
                 .UpdateTime(memberEntity1.getUpdateTime())
                 .build();
-
 
 
     }
@@ -194,14 +185,14 @@ public class MemberService {
 
         Page<MemberEntity> memberEntities = null;
 
-        if (subject == null){
+        if (subject == null) {
             memberEntities = memberRepository.findAll(pageable);
-        }else if (subject.equals("name")) {
-            memberEntities = memberRepository.findByNameContains(pageable,search);
+        } else if (subject.equals("name")) {
+            memberEntities = memberRepository.findByNameContains(pageable, search);
         } else if (subject.equals("email")) {
-            memberEntities = memberRepository.findByEmailContains(pageable,search);
-        } else if (subject.equals("phone")){
-            memberEntities = memberRepository.findByPhoneContains(pageable,search);
+            memberEntities = memberRepository.findByEmailContains(pageable, search);
+        } else if (subject.equals("phone")) {
+            memberEntities = memberRepository.findByPhoneContains(pageable, search);
         } else {
             memberEntities = memberRepository.findAll(pageable);
         }
@@ -211,9 +202,84 @@ public class MemberService {
         return memberDtos;
     }
 
-    public MemberDto passwordChange(MemberDto memberDto) {
+
+    @Transactional
+    public MemberDto memberUpdateOk(Long id) {
+        // MemberEntity id 확인
+        Optional<MemberEntity> optionalMemberEntity =
+                Optional.ofNullable(memberRepository.findById(id).orElseThrow(() -> {
+                    return new IllegalArgumentException("수정할 아이디가 없습니다.");
+                }));
+
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
+        if (optionalMemberEntity.isPresent()) {
+
+            MemberDto memberDto = MemberDto.builder()
+                    .id(memberEntity.getId())
+                    .name(memberEntity.getName())
+                    .birth(memberEntity.getBirth())
+                    .email(memberEntity.getEmail())
+                    .career(memberEntity.getCareer())
+                    .phone(memberEntity.getPhone())
+                    .postcode(memberEntity.getPostcode())
+                    .address(memberEntity.getAddress())
+                    .detailAddress(memberEntity.getDetailAddress())
+                    .extraAddress(memberEntity.getExtraAddress())
+                    .grade(memberEntity.getGrade())
+                    .gender(memberEntity.getGender())
+                    .password(passwordEncoder.encode(memberEntity.getPassword()))
+                    .build();
+            return memberDto;
+        }
+
+        return null;
+
+    }
+
+    @Transactional
+    public int memberUpdate(MemberDto memberDto) {
+        Optional<MemberEntity> optionalMemberEntity =
+                Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(() -> {
+                    return new IllegalArgumentException("수정할 아이디가 없습니다.");
+                }));
+
+        MemberEntity memberEntity = MemberEntity.toupdate(memberDto, passwordEncoder);
+//                .id(memberDto.getId())
+//                .name(memberDto.getName())
+//                .birth(memberDto.getBirth())
+//                .email(memberDto.getEmail())
+//                .career(memberDto.getCareer())
+//                .phone(memberDto.getPhone())
+//                .postcode(memberDto.getPostcode())
+//                .address(memberDto.getAddress())
+//                .detailAddress(memberDto.getDetailAddress())
+//                .extraAddress(memberDto.getExtraAddress())
+//                .grade(memberDto.getGrade())
+//                .gender(memberDto.getGender())
+//                .password(passwordEncoder.encode(memberDto.getPassword()))
+//                .build();
+
+
+        Long id = memberRepository.save(memberEntity).getId();
+
+        Optional<MemberEntity> optionalMemberEntity2 =
+                Optional.ofNullable(memberRepository.findById(id).orElseThrow(() -> {
+                    return new IllegalArgumentException("수정 아이디가 없습니다.");
+                }));
+
+        if (optionalMemberEntity2.isPresent()) {
+            // 수정이 정상 실행
+            return 1;
+        }
+        return 0;
+    }
+
+    public MemberDto passwordChange(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
-                = Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(IllegalArgumentException::new));
+                = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
+                    return new IllegalArgumentException("아이디가 없습니다.");
+        }));
 
         MemberEntity memberEntity = optionalMemberEntity.get();
         memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
@@ -237,14 +303,15 @@ public class MemberService {
                 .build();
     }
 
+
     public boolean passwordCheck(Long memberId, String password) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new));
 
-        if (optionalMemberEntity.isPresent()){
+        if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             return passwordEncoder.matches(password, memberEntity.getPassword());
-        }else {
+        } else {
             return false;
         }
 
@@ -261,8 +328,9 @@ public class MemberService {
 
     public Long companyJoin(MemberDto memberDto) {
         MemberEntity memberEntity = MemberEntity.toCompany(memberDto, passwordEncoder);
-        return  memberRepository.save(memberEntity).getId();
+        return memberRepository.save(memberEntity).getId();
     }
+
 
     public int companyNameCheck(String companyName) {
         int rs = memberRepository.findByCompanyName(companyName);
@@ -321,6 +389,7 @@ public class MemberService {
                 .build();
     }
 
+
     public MemberDto companyUpdate(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
@@ -348,4 +417,5 @@ public class MemberService {
                 .businessNumber(memberEntity.getBusinessNumber())
                 .build();
     }
+
 }

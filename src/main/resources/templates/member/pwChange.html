@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<form th:action="@{/member/pwChange}" id="pwChangeForm" method="post">
+<form th:action="@{/member/pwChange/{memberId}(memberId=${memberDto.id})}" id="pwChangeForm" method="post">
     <ul>
     <li>
         <input type="password" name="existingPassword" id="password">
