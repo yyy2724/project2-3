@@ -13,11 +13,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 
 
 @RequestMapping("/member")
@@ -169,10 +171,11 @@ public class MemberController {
     }
 
 
-    @PostMapping("/disabled")
-    public String disMember(@ModelAttribute MemberDto memberDto) {
+    @Transactional
+    @PostMapping("/disabled/{memberId}")
+    public String disMember(@PathVariable("memberId")Long memberId) {
 
-        Long rs = memberService.disabledMember(memberDto);
+        int rs = memberService.disabledMember(memberId);
         if (rs != 0) {
             return "/index";
         }
@@ -311,6 +314,12 @@ public class MemberController {
         return "company/update";
     }
 
+    @PostMapping("companyUpdate/{memberId}")
+    public String companyUpdatePost(@PathVariable("memberId") Long memberId, @ModelAttribute MemberDto memberDto, Model model){
+        MemberDto memberDto1 = memberService.companyUpdate(memberDto, memberId);
+        model.addAttribute("memberDto", memberDto1);
+        return "company/detail";
+    }
 
     //    여기부터 LIST
     @GetMapping("/freeList")
@@ -352,6 +361,35 @@ public class MemberController {
         return "freelancer/freeLancerList";
     }
 
+    @GetMapping("/freePwChange/{memberId}")
+    public String freePwChange(@PathVariable("memberId") Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "freelancer/pwChange";
+    }
+
+    @PostMapping("/freePwChange/{memberId}")
+    public String freePwChangePost(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
+        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
+        model.addAttribute("memberDto", memberDto1);
+
+        return "freelancer/detail";
+    }
+
+    @GetMapping("/companyPwChange/{memberId}")
+    public String companyPwChange(@PathVariable("memberId") Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "company/pwChange";
+    }
+
+    @PostMapping("/companyPwChange/{memberId}")
+    public String companyPwChangePost(@PathVariable("memberId") Long memberId, @ModelAttribute MemberDto memberDto, Model model){
+        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
+        model.addAttribute("memberDto", memberDto1);
+
+        return "company/detail";
+    }
 
 }
 
