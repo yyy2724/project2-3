@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
 
 <head>
     <meta charset="UTF-8">
@@ -13,8 +16,8 @@
     <script th:src="@{/js/member/findPw2.js}"></script>
     <link rel="stylesheet" th:href="@{/css/member/join.css}">
 </head>
-
 <body>
+<th:block layout:fragment="container">
 
     <form th:action="@{/member/join}" id="joinForm" method="post">
         <span>이메일: </span>
@@ -73,6 +76,7 @@
         <input type="hidden" name="is_display" value="1">
         <input type="submit" value="회원가입">
     </form>
+</th:block>
 </body>
 
 </html>
