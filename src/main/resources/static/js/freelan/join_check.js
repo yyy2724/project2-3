@@ -27,7 +27,6 @@ function email_check() {
         });
     }
 }
-
 function phoneCheck() {
     const phone = $('#phone').val();
     let memberPhone = 0;

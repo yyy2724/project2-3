@@ -8,7 +8,7 @@ $(document).ready(function () {
         var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
         return regex.test(password);
     }
-    $('#joinForm').submit(function (event) {
+    $('#adminJoinForm').submit(function (event) {
 
         var email = $('#mail').val();
         var password = $('#password').val();
@@ -18,7 +18,7 @@ $(document).ready(function () {
         var detailAddress = $('#detailAddress').val();
         var regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
         var nickName = $('#nickName').val();
-        let inputCode = document.getElementById('certificationNumber').value;
+
         if (!regExpEm.test(email)) {
             alert("올바른 이메일이 아닙니다.");
             $('#mail').focus();
@@ -97,7 +97,7 @@ $(document).ready(function () {
                     }
                 });
 
-        $('#joinForm').submit();
+        $('#adminJoinForm').submit();
     });
 });
 

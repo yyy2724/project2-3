@@ -1,4 +1,23 @@
-
+function companyCheck(){
+    const company = $('#companyName').val();
+    $.ajax({
+        url: "join/companyCheck",
+        type: 'post',
+        data: {"companyName":company},
+        success: function(cnt){
+            if(cnt == 0){
+                $('.company_ok').css("display", "inline-block");
+                $('.company_already').css("display", "none");
+            }else {
+                $('.company_already').css("display", "inline-block");
+                $('.company_ok').css("display", "none");
+            }
+        }
+    });
+}
+function businessNumberCheck(){
+    const businessNumber = $('#businessNumber')
+}
 function email_check() {
     const email = $('#mail').val(); //id값이 "id"인 입력란의 값을 저장
     const regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -27,12 +46,11 @@ function email_check() {
         });
     }
 }
-
 function phoneCheck() {
     const phone = $('#phone').val();
     let memberPhone = 0;
     let freePhone = 0;
-    const validatePone = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+    const validatePone = /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-(\d{3,4})-(\d{4})$/;
     if (!validatePone.test(phone)) {
             $('.phone_expression').css("display", "inline-block");
         } else {
@@ -59,7 +77,7 @@ function phoneCheck() {
 }
 function checkPws() {
     const pw = $('#password').val();
-    const email = $('#email').val();
+    const email = $('#mail').val();
     const pw_check = $('#checkPw').val();
     var passwordRules = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     if (!passwordRules.test(pw)) {

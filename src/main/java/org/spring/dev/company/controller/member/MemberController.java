@@ -2,9 +2,7 @@ package org.spring.dev.company.controller.member;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.config.MyUserDetails;
-import org.spring.dev.company.dto.freelancer.FreelancerDto;
 import org.spring.dev.company.dto.member.MemberDto;
-import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.service.member.MemberService;
 import org.spring.dev.company.service.member.EmailService;
 
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @RequestMapping("/member")
@@ -38,23 +34,50 @@ public class MemberController {
     }
 
 
-    @GetMapping("/join")
-    public String join(){
+    @GetMapping("/adminJoin")
+    public String adminJoin(){
 
-        return "member/join";
+        return "member/adminJoin";
     }
 
-    @PostMapping("/join")
+    @PostMapping("/adminJoin")
     public String memberJoin(@ModelAttribute MemberDto memberDto){
 //        System.out.println(memberDto.getEmail());
         Long rs = memberService.memberJoin(memberDto);
         if (rs == 0){
-            return "/";
+            return "member/join";
         }
 
-        return "member/login";
+        return "login/login";
     }
 
+    @GetMapping("/freeJoin")
+    public String freeJoin(){
+        return "freelancer/join";
+    }
+
+    @PostMapping("/freeJoin")
+    public String freeJoinPost(@ModelAttribute MemberDto memberDto){
+        Long rs = memberService.freeJoin(memberDto);
+        if (rs == 0){
+            return "freelancer/join";
+        }
+        return "login/login";
+    }
+
+    @GetMapping("/companyJoin")
+    public String companyJoin(){
+        return "company/join";
+    }
+
+    @PostMapping("/companyJoin")
+    public String companyJoinPost(@ModelAttribute MemberDto memberDto){
+        Long rs = memberService.companyJoin(memberDto);
+        if (rs == 0){
+            return "company/join";
+        }
+        return "login/login";
+    }
 
     @GetMapping("/m")
     public String m(){
@@ -139,7 +162,7 @@ public class MemberController {
     @PostMapping("/update/{id}")
     public String upMember(@ModelAttribute MemberDto memberDto, Model model){
         MemberDto memberDto1 = memberService.updateMember(memberDto);
-        model.addAttribute("memberDto",memberDto);
+        model.addAttribute("memberDto",memberDto1);
         return "member/detail";
     }
 
@@ -201,6 +224,30 @@ public class MemberController {
     }
 
 
+    // 비밀번호 변경
+    @GetMapping("/pwChange/{memberId}")
+    public String pwChange(@PathVariable("memberId")Long id, Model model){
+        MemberDto memberDto = memberService.detailMember(id);
+        model.addAttribute("memberDto",memberDto);
+        return "member/pwChange";
+    }
+    @PostMapping("/pwChange")
+    public String pwChangePost(@ModelAttribute MemberDto memberDto, Model model){
+        MemberDto memberDto1 = memberService.passwordChange(memberDto);
+        model.addAttribute("memberDto",memberDto1);
+        return "member/detail";
+    }
+
+    @PostMapping("/passCheck")
+    public @ResponseBody boolean passwordCheck(@RequestParam("id") Long memberId, @RequestParam("password") String password){
+
+        boolean rs = memberService.passwordCheck(memberId,password);
+        System.out.println(rs);
+        return rs;
+    }
+
+
+
     @GetMapping("/oauth2add")
     public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
 
@@ -221,12 +268,13 @@ public class MemberController {
     }
 
     @PostMapping("/oauth2add")
-    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, MemberDto memberDto){
+    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, MemberDto memberDto) {
         int rs = memberService.memberUpdate(memberDto);
-
 
         return "redirect:/";
     }
+
+
 }
 
 

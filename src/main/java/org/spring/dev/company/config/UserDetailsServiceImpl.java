@@ -1,10 +1,7 @@
 package org.spring.dev.company.config;
 
 import lombok.AllArgsConstructor;
-import org.spring.dev.company.entity.freelancer.FreelancerEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
-import org.spring.dev.company.repository.freelancer.FreelancerRepository;
-import org.spring.dev.company.repository.member.LoginRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     // DB 테이블에 사용자 정보 == 입력받은(Form)정보를 비교 -> 일치하면 -> User, UserDetails
-    private final FreelancerRepository freelancerRepository;
     private final MemberRepository memberRepository;
 
     @Override

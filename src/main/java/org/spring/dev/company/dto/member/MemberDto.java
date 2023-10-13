@@ -6,6 +6,7 @@ import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.entity.util.GenderEntity;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Builder
@@ -20,8 +21,6 @@ public class MemberDto {
     private String name;
 
     private String email;
-
-    private String nickName;
 
     private String phone;
 
@@ -41,11 +40,13 @@ public class MemberDto {
 
     private GenderEntity gender;
 
-    private String position;
-
     private String career;
 
-    @ColumnDefault("1")
+    //회사 관련
+    private String companyName;
+    // 사업자번호
+    private String businessNumber;
+
     private int is_display;
 
     private LocalDateTime CreateTime;
@@ -63,7 +64,6 @@ public class MemberDto {
         memberDto.setId(memberEntity.getId());
         memberDto.setEmail(memberEntity.getEmail());
         memberDto.setName(memberEntity.getName());
-        memberDto.setNickName(memberEntity.getNickName());
         memberDto.setPhone(memberEntity.getPhone());
         memberDto.setGrade(memberEntity.getGrade());
         memberDto.setCreateTime(memberEntity.getCreateTime());

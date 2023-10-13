@@ -8,6 +8,7 @@
 <body>
 
 <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">member마이페이지</a>
+<a th:href="@{/member/pwChange/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">비밀번호 변경</a>
 
 </body>
 </html>

@@ -1,11 +1,6 @@
 package org.spring.dev.company.controller.freelancer;
 
 import lombok.RequiredArgsConstructor;
-import org.spring.dev.company.config.MyUserDetails;
-import org.spring.dev.company.dto.freelancer.FreelancerDto;
-import org.spring.dev.company.dto.member.MemberDto;
-import org.spring.dev.company.service.freelancer.FreelancerService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class FreelancerContoller {
 
-    private final FreelancerService freelancerService;
 
     @GetMapping("/join")
     public String freeJoin(){
