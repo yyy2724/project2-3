@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -26,17 +27,18 @@ public class ApprovalController {
 
     @PostMapping("/api/v1/approval/{approveId}")
     public void approval(@AuthenticationPrincipal MyUserDetails member, @PathVariable("approveId") Long approvalId,@RequestBody String request) {
-        approvalService.approval(member.getMemberEntity().getId(), approvalId, request);
-    }
-
-    @GetMapping("/api/v1/approval/{approvalId}")
-    public ApprovalResponse get(@PathVariable("approvalId") Long id) {
-        return approvalService.get(id);
+        LocalDateTime start = LocalDateTime.now();
+        approvalService.approval(member.getMemberEntity().getId(), approvalId, request, start);
     }
 
     @GetMapping("/api/v1/approval")
     public List<ApprovalResponse> list() {
         return approvalService.list();
+    }
+
+    @GetMapping("/api/v1/approval/{approvalId}")
+    public ApprovalResponse get(@PathVariable("approvalId") Long id) {
+        return approvalService.get(id);
     }
 
 }

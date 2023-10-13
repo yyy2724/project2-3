@@ -55,7 +55,6 @@ class ApprovalControllerTest {
         ApprovalCreate request = ApprovalCreate.builder()
                 .title("프로젝트 투입 결재")
                 .content("프로젝트 관련")
-                .type(ApproType.MANAGER)
                 .build();
 
         // expect

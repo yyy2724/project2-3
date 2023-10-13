@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.spring.dev.company.entity.approval.ApprovalStatus;
 import org.spring.dev.company.entity.approval.ApprovalEntity;
+import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 
 @Getter
@@ -19,19 +20,17 @@ public class ApprovalResponse {
 
     private ApproType type;
 
-//    private MemberEntity memberEntity;
+    private MemberEntity memberEntity;
 
     private ApprovalStatus status;
 
-    private Long approvalMemberId;
 
     @Builder
-    private ApprovalResponse(Long id, String title, String content, ApproType type, ApprovalStatus status, Long approvalMemberId) {
+    private ApprovalResponse(Long id, String title, String content, ApproType type, ApprovalStatus status) {
         this.title = title;
         this.content = content;
         this.type = type;
         this.status = status;
-        this.approvalMemberId = approvalMemberId;
     }
 
     public static ApprovalResponse of(ApprovalEntity approval) {
@@ -41,14 +40,12 @@ public class ApprovalResponse {
                 .content(approval.getContent())
                 .type(approval.getType())
                 .status(approval.getStatus())
-                .approvalMemberId(approval.getApprovalMemberId())
                 .build();
     }
 
     @Builder
-    public ApprovalResponse(String title, String content, Long approvalMemberId) {
+    public ApprovalResponse(String title, String content) {
         this.title = title;
         this.content = content;
-        this.approvalMemberId = approvalMemberId;
     }
 }

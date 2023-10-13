@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.spring.dev.company.entity.approval.ApprovalEntity;
+import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 
 @Getter
@@ -14,24 +15,27 @@ public class ApprovalServiceCreate {
 
     private String content;
 
-    private ApproType type;
-
-    private Long approvalMemberId;
-
     @Builder
-    private ApprovalServiceCreate(String title, String content, ApproType type, Long approvalMemberId) {
+    private ApprovalServiceCreate(String title, String content) {
         this.title = title;
         this.content = content;
-        this.type = type;
-        this.approvalMemberId = approvalMemberId;
     }
 
-    public ApprovalEntity toEntity(Long id) {
+    public ApprovalEntity toEntity(MemberEntity member) {
+        if (member.getGrade().equals(ApproType.COMPANY)) {
+            return ApprovalEntity.builder()
+                    .title(title)
+                    .content(content)
+                    .memberEntity(member)
+                    .type(ApproType.FREELANCER)
+                    .build();
+        }
+
         return ApprovalEntity.builder()
                 .title(title)
                 .content(content)
-                .type(type)
-                .approvalMemberId(id)
+                .memberEntity(member)
+                .type(ApproType.COMPANY)
                 .build();
     }
 }
