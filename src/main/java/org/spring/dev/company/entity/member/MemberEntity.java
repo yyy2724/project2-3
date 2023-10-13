@@ -20,38 +20,41 @@ public class MemberEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "member_id" )
     private Long id;
 
-    @Column(name = "member_name")
+    @Column(name = "member_name",nullable = false)
     private String name;
 
-    @Column(name = "member_birth")
+    @Column(name = "member_birth",nullable = false)
     private String birth;
 
-    @Column(name = "member_email")
+    @Column(name = "member_email",nullable = false)
     private String email;
 
-    @Column(name = "member_nick")
+    @Column(name = "member_nick",nullable = false)
     private String nickName;
 
-    @Column(name = "member_phone")
+    @Column(name = "member_phone",nullable = false)
     private String phone;
 
-    @Column(name = "member_password")
+    @Column(name = "member_password",nullable = false)
     private String password;
 
-    @Column(name = "member_postcode")
+    @Column(name = "member_postcode",nullable = false)
     private String postcode;
 
-    @Column(name = "member_address")
+    @Column(name = "member_address",nullable = false)
     private String address;
 
-    @Column(name = "member_detailAddress")
+    @Column(name = "member_detailAddress",nullable = false)
     private String detailAddress;
 
-    @Column(name = "member_extraAddress")
+    @Column(name = "member_extraAddress",nullable = false)
     private String extraAddress;
+
+    @Column(name = "member_career", nullable = true)
+    private String career;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_grade")
@@ -82,7 +85,7 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setAddress(memberDto.getAddress());
         memberEntity.setDetailAddress(memberDto.getDetailAddress());
         memberEntity.setExtraAddress(memberDto.getExtraAddress());
-        memberEntity.setGrade(ApproType.INTERN);
+        memberEntity.setGrade(ApproType.COMPANY);
         memberEntity.setGender(memberDto.getGender());
         memberEntity.setIs_display(memberDto.getIs_display());
         return memberEntity;

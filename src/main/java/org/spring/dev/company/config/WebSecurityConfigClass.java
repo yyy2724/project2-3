@@ -1,6 +1,8 @@
 package org.spring.dev.company.config;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.entity.freelancer.FreelancerEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,8 +31,15 @@ import java.io.IOException;
 public class WebSecurityConfigClass {
 
 
+
     /*private final AuthenticationFailureHandler   customAuthenticationFailureHandler;*/
     private final CustomAuthenticationHandler   customAuthenticationFailureHandler;
+
+    @Bean
+    public MemberEntity memberEntity() {
+        // Create and return an instance of FreelancerEntity
+        return new MemberEntity();
+    }
 
 //    @Bean
 //    public AuthenticationFailureHandler authenticationFailureHandler() {
@@ -43,8 +52,12 @@ public class WebSecurityConfigClass {
         return new BCryptPasswordEncoder();
     }
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+
         // POST -> 웹페이지 보안 공격
         http.csrf().disable();
 

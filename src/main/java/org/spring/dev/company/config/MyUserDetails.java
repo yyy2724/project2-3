@@ -3,6 +3,7 @@ package org.spring.dev.company.config;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.spring.dev.company.entity.freelancer.FreelancerEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,9 +18,11 @@ import java.util.Map;
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails, OAuth2User {
 
-    @Getter
     @Autowired
     private MemberEntity memberEntity;
+    @Getter
+    @Autowired
+    private  FreelancerEntity freelancerEntity;
 
     private Map<String, Object> attributes;
 
@@ -39,6 +42,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
     public String getName() {
         return memberEntity.getEmail();
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

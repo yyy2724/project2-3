@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
 
     @Query("SELECT COUNT(*) FROM MemberEntity m WHERE m.email = :email")
-    int findByEmail(String email);
+    int findByEmail1(String email);
 
     @Query("SELECT COUNT(*) FROM MemberEntity m WHERE m.nickName = :nickName")
     int findByNickName(String nickName);
@@ -49,4 +49,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     Page<MemberEntity> findByEmailContains(Pageable pageable, String search);
 
     Page<MemberEntity> findByPhoneContains(Pageable pageable, String search);
+
+    Optional<MemberEntity> findByEmail(String email);
 }

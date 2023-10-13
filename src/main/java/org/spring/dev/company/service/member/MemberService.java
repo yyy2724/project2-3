@@ -26,10 +26,11 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final FreelancerRepository freelancerRepository;
 
+
     public int emailCheck(String email) {
 
-        int memberRs = memberRepository.findByEmail(email);
-        int freeRs = freelancerRepository.findByEmail(email);
+        int memberRs = memberRepository.findByEmail1(email);
+        int freeRs = freelancerRepository.findByEmail1(email);
         if (memberRs == 0){
             if (freeRs == 1){
                 return 1;

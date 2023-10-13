@@ -42,6 +42,8 @@ public class MemberDto {
 
     private String position;
 
+    private String career;
+
     private int is_display;
 
     private LocalDateTime CreateTime;

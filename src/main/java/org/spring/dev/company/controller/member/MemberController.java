@@ -1,6 +1,8 @@
 package org.spring.dev.company.controller.member;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
+import org.spring.dev.company.dto.freelancer.FreelancerDto;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.service.member.MemberService;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,13 @@ public class MemberController {
 
     private final MemberService memberService;
     private final EmailService emailService;
+
+    @GetMapping("/login")
+    public String login(){
+
+        return "member/login";
+    }
+
 
     @GetMapping("/join")
     public String join(){
@@ -188,6 +198,34 @@ public class MemberController {
 
         return "member/memberList";
 
+    }
+
+
+    @GetMapping("/oauth2add")
+    public String oauth2addOk(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+
+        System.out.println("myUserDetails " + myUserDetails);
+
+        Long freeId = myUserDetails.getFreelancerEntity().getId();
+
+        System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getFreelancerEntity());
+        System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getFreelancerEntity().getId());
+
+        MemberDto memberDto = MemberService.memberUpdateOk(freeId);
+
+        System.out.println("freelancerDto " + freelancerDto);
+        model.addAttribute("freelancer", freelancerDto);
+
+        return "freelancer/oauth2add";
+
+    }
+
+    @PostMapping("/oauth2add")
+    public String oauth2add(@AuthenticationPrincipal MyUserDetails myUserDetails, FreelancerDto freelancerDto){
+        int rs = freelancerService.freeUpdate(freelancerDto);
+
+
+        return "redirect:/";
     }
 }
 
