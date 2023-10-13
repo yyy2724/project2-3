@@ -1,6 +1,7 @@
 package org.spring.dev.company.controller.board;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.board.BoardDto;
 import org.spring.dev.company.dto.board.ReplyDto;
 import org.spring.dev.company.entity.board.BoardEntity;
@@ -39,8 +40,9 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writePost(BoardDto boardDto, @RequestParam("file") MultipartFile file ) throws IOException {
+    public String writePost(@AuthenticationPrincipal MyUserDetails myUserDetails, BoardDto boardDto, @RequestParam("file") MultipartFile file ) throws IOException {
         boardDto.setBoardFile(file);
+//        String email = myUserDetails.getUsername();
         boardService.boardWrite(boardDto);
         return "redirect:/board/list";
     }
@@ -99,10 +101,10 @@ public class BoardController {
     @GetMapping("/detail/{id}")
     private String detail(@PathVariable("id") Long id, Model model){
         BoardDto boardDto = boardService.detail(id);
-        List<ReplyDto> replyDtoList = replyService.list(boardDto.getId());
-        Collections.reverse(replyDtoList);
+//        List<ReplyDto> replyDtoList = replyService.list(boardDto.getId());
+//        Collections.reverse(replyDtoList);
         model.addAttribute("board", boardDto);
-        model.addAttribute("replyList", replyDtoList);
+//        model.addAttribute("replyList", replyDtoList);
 
         return "board/detail";
     }
@@ -125,6 +127,8 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/list";
     }
+
+
 
 
 
