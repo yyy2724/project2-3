@@ -7,11 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -36,18 +32,34 @@ public interface WorkTimeRepository extends JpaRepository<WorkTimeEntity, Long> 
     void updateWorkTotalTime(@Param("workTimeTotal") Long workTimeTotal, @Param("date") String date);
 
 
-//    달 검색
-    @Modifying
-    @Query(value = "SELECT * "+
-    "FROM c_work_time " +
-    "WHERE MONTH(work_time_in) = :month", nativeQuery = true)
-    List<WorkTimeEntity> findByWorkTimeMonth(@Param("month") String workMonth);
-
-    @Modifying
+    //    달 검색
     @Query(value = "SELECT * "+
             "FROM c_work_time " +
             "WHERE MONTH(work_time_in) = :month "+
-            "AND work_time_type LIKE '%:type%'", nativeQuery = true)
-    List<WorkTimeEntity> findByWorkTimeWorkType(@Param("month") String workMonth, @Param("type") String workType);
+            "AND member_entity = :id "+
+            "ORDER BY DATE(work_time_in) ASC", nativeQuery = true)
+    List<WorkTimeEntity> findByWorkTimeMonth(@Param("id") Long memberId, @Param("month") String workMonth);
 
+
+    @Query(value = "SELECT * "+
+            "FROM c_work_time " +
+            "WHERE work_time_type LIKE %:type% " +
+            "AND member_entity = :id "+
+            "ORDER BY DATE(work_time_in) ASC", nativeQuery = true)
+    List<WorkTimeEntity> findByWorkTimeWorkType(@Param("id") Long MemberId, @Param("type") String workType);
+
+    @Modifying
+    @Query(value = "SELECT * "+
+            "FROM c_work_time "+
+            "WHERE DATE(work_time_in) = :date "+
+            "AND member_entity = :id "+
+            "ORDER BY DATE(work_time_in) ASC", nativeQuery = true)
+    List<WorkTimeEntity> findByWorkTimeDate(@Param("date") String workDate, @Param("id") Long MemberId);
+
+
+    @Query(value = "SELECT * "+
+            "FROM c_work_time " +
+            "WHERE member_entity = :id "+
+            "ORDER BY DATE(work_time_in) ASC", nativeQuery = true)
+    List<WorkTimeEntity> findByWorkTimeMemberId(@Param("id")Long memberId);
 }

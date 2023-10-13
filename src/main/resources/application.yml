@@ -1,7 +1,7 @@
-server:
-  port: 8095
-
 # git 올릴때 빼고 올릴것
+server:
+  port: 8023
+
 spring:
   mail:
     host: smtp.gmail.com
@@ -16,24 +16,25 @@ spring:
           starttls:
             enable: true
   # 여기까지
-
-
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-    #    username: admin
-    #    password: '00000000'
-    url: jdbc:mysql://localhost:3306/project02
-    username: root
-    password: 1234
+    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+    username: admin
+    password: '00000000'
+#    url: jdbc:mysql://localhost:3306/project02
+#    username: root
+#    password: 1234
+
+
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none # DDL?? ??
+      ddl-auto: update # DDL?? ??
     properties:
       hibernate:
         show_sql: true
@@ -54,4 +55,29 @@ spring:
     include: oauth2
   # 여기까지
 
-  spring.main.allow-bean-definition-overriding: true
+# spring.main.allow-bean-definition-overriding: true
+
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: test
+#
+#
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/project02
+#    username: root
+#    password:
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#  sql:
+#    init:
+#      mode: never

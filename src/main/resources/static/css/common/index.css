@@ -1,0 +1,9 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+
+body{
+    padding-top: 90px;
+    padding-left: 200px;
+    position: fixed;
+}

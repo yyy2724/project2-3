@@ -24,8 +24,7 @@ public class BaseEntity {
     private LocalDateTime UpdateTime;
 
     // 만약에 회원이 탈퇴하면 더 이상 가져올 필요가 없으니까 select문을 사용할 경우 is_display가 1인 경우에만 가져오도록(null값은 나오지 않도록)
-    @Column(name = "is_display")
-    @ColumnDefault("1")
+    @Column(name = "is_display", columnDefinition = "1")
     private int is_display;
 
 }

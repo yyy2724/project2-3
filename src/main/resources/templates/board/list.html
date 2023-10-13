@@ -109,6 +109,7 @@
                     <th>제목</th>
                     <th>내용</th>
                     <th>작성자</th>
+<!--                    <th>회원아이디</th>-->
                     <th>게시판유형</th>
                     <th>작성시간</th>
                     <th>조회수</th>
@@ -120,6 +121,7 @@
                     <td><a th:href="@{/board/detail/{id}(id=${board.id})}" th:text="${board.title}"></a></td>
                     <td th:text="${board.content}"></td>
                     <td th:text="${board.writer}"></td>
+<!--                    <td th:text="${board.memberEntity.email}"></td>-->
                     <td th:text="${#strings.toString(board.boardType)}"></td>
                     <td th:text="${#temporals.format(board.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td th:text="${board.hit}"></td>

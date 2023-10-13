@@ -1,7 +1,8 @@
 package org.spring.dev.company.entity.worktime;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.spring.dev.company.dto.workTime.WorkTimeDto;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.BaseEntity;
 import org.spring.dev.company.entity.util.WorkType;
@@ -12,6 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "c_work_time")
 public class WorkTimeEntity extends BaseEntity {
 
@@ -34,8 +38,18 @@ public class WorkTimeEntity extends BaseEntity {
     private WorkType workType;
 
     @JoinColumn(name = "memberEntity")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity memberEntity;
 
-
+    //    update
+    public static WorkTimeEntity toEntity(WorkTimeDto workTimeDto) {
+        return WorkTimeEntity.builder()
+                .id(workTimeDto.getId())
+                .workTimeStart(workTimeDto.getWorkTimeStart())
+                .workTimeEnd(workTimeDto.getWorkTimeEnd())
+                .total(workTimeDto.getTotal())
+                .workType(workTimeDto.getWorkType())
+                .memberEntity(workTimeDto.getMemberEntity())
+                .build();
+    }
 }

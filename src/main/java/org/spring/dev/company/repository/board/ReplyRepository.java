@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
     List<ReplyEntity> findAllByBoardEntity(BoardEntity boardEntity);
+
+    List<ReplyEntity> findAllByBoardEntityOrderByIdDesc(BoardEntity boardEntity);
 }
