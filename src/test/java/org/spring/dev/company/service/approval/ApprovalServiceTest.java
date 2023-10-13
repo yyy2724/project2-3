@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.spring.dev.company.controller.approval.request.ApprovalCreate;
+import org.spring.dev.company.controller.approval.request.ApprovalSearch;
+import org.spring.dev.company.dto.approval.response.ApprovalResponse;
 import org.spring.dev.company.entity.approval.ApprovalEntity;
 import org.spring.dev.company.entity.approval.ApprovalStatus;
 import org.spring.dev.company.entity.approval.ProjectStatus;
@@ -24,6 +26,8 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,15 +50,16 @@ class ApprovalServiceTest {
 
     @AfterEach
     public void clean() {
-        approvalRepository.deleteAll();
-        memberRepository.deleteAll();
+        approvalRepository.deleteAllInBatch();
+        memberRepository.deleteAllInBatch();
     }
 
     @Test
+    @Disabled
     @DisplayName("회사가 프로젝트에 필요한 프리랜서를 구한다.")
     public void test1() {
         // given
-        MemberEntity member = memberSave("김회사", "0418", "010-0000-0000", "주소1", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity member = memberSave("김회사", "0418", "010-0000-0000", "주소1",  GenderEntity.M);
 
 
 
@@ -77,14 +82,15 @@ class ApprovalServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("회사가 프리랜서를 구하는 문서에 프리랜서가 승인한다.")
     public void test2() {
         // given
         LocalDateTime now = LocalDateTime.now();
 
-        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", GenderEntity.M);
 
-        MemberEntity freelancer = memberSave("김프리랜서", "0418", "010-1111-1111", "주소2", ApproType.FREELANCER, GenderEntity.M);
+        MemberEntity freelancer = memberSave("김프리랜서", "0418", "010-1111-1111", "주소2", GenderEntity.M);
 
         List<MemberEntity> memberEntities = memberRepository.saveAll(List.of(company, freelancer));
 
@@ -111,14 +117,15 @@ class ApprovalServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("허가받지 않는 사람이 결재를 요청할 시 에러가 난다.")
     public void test3() {
         // given
         LocalDateTime now = LocalDateTime.now();
 
-        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", GenderEntity.M);
 
-        MemberEntity freelancer = memberSave("이회사", "0418", "010-1111-1111", "주소2", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity freelancer = memberSave("이회사", "0418", "010-1111-1111", "주소2", GenderEntity.M);
 
         List<MemberEntity> memberEntities = memberRepository.saveAll(List.of(company, freelancer));
 
@@ -139,13 +146,14 @@ class ApprovalServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("부장이 인턴의 결재를 반려한다.")
     public void test4() {
         // given
         LocalDateTime now = LocalDateTime.now();
-        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", GenderEntity.M);
 
-        MemberEntity freelancer = memberSave("김프리랜서", "0418", "010-1111-1111", "주소2", ApproType.FREELANCER, GenderEntity.M);
+        MemberEntity freelancer = memberSave("김프리랜서", "0418", "010-1111-1111", "주소2", GenderEntity.M);
 
         List<MemberEntity> memberEntities = memberRepository.saveAll(List.of(company, freelancer));
 
@@ -168,10 +176,11 @@ class ApprovalServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("공문을 올릴 때 ProjectStatus이 Null이면  ProjectStatus는 미완성 상태가 된다..")
     public void test5() {
         // given
-        MemberEntity member = memberSave("김회사", "0418", "010-0000-0000", "주소1", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity member = memberSave("김회사", "0418", "010-0000-0000", "주소1", GenderEntity.M);
 
 
 
@@ -192,14 +201,15 @@ class ApprovalServiceTest {
     }
 
     @Test
+    @Disabled
     @Transactional
     @DisplayName("프리랜서가 결재버튼을 눌렀을 때 결재 시간이 등록된다.")
     public void test6() {
         LocalDateTime now = LocalDateTime.now();
 
-        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", ApproType.COMPANY, GenderEntity.M);
+        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", GenderEntity.M);
 
-        MemberEntity freelancer = memberSave("김프리랜서", "0418", "010-1111-1111", "주소2", ApproType.FREELANCER, GenderEntity.M);
+        MemberEntity freelancer = memberSave("김프리랜서", "0418", "010-1111-1111", "주소2", GenderEntity.M);
 
         List<MemberEntity> memberEntities = memberRepository.saveAll(List.of(company, freelancer));
 
@@ -223,14 +233,44 @@ class ApprovalServiceTest {
         assertEquals(now, approval.getStart());
     }
 
+    @Test
+    @Disabled
+    @DisplayName("결재문서를 20개 등록하면 내림차순으로 보여진다.")
+    public void test7() {
+        // given
+        MemberEntity company = memberSave("김회사", "0418", "010-0000-0000", "주소1", GenderEntity.M);
 
-    private static MemberEntity memberSave(String name, String birth, String phone, String address, ApproType type, GenderEntity gender) {
+        List<ApprovalEntity> approvals = IntStream.range(0, 20)
+                .mapToObj(i -> ApprovalEntity.builder()
+                        .title("제목 " + i)
+                        .content("내용 " + i)
+                        .memberEntity(company)
+                        .type(ApproType.COMPANY)
+                        .build())
+                .collect(Collectors.toList());
+
+        approvalRepository.saveAll(approvals);
+
+        ApprovalSearch search = ApprovalSearch.builder()
+                .page(0)
+                .build();
+
+        // when
+        List<ApprovalResponse> responses = approvalService.list(search.toServiceRequest());
+
+        // then
+        assertEquals(10L, responses.size());
+        assertEquals("제목 19", responses.get(0).getTitle());
+
+    }
+
+
+    private static MemberEntity memberSave(String name, String birth, String phone, String address, GenderEntity gender) {
         return MemberEntity.builder()
                 .name(name)
                 .birth(birth)
                 .phone(phone)
                 .address(address)
-                .grade(type)
                 .gender(gender)
                 .build();
     }

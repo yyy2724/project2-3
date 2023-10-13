@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ApprovalRepository extends JpaRepository<ApprovalEntity, Long> {
+public interface ApprovalRepository extends JpaRepository<ApprovalEntity, Long>, ApprovalRepositoryCustom {
 
     List<ApprovalEntity> findAllByType(ApproType approType);
 }

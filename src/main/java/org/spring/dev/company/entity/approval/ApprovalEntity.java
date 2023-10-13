@@ -1,5 +1,6 @@
 package org.spring.dev.company.entity.approval;
 
+import lombok.AccessLevel;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 import org.spring.dev.company.entity.util.BaseEntity;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "c_approval")
 public class ApprovalEntity extends BaseEntity {
 
@@ -33,7 +34,6 @@ public class ApprovalEntity extends BaseEntity {
     private ApproType type;
 
     // n:1 한명의 회원이 여러개의 결재문서
-    @JoinColumn(name = "memberEntity")
     @ManyToOne
     private MemberEntity memberEntity;
 

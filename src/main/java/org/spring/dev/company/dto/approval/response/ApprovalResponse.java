@@ -20,18 +20,26 @@ public class ApprovalResponse {
 
     private ApproType type;
 
-    private MemberEntity memberEntity;
-
     private ApprovalStatus status;
-
 
     @Builder
     private ApprovalResponse(Long id, String title, String content, ApproType type, ApprovalStatus status) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.type = type;
         this.status = status;
     }
+
+    //    @Builder
+//    private ApprovalResponse(Long id, String title, String content, ApproType type, MemberEntity member, ApprovalStatus status) {
+//        this.id = id;
+//        this.title = title;
+//        this.content = content;
+//        this.type = type;
+//        this.memberEntity = member;
+//        this.status = status;
+//    }
 
     public static ApprovalResponse of(ApprovalEntity approval) {
         return ApprovalResponse.builder()
@@ -41,11 +49,5 @@ public class ApprovalResponse {
                 .type(approval.getType())
                 .status(approval.getStatus())
                 .build();
-    }
-
-    @Builder
-    public ApprovalResponse(String title, String content) {
-        this.title = title;
-        this.content = content;
     }
 }
