@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -16,22 +17,32 @@ import java.util.Objects;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
-
-
     /*
         멤버 아이디를 필수로 개인 스퀘줄 정보를 가져옴
         검색 조건에 따라 가져올수있게 설정
      */
     @GetMapping("/{memberId}")
-    public Map<String, Objects> getScheduleDetail(
-            @PathVariable(name = "memberId") Long memberId){
+    @ResponseBody
+    public List<ScheduleDto> getScheduleDetail(
+            @PathVariable(name = "memberId") Long memberId,
+            @RequestBody ScheduleDto scheduleDto)
+    {
 
-        Map<String,Objects> result = new HashMap<String,Objects>();
+        List<ScheduleDto> scheduleDtoList = scheduleService.getScheduleDetail(scheduleDto);
 
-            scheduleService.getScheduleDetail();
+        return scheduleDtoList;
+    }
 
+    @PostMapping("/{memberId}")
+    @ResponseBody
+    public ScheduleDto postSchedule(
+            @PathVariable(name = "memberId") Long memberId,
+            @RequestBody ScheduleDto scheduleDto)
+    {
 
-        return result;
+//        ScheduleDto scheduleDto = scheduleService.postSchedule(scheduleDto);
+
+        return scheduleDto;
     }
 
 }
