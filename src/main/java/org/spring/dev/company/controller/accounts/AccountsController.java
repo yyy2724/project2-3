@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("accounts")
+@RequestMapping("/accounts")
 public class AccountsController {
 
     private final AccountsService accountsService;
