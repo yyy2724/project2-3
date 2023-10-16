@@ -13,31 +13,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/board/calendar.js}" defer></script>
-    <script th:src="@{/js/index.js}" defer></script>
 </head>
 <th:block layout:fragment="container">
     <body>
     <div class="box">
         <div class="left">
-            <div class="work">
-                <h2>오늘의 근무</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="th_start">출근시간</th>
-                        <th class="th_end">퇴근시간</th>
-                        <th class="th_type">근무형태</th>
-                    </tr>
-                    </thead>
-                    <tbody id="work">
-                    <tr th:each = "work:${workTimeList}">
-                        <td th:text = "${#temporals.format(work.workTimeStart, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td th:text = "${#temporals.format(work.workTimeEnd, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td th:text = "${work.workType}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="notice">
                 <h2>공지사항</h2>
                 <table>
