@@ -2,6 +2,7 @@ package org.spring.dev.company.service.member;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.member.MemberRepository;
@@ -167,6 +168,7 @@ public class MemberService {
 
     }
 
+    @Transactional
     public int disabledMember(Long memberId) {
         Optional<MemberEntity> memberEntity =
                 Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new));
@@ -276,7 +278,7 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberDto passwordChange(MemberDto memberDto, Long memberId) {
+    public int passwordChange(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
                     return new IllegalArgumentException("아이디가 없습니다.");
@@ -285,23 +287,11 @@ public class MemberService {
         MemberEntity memberEntity = optionalMemberEntity.get();
         memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
-        memberRepository.save(memberEntity);
-        return MemberDto.builder()
-                .id(memberEntity.getId())
-                .name(memberEntity.getName())
-                .email(memberEntity.getEmail())
-                .password(memberEntity.getPassword())
-                .birth(memberEntity.getBirth())
-                .phone(memberEntity.getPhone())
-                .postcode(memberEntity.getPostcode())
-                .address(memberEntity.getAddress())
-                .detailAddress(memberEntity.getDetailAddress())
-                .extraAddress(memberEntity.getExtraAddress())
-                .gender(memberEntity.getGender())
-                .grade(memberEntity.getGrade())
-                .CreateTime(memberEntity.getCreateTime())
-                .is_display(memberEntity.getIs_display())
-                .build();
+         String password = memberRepository.save(memberEntity).getPassword();
+        if (passwordEncoder.matches(memberDto.getPassword(), password)){
+            return 1;
+        }
+        return 0;
     }
 
 
