@@ -110,7 +110,7 @@ public class BoardController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, Model model){
+    public String update(@PathVariable("id") Long id, Model model) throws IOException {
         BoardDto board = boardService.update(id);
         model.addAttribute("board", board);
         return "/board/update";
