@@ -35,12 +35,24 @@ public class ScheduleService {
     }
 
 
-    //스케줄 생성
+    //생성
     public ScheduleDto postSchedule(ScheduleDto scheduleDto) {
 
         ScheduleEntity result = scheduleRepostory.save(ScheduleEntity.toEntity(scheduleDto));
 
         return ScheduleDto.toDto(result);
-
     }
+
+
+    //업데이트
+    public ScheduleDto postSchedule(Long scheduleId, ScheduleDto scheduleDto) {
+        scheduleDto.setId(scheduleId);
+        ScheduleEntity result = scheduleRepostory.save(ScheduleEntity.toEntity(scheduleDto));
+
+        return ScheduleDto.toDto(result);
+    }
+
+
+    //스케줄 생성
+
 }

@@ -50,7 +50,8 @@
                   setCalendar(work_type,start_date,end_date,work_id);
                   getCalendar(calendar.getDate() ,memberId)
                   calendar.render();
-                  location.reload(location.href);
+                  location.reload()
+                  
 
                 }
               
@@ -81,6 +82,7 @@
                   setCalendar(work_type,start_date,end_date,work_id);
                   getCalendar(calendar.getDate() ,memberId)
                   calendar.render();
+                  location.reload()
 
                 }
               
@@ -102,6 +104,8 @@
       });
 
       function setCalendar(work_type,start,end,memberId){
+
+        location.reload(location.href);
 
         let jsonData = {
           workTimeStart : start,

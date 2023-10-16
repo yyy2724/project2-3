@@ -24,8 +24,6 @@ public class ScheduleController {
         return "schedule/schedule";
     }
 
-
-
     /*
         멤버 아이디를 필수로 개인 스퀘줄 정보를 가져옴
         검색 조건에 따라 가져올수있게 설정
@@ -42,7 +40,7 @@ public class ScheduleController {
     }
 
 
-    // C U D 이 컨트롤러 통해서 함
+    //일정 생성
     @PostMapping("/{memberId}")
     @ResponseBody
     public ScheduleDto postSchedule(
@@ -50,6 +48,16 @@ public class ScheduleController {
             @RequestBody ScheduleDto scheduleDto)
     {
         ScheduleDto result = scheduleService.postSchedule(scheduleDto);
+        return scheduleDto;
+    }
+
+    @PostMapping("/update/{scheduleId}")
+    @ResponseBody
+    public ScheduleDto updateSchedule(
+            @PathVariable(name = "scheduleId") Long scheduleId,
+            @RequestBody(required = true) ScheduleDto scheduleDto)
+    {
+        ScheduleDto result = scheduleService.postSchedule(scheduleId,scheduleDto);
         return scheduleDto;
     }
 
