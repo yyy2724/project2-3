@@ -31,6 +31,9 @@ body{
     width: inherit;
     height: 400px;
 }
+.left .notice h2{
+    text-align: center;
+}
 /* table */
 table, th, td{
     border-collapse: collapse;
@@ -56,6 +59,9 @@ table, th, td{
 .middle{
     width: 900px;
     height: 820px;
+}
+.middle .calendar{
+    background-color: white;
 }
 /* calendar */
 .middle .calendar .modal{
