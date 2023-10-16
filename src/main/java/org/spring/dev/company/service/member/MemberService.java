@@ -2,6 +2,7 @@ package org.spring.dev.company.service.member;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.member.MemberRepository;
@@ -167,18 +168,19 @@ public class MemberService {
 
     }
 
-    public Long disabledMember(MemberDto memberDto) {
+    @Transactional
+    public int disabledMember(Long memberId) {
         Optional<MemberEntity> memberEntity =
-                Optional.ofNullable(memberRepository.findById(memberDto.getId()).orElseThrow(IllegalArgumentException::new));
+                Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new));
         if (memberEntity.get().getIs_display() != 0) {
 
             MemberEntity memberEntity1 = memberEntity.get();
             memberEntity1.setIs_display(0);
-            Long rs = memberRepository.save(memberEntity1).getId();
+            int rs = memberRepository.save(memberEntity1).getIs_display();
             return rs;
         }
-        Long rs = 0L;
-        return rs;
+
+        return 0;
     }
 
     public Page<MemberDto> pageMemberList(Pageable pageable, String subject, String search) {
@@ -275,7 +277,8 @@ public class MemberService {
         return 0;
     }
 
-    public MemberDto passwordChange(MemberDto memberDto, Long memberId) {
+    @Transactional
+    public int passwordChange(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
                     return new IllegalArgumentException("아이디가 없습니다.");
@@ -284,23 +287,11 @@ public class MemberService {
         MemberEntity memberEntity = optionalMemberEntity.get();
         memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
-        memberRepository.save(memberEntity);
-        return MemberDto.builder()
-                .id(memberEntity.getId())
-                .name(memberEntity.getName())
-                .email(memberEntity.getEmail())
-                .password(memberEntity.getPassword())
-                .birth(memberEntity.getBirth())
-                .phone(memberEntity.getPhone())
-                .postcode(memberEntity.getPostcode())
-                .address(memberEntity.getAddress())
-                .detailAddress(memberEntity.getDetailAddress())
-                .extraAddress(memberEntity.getExtraAddress())
-                .gender(memberEntity.getGender())
-                .grade(memberEntity.getGrade())
-                .CreateTime(memberEntity.getCreateTime())
-                .is_display(memberEntity.getIs_display())
-                .build();
+         String password = memberRepository.save(memberEntity).getPassword();
+        if (passwordEncoder.matches(memberDto.getPassword(), password)){
+            return 1;
+        }
+        return 0;
     }
 
 
@@ -316,7 +307,7 @@ public class MemberService {
         }
 
     }
-
+    @Transactional
     public Long freeJoin(MemberDto memberDto) {
         MemberEntity memberEntity = MemberEntity.toFree(memberDto, passwordEncoder);
         Long rs = memberRepository.save(memberEntity).getId();
@@ -326,6 +317,7 @@ public class MemberService {
         return rs;
     }
 
+    @Transactional
     public Long companyJoin(MemberDto memberDto) {
         MemberEntity memberEntity = MemberEntity.toCompany(memberDto, passwordEncoder);
         return memberRepository.save(memberEntity).getId();
@@ -342,6 +334,7 @@ public class MemberService {
         return rs;
     }
 
+    @Transactional
     public MemberDto freeUpdate(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
@@ -349,6 +342,7 @@ public class MemberService {
         }));
 
         MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setName(memberDto.getName());
         memberEntity.setBirth(memberDto.getBirth());
         memberEntity.setPhone(memberDto.getPhone());
         memberEntity.setCareer(memberDto.getCareer());
@@ -390,8 +384,7 @@ public class MemberService {
                 .businessNumber(optionalMemberEntity.get().getBusinessNumber())
                 .build();
     }
-
-
+    @Transactional
     public MemberDto companyUpdate(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{

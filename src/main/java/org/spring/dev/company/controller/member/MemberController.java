@@ -13,11 +13,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 
 
 @RequestMapping("/member")
@@ -169,14 +171,21 @@ public class MemberController {
     }
 
 
-    @PostMapping("/disabled")
-    public String disMember(@ModelAttribute MemberDto memberDto) {
+    @GetMapping("/disabled/{memberId}")
+    public String disabled(@PathVariable("memberId")Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "member/disabled";
+    }
 
-        Long rs = memberService.disabledMember(memberDto);
+    @PostMapping("/disabled/{memberId}")
+    public String disMember(@PathVariable("memberId") Long memberId) {
+
+        int rs = memberService.disabledMember(memberId);
         if (rs != 0) {
-            return "/index";
-        }
         return "member/detail";
+        }
+            return "member/m";
     }
 
 
@@ -234,10 +243,13 @@ public class MemberController {
 
     @PostMapping("/pwChange/{memberId}")
     public String pwChangePost(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
-        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
-        model.addAttribute("memberDto", memberDto1);
-
-        return "member/detail";
+        int rs = memberService.passwordChange(memberDto, memberId);
+        if (rs != 1){
+            MemberDto memberDto1 = memberService.detailMember(memberId);
+            model.addAttribute("memberDto",memberDto1);
+            return "member/detail";
+        }
+        return "redirect:/member/logout";
     }
 
     @PostMapping("/passCheck")
@@ -311,10 +323,17 @@ public class MemberController {
         return "company/update";
     }
 
+    @PostMapping("companyUpdate/{memberId}")
+    public String companyUpdatePost(@PathVariable("memberId") Long memberId, @ModelAttribute MemberDto memberDto, Model model) {
+        MemberDto memberDto1 = memberService.companyUpdate(memberDto, memberId);
+        model.addAttribute("memberDto", memberDto1);
+        return "company/detail";
+    }
+
 
     //    여기부터 LIST
     @GetMapping("/freeList")
-    public String freeList(@PageableDefault(page = 0, size = 10, sort = "id",
+    public String freeList(@PageableDefault(page = 0, size = 5, sort = "id",
             direction = Sort.Direction.DESC) Pageable pageable,
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam(value = "search", required = false) String search,
@@ -350,6 +369,84 @@ public class MemberController {
 
 
         return "freelancer/freeLancerList";
+    }
+
+    @GetMapping("/companyList")
+    public String companyList(@PageableDefault(page = 0, size = 5, sort = "id",
+            direction = Sort.Direction.DESC) Pageable pageable,
+                              @RequestParam(value = "subject", required = false) String subject,
+                              @RequestParam(value = "search", required = false) String search,
+                              Model model) {
+
+        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+
+
+        Long totalCount = memberList.getTotalElements();
+        int pagesize = memberList.getSize();
+        int nowPage = memberList.getNumber();
+        int totalPage = memberList.getTotalPages();
+        int blockNum = 3;
+
+        int startPage =
+                (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage
+                        ? (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+
+        int endPage =
+                (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+
+        for (int i = startPage; i <= endPage; i++) {
+            System.out.println(i + " , ");
+        }
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+//        model.addAttribute("postVo", postList);
+
+
+        model.addAttribute("companyList", memberList);
+
+
+        return "company/companyList";
+    }
+
+    @GetMapping("/staffList")
+    public String staffList(@PageableDefault(page = 0, size = 5, sort = "id",
+            direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam(value = "subject", required = false) String subject,
+                            @RequestParam(value = "search", required = false) String search,
+                            Model model) {
+
+        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+
+
+        Long totalCount = memberList.getTotalElements();
+        int pagesize = memberList.getSize();
+        int nowPage = memberList.getNumber();
+        int totalPage = memberList.getTotalPages();
+        int blockNum = 3;
+
+        int startPage =
+                (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage
+                        ? (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+
+        int endPage =
+                (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+
+        for (int i = startPage; i <= endPage; i++) {
+            System.out.println(i + " , ");
+        }
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+//        model.addAttribute("postVo", postList);
+
+
+        model.addAttribute("staffList", memberList);
+
+
+        return "member/staffList";
     }
 
 
