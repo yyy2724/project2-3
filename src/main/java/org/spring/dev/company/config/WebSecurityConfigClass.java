@@ -1,6 +1,5 @@
 package org.spring.dev.company.config;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -31,9 +31,8 @@ import java.util.Objects;
 public class WebSecurityConfigClass {
 
 
-
     /*private final AuthenticationFailureHandler   customAuthenticationFailureHandler;*/
-    private final CustomAuthenticationHandler   customAuthenticationFailureHandler;
+    private final CustomAuthenticationHandler customAuthenticationFailureHandler;
 
     @Bean
     public MemberEntity memberEntity() {
@@ -53,7 +52,6 @@ public class WebSecurityConfigClass {
     }
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -65,12 +63,17 @@ public class WebSecurityConfigClass {
         // 이건 나중에 하겠음
         http.authorizeHttpRequests()
                 // 로그인시
-                .antMatchers("/login/logout","/member/m").authenticated()
+                .antMatchers("/login/logout", "/member/m").authenticated()
                 // OAUTH 정보 추가 페이지
                 .antMatchers("/member/**").permitAll()
                 // 모두 허용
                 .anyRequest().permitAll()
         ;
+//        // 자동로그인 설정
+//        http.rememberMe()
+//                .rememberMeParameter("rememberMe")
+//                .tokenValiditySeconds(86400 * 30)
+//                .userDetailsService(userDetailsService());
 
 
         // 로그인 설정
@@ -125,21 +128,27 @@ public class WebSecurityConfigClass {
 
         // 로그아웃 설정 -> logout(기본)
         http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")) // 직접 로그아웃 URL
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 직접 로그아웃 URL
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/member/m")
         ;
 
         return http.build();
     }
+
+
+//    public UserDetailsService userDetailsService(){
+//        return userDetailsService();
+//    }
 
     // OAuth2.0 SNS로그인 설정
     @Bean       // 요청, User
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> myOAuth2UserService() {
         return new MyOAuth2UserService();
     }
+
 
 }
 

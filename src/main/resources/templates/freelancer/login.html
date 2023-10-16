@@ -38,6 +38,10 @@
                             <li>
                                 <button type="button" onclick="redirectToJoinPage()">회원가입</button>
                             </li>
+                            <li>
+                                <label for="rememberMe">로그인상태 유지</label>
+                                <input type="checkbox" name="rememberMe" id="rememberMe">
+                            </li>
                             <li class="oauth-login">
                                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}"
                                                                                   alt="google"></a>
