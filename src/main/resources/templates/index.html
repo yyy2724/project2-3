@@ -47,7 +47,25 @@
             </div>
             </th:block>
             <th:block sec:authorize="hasAnyRole('FREELANCER')">
-
+                <!-- table말고 div -->
+                <div class="detail">
+                    <table class="detailTable">
+                        <thead class="detailThead">
+                        <tr>
+                            <th>이름</th>
+                            <th>생년월일</th>
+                            <th>이메일</th>
+                            <th>전화번호</th>
+                        </tr>
+                        </thead>
+                        <tbody class="detailTbody">
+                            <td th:text="${#authentication.principal.memberEntity.name}"></td>
+                            <td th:text="${#authentication.principal.memberEntity.birth}"></td>
+                            <td th:text="${#authentication.principal.memberEntity.email}"></td>
+                            <td th:text="${#authentication.principal.memberEntity.phone}"></td>
+                        </tbody>
+                    </table>
+                </div>
             </th:block>
             <th:block sec:authorize="hasAnyRole('COMPANY')">
 
