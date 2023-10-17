@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -171,10 +172,71 @@ public class BoardService {
         BoardEntity boardEntity = boardRepository.findById(boardDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("수정할 게시글이 존재하지 않습니다."));
 
+        Optional<FileEntity> optionalFileEntity = fileRepository.findByBoardEntityId(boardDto.getId());
+
+        if(optionalFileEntity.isPresent()) {
+            String fileNewName = optionalFileEntity.get().getNewName();
+            String filePath = "C:/saveFiles/" + fileNewName;
+            File deleteFile = new File(filePath);
+
+            if(deleteFile.exists()) {
+                deleteFile.delete();
+                System.out.println("파일을 삭제하였습니다.");
+            } else {
+                System.out.println("파일이 존재하지 않습니다.");
+            }
+            fileRepository.delete(optionalFileEntity.get());
+        }
+
+
         boardEntity.setWriter(boardDto.getWriter());
         boardEntity.setTitle(boardDto.getTitle());
         boardEntity.setContent(boardDto.getContent());
 
         boardRepository.save(boardEntity);
+
+
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(boardDto.getId());
+
+
+        if (boardDto.getBoardFile().isEmpty()) {
+            // 파일 없는 경우
+            boardEntity.setWriter(boardDto.getWriter());
+            boardEntity.setTitle(boardDto.getTitle());
+            boardEntity.setContent(boardDto.getContent());
+            boardEntity.setIsFile(0);
+            boardRepository.save(boardEntity);
+
+        } else {
+            // 파일 있는 경우
+            MultipartFile boardFile = boardDto.getBoardFile();
+            String fileOldName = boardFile.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
+            String fileNewName = uuid + "_" + fileOldName;
+            String savePath = "C:/saveFiles/" + fileNewName;
+            boardFile.transferTo(new File(savePath));
+
+            boardEntity.setWriter(boardDto.getWriter());
+            boardEntity.setTitle(boardDto.getTitle());
+            boardEntity.setContent(boardDto.getContent());
+            boardEntity.setIsFile(1);
+            boardRepository.save(boardEntity);
+
+            FileEntity bFileEntity = FileEntity.builder()
+                    .boardEntity(boardEntity)
+                    .newName(fileNewName)
+                    .oldName(fileOldName)
+                    .build();
+            Long fileId = fileRepository.save(bFileEntity).getId();
+            fileRepository.findById(fileId).orElseThrow(()->{
+                throw new IllegalArgumentException("파일등록에 실패하였습니다.");
+            });
+        }
+
+        boardRepository.findById(boardDto.getId()).orElseThrow(() -> {
+            throw new IllegalArgumentException("게시글 수정에 실패하였습니다.");
+        });
+
+
     }
 }

@@ -1,3 +1,7 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+
 .member_ok{
 color:#008000;
 display: none;

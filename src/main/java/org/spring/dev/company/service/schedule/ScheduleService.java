@@ -4,7 +4,8 @@ package org.spring.dev.company.service.schedule;
 import lombok.AllArgsConstructor;
 import org.spring.dev.company.dto.schedule.ScheduleDto;
 import org.spring.dev.company.entity.schedule.ScheduleEntity;
-import org.spring.dev.company.repository.schedule.ScheduleRepository;
+import org.spring.dev.company.repository.schedule.ScheduleQueryDsl;
+import org.spring.dev.company.repository.schedule.ScheduleRepostory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleService {
 
-    private ScheduleRepository scheduleRepostory;
+    private ScheduleRepostory scheduleRepostory;
+
+    private ScheduleQueryDsl scheduleQueryDsl;
 
     public List<ScheduleDto> getScheduleDetail(ScheduleDto scheduleDto) {
         List<ScheduleDto> scheduleDtoList = new ArrayList<ScheduleDto>();
-        List<ScheduleEntity> scheduleEntityList = scheduleRepostory.findScheduleSearch(scheduleDto);
+        List<ScheduleEntity> scheduleEntityList = scheduleQueryDsl.findScheduleSearch(scheduleDto);
 
         //비어있지 않다면
         if(!scheduleEntityList.isEmpty())
@@ -32,14 +35,24 @@ public class ScheduleService {
     }
 
 
-    //스케줄 생성
+    //생성
     public ScheduleDto postSchedule(ScheduleDto scheduleDto) {
 
-        ScheduleEntity scheduleEntity = scheduleRepostory.insertSchedule(scheduleDto);
+        ScheduleEntity result = scheduleRepostory.save(ScheduleEntity.toEntity(scheduleDto));
 
-
-
-        return scheduleDto;
-
+        return ScheduleDto.toDto(result);
     }
+
+
+    //업데이트
+    public ScheduleDto postSchedule(Long scheduleId, ScheduleDto scheduleDto) {
+        scheduleDto.setId(scheduleId);
+        ScheduleEntity result = scheduleRepostory.save(ScheduleEntity.toEntity(scheduleDto));
+
+        return ScheduleDto.toDto(result);
+    }
+
+
+    //스케줄 생성
+
 }

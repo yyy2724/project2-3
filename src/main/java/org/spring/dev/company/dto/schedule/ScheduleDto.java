@@ -3,6 +3,8 @@ package org.spring.dev.company.dto.schedule;
 import lombok.*;
 import org.spring.dev.company.entity.schedule.ScheduleEntity;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -15,10 +17,13 @@ public class ScheduleDto {
 
         private Long id;
 
+        @Valid
         private LocalDateTime startDateTime;
 
+        @Valid
         private LocalDateTime endDateTime;
 
+        @Valid
         private String content;
 
         private String color;

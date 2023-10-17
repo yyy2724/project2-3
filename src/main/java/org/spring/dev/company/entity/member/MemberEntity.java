@@ -130,7 +130,7 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setExtraAddress(memberDto.getExtraAddress());
         memberEntity.setGrade(ApproType.FREELANCER);
         memberEntity.setGender(memberDto.getGender());
-        memberEntity.setIs_display(1);
+        memberEntity.setMatching(memberDto.isMatching());
         return memberEntity;
     }
 

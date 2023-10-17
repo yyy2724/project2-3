@@ -10,11 +10,19 @@
             <ul>
                 <li><a th:href="@{/}"><img th:src="@{/images/worktime/zoom.png}" alt="검색" class="zoom"></a></li>
                 <li><a th:href="@{/}"><img th:src="@{/images/worktime/list.png}" alt="리스트" class="list"></a></li>
+                <li><a th:href="@{/}"><img th:src="@{/images/mail.png}" alt="메일" class="mail"></a></li>
 <!--                추후 security설정 요함-->
-                <li><a th:href="@{/login/login}">로그인</a></li>
-                <li><a th:href="@{/member/join}">회원가입</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a th:href="@{/login/login}">로그인</a></li>
+                </th:block>
+                <th:block sec:authorize="hasAnyRole('STAFF', 'FREELANCER' ,'COMPANY')">
+                    <li><a th:href="@{/member/logoout}">로그아웃</a></li>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a th:href="@{/member/join}">회원가입</a></li>
+                </th:block>
 <!--                로그인 시 회원 이름 보이게-->
-                <li><span></span>님</li>
+<!--                <li><span th:text="${authentication.principal.memberEntity.id}"></span>님</li>-->
             </ul>
         </div>
     </div>

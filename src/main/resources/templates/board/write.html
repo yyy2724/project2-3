@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,11 +18,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/board/write.js}" defer></script>
     <script th:src="@{/js/board/calendar.js}" defer></script>
-    <script th:src="@{/js/board/pushMessage.js}" defer></script>
+    <link rel="stylesheet" th:href="@{/css/board/write.css}">
+
 
 </head>
 <body>
-
+<th:block layout:fragment="container">
     <div class="container">
 
         <div class="write">
@@ -106,5 +109,6 @@
 
         </div>
     </div>
+</th:block>
 </body>
 </html>
