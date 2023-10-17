@@ -3,8 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <link rel="stylesheet" th:href="@{/css/member/login.css}">
-<<<<<<< HEAD
-=======
 <script>
     function redirectToJoinPage() {
         // 페이지 이동
@@ -15,11 +13,7 @@
         // 페이지 이동
         window.location.href = '/member/findPw'
     }
-
-
 </script>
-
->>>>>>> 17323740eb28197568f82466860eee6302d30272
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -33,7 +27,6 @@
                     <h1>로그인</h1>
 
                     <form th:action="@{/login/login}" method="post">
-<!--                        <input type="hidden" value="secret" name="secret_key">-->
                         <ul>
                             <li>
                                 <input type="email" name="email" id="email" placeholder="아이디를 입력해주세요"
@@ -55,9 +48,6 @@
                                 <button type="submit">로그인</button>
                             </li>
                             <li>
-<<<<<<< HEAD
-                                <a th:href="@{/member/join}">회원가입</a>
-=======
                                 <button type="button" onclick="redirectToJoinPage()">회원가입</button>
                             </li>
                             <li>
@@ -70,7 +60,6 @@
                                                                                  alt="kakao"></a>
                                 <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/images/oauth2/naver.jpg}"
                                                                                  alt="naver"></a>
->>>>>>> 17323740eb28197568f82466860eee6302d30272
                             </li>
 
                         </ul>
