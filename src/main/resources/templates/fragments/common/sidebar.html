@@ -36,19 +36,19 @@
                             <!--security 관리자 권한 부여-->
                             <th:block sec:authorize="hasAnyRole('STAFF')">
                                 <li>
-                                    <a th:href="@{/member/detail/{id}}">마이페이지</a>
+                                    <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
                                 </li>
                             </th:block>
                             <!--security 프리랜서 권한 부여-->
                             <th:block sec:authorize="hasAnyRole('FREELANCER')">
                                 <li>
-                                    <a th:href="@{/member/freeDetail/{memberId}}">프리랜서마이페이지</a>
+                                    <a th:href="@{/member/freeDetail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">프리랜서마이페이지</a>
                                 </li>
                             </th:block>
                             <!--security 회사 권한 부여-->
                             <th:block sec:authorize="hasAnyRole('COMPANY')">
                                 <li>
-                                    <a th:href="@{/member/freeDetail/{memberId}}">회사마이페이지</a>
+                                    <a th:href="@{/member/companyDetail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">회사마이페이지</a>
                                 </li>
                             </th:block>
                             <li>
@@ -62,18 +62,20 @@
                     <li><a href="#">근무/근태</a>
                         <ul class="small">
                             <li>
-                                <a th:href="@{/work}">출근/퇴근</a>
+                                <a th:href="@{/work/commute}">출근/퇴근</a>
                             </li>
                             <li>
                                 <a th:href="@{/work}">근무기록</a>
                             </li>
                             <li>
-                                <a th:href="@{/pay/{memberId}}">월급내역</a>
+                                <a th:href="@{/pay/}">월급내역</a>
                             </li>
                             <!--security 프리랜서 권한 부여-->
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
-                                <a th:href="@{/}">일정관리</a>
+                                <a th:href="@{/schedule/index/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">일정관리</a>
                             </li>
+                            </th:block>
                         </ul>
                     </li>
                     <li><a href="#">공지사항</a>
