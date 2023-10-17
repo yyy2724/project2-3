@@ -81,7 +81,8 @@ public class WorkTimeController {
     @PostMapping("/workin/{memberId}")
     @ResponseBody
     public Map<String, Object> postWorkIn(
-            @PathVariable(name = "memberId") Long memberId
+            @PathVariable(name = "memberId") Long memberId,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
         Map<String, Object> map = new HashMap<>();
         Long result = workTimeService.postWorkTimeIn(memberId);
@@ -101,7 +102,8 @@ public class WorkTimeController {
     @PostMapping("/workout/{memberId}")
     @ResponseBody
     public Map<String, Object> postWorkOut(
-            @PathVariable(name = "memberId") Long memberId
+            @PathVariable(name = "memberId") Long memberId,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
         Map<String, Object> map = new HashMap<>();
         Long result = workTimeService.postWorkTimeOut(memberId);

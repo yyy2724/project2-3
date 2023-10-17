@@ -1,7 +1,7 @@
 var memberId = $('#memberId').val();
 
 var workInButton = document.querySelector('#workInBtn');
-        workInButton.addEventListener("click", function (memberId) {
+        workInButton.addEventListener("click", function () {
             $.ajax({
                 url: "/work/workin/" + memberId,
                 method: "POST",

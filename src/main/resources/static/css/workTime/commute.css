@@ -2,22 +2,67 @@
 @import url(/css/common/header.css);
 @import url(/css/common/sidebar.css);
 
-#content {
-    width: 80vw;
-    text-align: center;
-    margin: 0 auto
+body{
+    position: fixed;
+}
+.container{
+    width: 1720px;
+    padding: 10px 0 10px 0;
+    display: flex;
+    justify-content: center;
+}
+.container .content{
+    width: inherit;
+}
+.container .content .content-con{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 /* title */
-content .content-header h2{
-    font-size: 40px;
+.content .content-con .content-header{
+    text-align: center;
+    padding-bottom: 100px;
 }
+/* .content .content-header h2{
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+} */
 /* main */
-content .content-main .left{
-    font-size: 22px;
-    padding-bottom: 10px;
+.content .content-con .content-main{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
 }
-content .content-main .right{
-    font-size: 22px;
-    padding-bottom: 10px;
+.content .content-main .left{
+    text-align: center;
+    width: 400px;
+    height: 200px;
+}
+.content .content-main .right{
+    text-align: center;
+    width: 400px;
+    height: 200px;
+}
+button{
+    cursor: pointer;
+    width: inherit;
+    height: inherit;
+    border-radius: 10px;
+    border: none;
+    background-color: #152161;
+}
+button:hover{
+    color: #c5c5c5;;
+}
+input{
+    cursor: pointer;
+    border: none;
+    background-color: #152161;
+    font-size: 80px;
+    color: white;
 }
