@@ -15,7 +15,7 @@ public class AccountsService {
 
     private final AccountsRepository accountsRepository;
 
-    public AccountsDto postAccout(AccountsDto accountsDto) {
+    public AccountsDto postAccount(AccountsDto accountsDto) {
 
         AccountsEntity result = accountsRepository.save(AccountsEntity.toEntity(accountsDto));
 
