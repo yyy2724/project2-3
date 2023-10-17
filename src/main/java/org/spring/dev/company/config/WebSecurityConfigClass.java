@@ -63,7 +63,7 @@ public class WebSecurityConfigClass {
         // 이건 나중에 하겠음
         http.authorizeHttpRequests()
                 // 로그인시
-                .antMatchers("/login/logout", "/member/m").authenticated()
+                .antMatchers("/member/logout","/member/m").authenticated()
                 // OAUTH 정보 추가 페이지
                 .antMatchers("/member/**").permitAll()
                 // 모두 허용
@@ -132,7 +132,7 @@ public class WebSecurityConfigClass {
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/member/m")
+                .logoutSuccessUrl("/login/login")
         ;
 
         return http.build();

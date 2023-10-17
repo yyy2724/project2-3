@@ -8,6 +8,13 @@
         // 페이지 이동
         window.location.href = '/member/join';
     }
+
+    function pwSearch(){
+        // 페이지 이동
+        window.location.href = '/member/findPw'
+    }
+
+
 </script>
 
 <head>
@@ -46,6 +53,9 @@
                             </li>
                             <li>
                                 <button type="button" onclick="redirectToJoinPage()">회원가입</button>
+                            </li>
+                            <li>
+                                <button type="button" onclick="pwSearch()">비밀번호 찾기</button>
                             </li>
                             <li class="oauth-login">
                                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}"

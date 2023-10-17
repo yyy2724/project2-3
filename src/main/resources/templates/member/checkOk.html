@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>비밀번호찾기</title>
+    <link rel="stylesheet" href="/css/member/checkOk.css">
 </head>
 <body>
-<form th:action="@{/member/checkOk}" method="post">
-    아이디  <input type="text" th:value="${email}"  name="email" id="email" class="email" readonly>
-    비밀번호 <input type="password" name="password" id="password" class="password" >
-    <input type="submit" class="btn">
-</form>
+<div class="container">
+    <h1>비밀번호 설정</h1><br>
+    <form th:action="@{/member/checkOk}" method="post">
+        <div>
+            <div class="forTextLabel">
+                이메일
+            </div>
+            <div class="forText">
+                <input type="text" th:value="${email}" name="email" id="emailText" class="emailText" readonly>
+            </div>
+
+        </div>
+        <div class="in">
+            <div class="forTextLabel">
+                새 비밀번호
+            </div>
+            <div class="forText">
+                <input type="password" name="password" id="certificationNumber" class="password">
+            </div>
+
+
+            <div>
+                <input type="submit" class="btn" id="certificationBtn" value="설정완료" />
+            </div>
+        </div>
+
+    </form>
+</div>
 </body>
 </html>
