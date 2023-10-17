@@ -2,6 +2,7 @@ package org.spring.dev.company.service.pay;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.pay.PayDto;
+import org.spring.dev.company.dto.workTime.WorkTimeDto;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.pay.PayEntity;
 import org.spring.dev.company.entity.worktime.WorkTimeEntity;
@@ -59,6 +60,19 @@ public class PayService {
                 payDtoList.add(payDto);
             }
         }
+        return payDtoList;
+    }
+
+    public List<PayDto> getPayYearList(Long memberId, String workYear) {
+        List<PayDto> payDtoList = new ArrayList<PayDto>();
+
+        List<PayEntity> payEntityList = payRepository.findByPayYear(memberId, workYear);
+
+        for (PayEntity payEntity: payEntityList) {
+            payDtoList.add( PayDto.toDto(payEntity));
+
+        }
+
         return payDtoList;
     }
 }

@@ -17,15 +17,21 @@ import java.util.Objects;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
+
+    @GetMapping("/{memberId}/index")
+    public String index(
+            @PathVariable(name = "memberId") Long memberId) {
+        return "schedule/schedule";
+    }
+
     /*
         멤버 아이디를 필수로 개인 스퀘줄 정보를 가져옴
         검색 조건에 따라 가져올수있게 설정
      */
     @GetMapping("/{memberId}")
     @ResponseBody
-    public List<ScheduleDto> getScheduleDetail(
-            @PathVariable(name = "memberId") Long memberId,
-            @RequestBody ScheduleDto scheduleDto)
+    public List<ScheduleDto> getScheduleDetail(ScheduleDto scheduleDto,
+            @PathVariable(name = "memberId") Long memberId)
     {
 
         List<ScheduleDto> scheduleDtoList = scheduleService.getScheduleDetail(scheduleDto);
@@ -33,15 +39,25 @@ public class ScheduleController {
         return scheduleDtoList;
     }
 
+
+    //일정 생성
     @PostMapping("/{memberId}")
     @ResponseBody
     public ScheduleDto postSchedule(
             @PathVariable(name = "memberId") Long memberId,
             @RequestBody ScheduleDto scheduleDto)
     {
+        ScheduleDto result = scheduleService.postSchedule(scheduleDto);
+        return scheduleDto;
+    }
 
-//        ScheduleDto scheduleDto = scheduleService.postSchedule(scheduleDto);
-
+    @PostMapping("/update/{scheduleId}")
+    @ResponseBody
+    public ScheduleDto updateSchedule(
+            @PathVariable(name = "scheduleId") Long scheduleId,
+            @RequestBody(required = true) ScheduleDto scheduleDto)
+    {
+        ScheduleDto result = scheduleService.postSchedule(scheduleId,scheduleDto);
         return scheduleDto;
     }
 

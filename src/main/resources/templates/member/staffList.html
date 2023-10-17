@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
 <head>
     <meta charset="UTF-8">
     <title>직원 목록</title>
-    <!-- 프리랜서들만 보입니다.!!!!!!! -->
+    <link rel="stylesheet" th:href="@{/css/member/staffList.css}">
 </head>
+<th:block layout:fragment="container">
 <body>
-
-<script>
-    let i = 0;
-</script>
-
 <!-- 관리자용 회원 관리 페이지 -->
-<!-- 프리랜서들만 보입니다.!!!!!!! -->
 <div class="container">
     <div class="container-con">
         <div class="memberList">
@@ -24,120 +21,107 @@
                 </div>
 
                 <div class="search">
-                    <div class="search-con">
-                        <form action="/member/staffList" method="get" class="search">
-                            <select name="subject" id="subject">
-                                <option value="name">이름</option>
-                                <option value="email">이메일</option>
-                            </select>
-                            <input type="text" name="search" id="search" th:value="${param.search}">
-                            <input type="submit" value="검색">
-                        </form>
-                    </div>
+                        <div class="form">
+                            <form th:action="@{/member/staffList}" method="get" class="search">
+                                <select name="subject" id="subject">
+                                    <option th:value="name">이름</option>
+                                    <option th:value="email">이메일</option>
+                                </select>
+                                <input type="text" name="search" id="search" th:value="${param.search}">
+                                <button type="submit">
+                                    <img th:src="@{/images/worktime/zoom.png}" alt="검색" class="zoom">
+                                </button>
+                            </form>
+                        </div>
                 </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>순번</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>보기</th>
+                        <th>정산</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="staff, iterStat:${staffList}">
+                        <th:block th:if="${staff.grade.toString()} == 'STAFF'">
+                            <th:block th:if="${staff.is_display} == 1">
+                            <td th:text="${iterStat.count}"></td>
+                            <td th:text="${staff.name}"></td>
+                            <td th:text="${staff.email}"></td>
+                            <td th:text="${staff.phone}"></td>
+                            <td><a th:href="@{/member/detail/{memberId}(memberId=${staff.id})}">상세보기</a></td>
+                            <td>
+                                <form th:action="@{/pay/{memberId}(memberId=${staff.id})}" method="post" class="pay">
+                                    <input type="hidden" name="workMonth" value="workMonth">
+                                    <select name="workMonth" id="workMonth">
+                                        <option value="01">1월</option>
+                                        <option value="02">2월</option>
+                                        <option value="03">3월</option>
+                                        <option value="04">4월</option>
+                                        <option value="05">5월</option>
+                                        <option value="06">6월</option>
+                                        <option value="07">7월</option>
+                                        <option value="08">8월</option>
+                                        <option value="09">9월</option>
+                                        <option value="10">10월</option>
+                                        <option value="11">11월</option>
+                                        <option value="12">12월</option>
+                                    </select>
+<!--                                    <input type="hidden" name="id" th:value="id">-->
 
-                <div class="memberList-container">
-                    <table>
-                        <thead>
-                        <tr class="th1">
-                            <th colspan="8">직원 목록</th>
-                        </tr>
-                        <tr class="th2">
-                            <th>순번</th>
-                            <th>이름</th>
-                            <th>이메일</th>
-                            <th>전화번호</th>
-                            <th>메뉴</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <tr th:each="staff, iterStat:${staffList}">
-                            <th:block th:if="${staff.grade.toString()} == 'COMPANY'">
-                                <th:block th:if="${staff.is_display} == 1">
-                                    <script>
-                                        i++;
-                                    </script>
-                                    <td th:text="${iterStat.count}"></td>
-                                    <td th:text="${staff.name}"></td>
-                                    <td th:text="${staff.email}"></td>
-                                    <td th:text="${staff.phone}"></td>
-                                    <td>
-                                        <!--                                <a th:href="@{/member/delete/{id}(id=${member.id})}">삭제</a>-->
-                                        <!--                                <a th:href="@{/member/update/{id}(id=${member.id})}">수정</a>-->
-                                        <a th:href="@{/member/detail/{memberId}(memberId=${staff.id})}">상세보기</a>
-                                    </td>
-                                </th:block>
-                            </th:block>
-                        </tr>
-
-                        </tbody>
-                    </table>
-
-                    <div class="paging">
+                                    <button>
+                                        <input type="submit" name="price" value="price">
+                                    </button>
+                                </form>
+<!--                                <a th:href="@{/pay/{memberId}(memberId=${staff.id})}">정산하기</a>-->
+                            </td>
+                        </th:block>
+                        </th:block>
+                    </tr>
+                    </tbody>
+                 </table>
+                <div class="page">
                         <ul>
                             <li>
-                                <!--페이징 보류  -->
-                                <!--                                    <span th:if="${1==postList.pageable.pageNumber+1}"></span>-->
-                                <!-- 현재페이지가 첫번째 페이지이면 span표시 -->
                                 <span th:if="${1==staffList.pageable.pageNumber+1}" class="span0">START</span>
-                                <!-- 처음 페이지가 아니면 처음(누를시 1페이지로) -->
                                 <span th:unless="${1==staffList.pageable.pageNumber+1}">
-                                    <a th:href="@{/member/staffList(page=0,search=${param.search} ,subject=${param.subject})}"
-                                       class="span1">처음</a>
-                                    </span>
+                                    <a th:href="@{/member/staffList(page=0,search=${param.search} ,subject=${param.subject})}" class="span1">처음</a>
+                                </span>
                             </li>
-
                             <li>
-                                <!-- 첫페이지 일때 -->
                                 <span th:if="${1==staffList.pageable.pageNumber+1}" class="span0">Pre</span>
                                 <span th:unless="${1==staffList.pageable.pageNumber+1}">
-                                        <a th:href="@{/member/staffList(page=${staffList.pageable.pageNumber-1},search=${param.search} ,subject=${param.subject})}"
-                                           class="span1">이전</a>
-                                     </span>
+                                        <a th:href="@{/member/staffList(page=${staffList.pageable.pageNumber-1},search=${param.search} ,subject=${param.subject})}" class="span1">이전</a>
+                                </span>
                             </li>
-
-
                             <li th:each="i : ${#numbers.sequence(startPage, endPage)}" class="block">
-                                    <span th:if="${i == staffList.pageable.pageNumber+1}" th:text="${i}"
-                                          class="now"></span>
-
-                                <a th:unless="${i == staffList.pageable.pageNumber+1}"
-                                   th:href="@{/member/staffList(page=${i - 1},search=${param.search} ,subject=${param.subject})}"
-                                   th:text="${i}"></a>
+                                <span th:if="${i == staffList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
+                                <a th:unless="${i == staffList.pageable.pageNumber+1}" th:href="@{/member/staffList(page=${i - 1},search=${param.search} ,subject=${param.subject})}" th:text="${i}"></a>
                             </li>
-
                             <li>
-                                <span th:if="${staffList.totalPages == staffList.pageable.pageNumber + 1}"
-                                      class="span0">NEXT</span>
-
+                                <span th:if="${staffList.totalPages == staffList.pageable.pageNumber + 1}" cclass="span0">NEXT</span>
                                 <span th:unless="${staffList.totalPages == staffList.pageable.pageNumber + 1}">
-                            <a th:href="@{/member/staffList(page=${staffList.pageable.pageNumber + 1},search=${param.search} ,subject=${param.subject} )}"
-                               class="span1">다음</a>
-                        </span>
+                                    <a th:href="@{/member/staffList(page=${staffList.pageable.pageNumber + 1},search=${param.search} ,subject=${param.subject} )}" class="span1">다음</a>
+                                </span>
                             </li>
-
-
                             <li>
-                                <span th:if="${staffList.totalPages == staffList.pageable.pageNumber + 1}"
-                                      class="span0">END</span>
-
+                                <span th:if="${staffList.totalPages == staffList.pageable.pageNumber + 1}" class="span0">END</span>
                                 <span th:unless="${staffList.totalPages == staffList.pageable.pageNumber+1}">
-                            <a th:href="@{/member/companyList(page=${staffList.totalPages}-1,search=${param.search} ,subject=${param.subject})}"
-                               class="span1">마지막</a>
-                        </span>
+                                    <a th:href="@{/member/companyList(page=${staffList.totalPages}-1,search=${param.search} ,subject=${param.subject})}" class="span1">마지막</a>
+                                </span>
                             </li>
-
                         </ul>
                     </div>
-
-
-                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+</th:block>
 </html>
 
 

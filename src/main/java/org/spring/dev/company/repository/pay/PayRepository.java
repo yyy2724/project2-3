@@ -20,4 +20,11 @@ public interface PayRepository extends JpaRepository<PayEntity, Long> {
     List<PayEntity> findByPayMonth(@Param("id") Long memberId, @Param("month") String payMonth);
 
     List<PayEntity> findBymemberEntity_Id(Long memberId);
+
+    @Modifying
+    @Query(value = "SELECT * "+
+            "FROM c_pay "+
+            "WHERE YEAR(pay_day) = :year "+
+            "AND member_id = :id", nativeQuery = true)
+    List<PayEntity> findByPayYear(@Param("id") Long memberId, @Param("year") String workYear);
 }
