@@ -35,8 +35,9 @@ body{
 /* main */
 .content .content-con .content-main{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     padding: 20px;
+    gap: 200px;
 }
 .content .content-main .left{
     text-align: center;

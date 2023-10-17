@@ -36,6 +36,10 @@
 .header .nav .right-nav>ul>li{
     padding: 10px;
 }
+.header .nav .right-nav>ul>li span{
+    font-size: 20px;
+    border-bottom: 1px solid black;
+}
 .header .nav .right-nav>ul>li a{
     font-size: 20px;
     padding: 10px;

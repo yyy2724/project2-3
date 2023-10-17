@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/common/loginList.css}">
 </head>
 <body>
-<ul>
-    <li>
-        <a th:href="@{/member/login}">직원로그인</a>
-    </li>
-    <li>
-        <a th:href="@{/member/companyLogin}">회사로그인</a>
-    </li>
-    <li>
-        <a th:href="@{/member/freelancerLogin}">프리렌서로그인</a>
-    </li>
-</ul>
+<div class="header">
+    <span class="red"></span>
+    <span class="yellow"></span>
+    <span class="green"></span>
+</div>
+<div class="main">
+    <div class="nav">
+        <div class="top">
+            <a th:href="@{/member/login}">직원로그인</a>
+        </div>
+        <div class="middle">
+            <a th:href="@{/member/companyLogin}">회사로그인</a>
+        </div>
+        <div class="bottom">
+            <a th:href="@{/member/freelancerLogin}">프리렌서로그인</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

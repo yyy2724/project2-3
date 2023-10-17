@@ -13,7 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/board/calendar.js}" defer></script>
-    <script th:src="@{/js/index.js}" defer></script>
 </head>
 <th:block layout:fragment="container">
     <body>
@@ -49,8 +48,9 @@
             <th:block sec:authorize="hasAnyRole('FREELANCER')">
                 <!-- table말고 div -->
                 <div class="detail">
-                    <table class="detailTable">
-                        <thead class="detailThead">
+                    <h2>내정보</h2>
+                    <table>
+                        <thead>
                         <tr>
                             <th>이름</th>
                             <th>생년월일</th>
@@ -68,7 +68,27 @@
                 </div>
             </th:block>
             <th:block sec:authorize="hasAnyRole('COMPANY')">
-
+                <div class="detail">
+                    <h2>내정보</h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>회사명</th>
+                            <th>사업자번호</th>
+                            <th>대표자명</th>
+                            <th>이메일</th>
+                            <th>전화번호</th>
+                        </tr>
+                        </thead>
+                        <tbody class="detailTbody">
+                        <td th:text="${#authentication.principal.memberEntity.name}"></td>
+                        <td th:text="${#authentication.principal.memberEntity.businessNumber}"></td>
+                        <td th:text="${#authentication.principal.memberEntity.companyName}"></td>
+                        <td th:text="${#authentication.principal.memberEntity.email}"></td>
+                        <td th:text="${#authentication.principal.memberEntity.phone}"></td>
+                        </tbody>
+                    </table>
+                </div>
             </th:block>
         </div>
         <div class="middle">
