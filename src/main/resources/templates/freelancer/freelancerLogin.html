@@ -2,11 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:c="http://www.w3.org/1999/XSL/Transform">
-<link rel="stylesheet" th:href="@{/css/member/login.css}">
+<link rel="stylesheet" th:href="@{/css/freelancer/freelancerLogin.css}">
 <script>
     function redirectToJoinPage() {
         // 페이지 이동
         window.location.href = '/member/join';
+    }
+    function pwSearch(){
+        // 페이지 이동
+        window.location.href = '/member/findPw'
     }
 </script>
 
@@ -45,7 +49,10 @@
                                 <button type="submit">로그인</button>
                             </li>
                             <li>
-                                <a th:href="@{/member/freeJoin}">회원가입</a>
+                                <button type="button" onclick="redirectToJoinPage()">회원가입</button>
+                            </li>
+                            <li>
+                                <button type="button" onclick="pwSearch()">비밀번호 찾기</button>
                             </li>
                             <li class="oauth-login">
                                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}"
