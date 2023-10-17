@@ -59,6 +59,7 @@ function replyListFn(boardIdVal){
                            <td>
                                 <input type="text" value='${el.id}' name="replyId2" id="replyId2" readonly>
                                <input type="text" value='${el.boardId}' readonly><br>
+                               <input type="text" value='${el.email}' readonly><br>
                                <input type="text" value="${el.writer}"  class="updateWriter" readonly ><br>
                                <input type="text" value="${el.content}"  class="updateContent" readonly><br>
                                    <span >${el.createTime}</span><br>
@@ -67,7 +68,6 @@ function replyListFn(boardIdVal){
                                        <button type="button" value="${el.id}" onclick="showUpdate(event, ${el.id})">수정</button>
                                        <button type="button" value="${el.id}" class="replyDeleteBtn" onclick="replyDelete(${el.id})">삭제</button>
                                    </span>
-
                                </div>
                                <div class="update" style="display: none;">
                                   <input type="button" value="수정완료" class="replyUpdateBtn" onclick="replyUpdate(${el.id})">

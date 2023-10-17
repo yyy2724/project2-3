@@ -21,20 +21,17 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-
-
     @PostMapping("/write")
     public ResponseEntity<Integer> write(@AuthenticationPrincipal MyUserDetails myUserDetails,
                                          @RequestBody ReplyDto replyDto){
-//        String email = myUserDetails.getUsername();
-//        int replyRs = replyService.write(replyDto, email);
-        int replyRs = replyService.write(replyDto);
+        int replyRs = replyService.write(replyDto, myUserDetails);
         return new ResponseEntity<>(replyRs, HttpStatus.OK);
     }
 
     @GetMapping("/list/{boardId}")
     public ResponseEntity<List<ReplyDto>> memberList(@PathVariable("boardId") Long boardId){
         List<ReplyDto> replyDtos = replyService.replyFindAll(boardId);
+        System.out.println(replyDtos +"<<<replyDtos");
         return new ResponseEntity<>(replyDtos,HttpStatus.OK);
     }
 
