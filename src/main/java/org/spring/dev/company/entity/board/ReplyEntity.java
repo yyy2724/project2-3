@@ -1,6 +1,7 @@
 package org.spring.dev.company.entity.board;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.BaseEntity;
@@ -29,9 +30,11 @@ public class ReplyEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "board_id")
+
     private BoardEntity boardEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
+    @JsonIgnore
     private MemberEntity memberEntity;
 }

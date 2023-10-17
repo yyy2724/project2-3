@@ -30,6 +30,7 @@ public class ReplyDto {
     private LocalDateTime updateTime;
     private BoardEntity boardEntity;
     private MemberEntity memberEntity;
+    private String email;
 
     public static ReplyDto toReplyDto(ReplyEntity replyEntity) {
         ReplyDto replyDto = new ReplyDto();

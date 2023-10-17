@@ -29,11 +29,11 @@ public class BoardService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void boardWrite(BoardDto boardDto) throws IOException {
+    public void boardWrite(BoardDto boardDto, MyUserDetails myUserDetails) throws IOException {
 
-//        MemberEntity memberEntity = memberRepository.findByEmail(email).orElseThrow(()->{
-//            throw new IllegalArgumentException("아이디가 존재하지 않습니다.");
-//        });
+        MemberEntity memberEntity = memberRepository.findByEmail(myUserDetails.getMemberEntity().getEmail()).orElseThrow(()->{
+            throw new IllegalArgumentException("아이디가 존재하지 않습니다.");
+        });
 
 
         if(boardDto.getBoardFile().isEmpty()){
@@ -48,7 +48,7 @@ public class BoardService {
                     .endDate(boardDto.getEndDate())
                     .hit(0)
                     .isFile(0)
-//                    .memberEntity(memberEntity)
+                    .memberEntity(memberEntity)
                     .build();
             Long boardId = boardRepository.save(boardEntity).getId();
             boardRepository.findById(boardId).orElseThrow(()->{
@@ -73,7 +73,7 @@ public class BoardService {
                     .endDate(boardDto.getEndDate())
                     .hit(0)
                     .isFile(1)
-//                    .memberEntity(memberEntity)
+                    .memberEntity(memberEntity)
                     .build();
             Long boardId = boardRepository.save(boardEntity).getId();
             boardRepository.findById(boardId).orElseThrow(()->{
