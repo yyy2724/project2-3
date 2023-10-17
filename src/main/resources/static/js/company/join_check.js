@@ -1,41 +1,43 @@
-function companyCheck(){
+function companyCheck() {
     const company = $('#companyName').val();
     $.ajax({
-        url: "join/companyCheck",
+        url: "/join/companyCheck",
         type: 'post',
-        data: {"companyName":company},
-        success: function(cnt){
-            if(cnt == 0){
+        data: { "companyName": company },
+        success: function (cnt) {
+            if (cnt == 0) {
                 $('.company_ok').css("display", "inline-block");
                 $('.company_already').css("display", "none");
-            }else {
+            } else {
                 $('.company_already').css("display", "inline-block");
                 $('.company_ok').css("display", "none");
             }
         }
     });
 }
-function businessNumberCheck(){
+function businessNumberCheck() {
     const businessNumber = $('#businessNumber').val();
     var businessNumberEx = /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/;
-    if (!businessNumberEx.test(businessNumber)){
-
-    $.ajax({
-            url: "join/businessNumberCheck",
+    if (businessNumberEx.test(businessNumber)) {
+        $('.businessNumber_expression').css("display", "none");
+        $.ajax({
+            url: "/join/businessNumberCheck",
             type: 'post',
-            data: {"businessNumber":businessNumber},
-            success: function(cnt){
-                if(cnt == 0){
+            data: { "businessNumber": businessNumber },
+            success: function (cnt) {
+                if (cnt == 0) {
                     $('.businessNumber_ok').css("display", "inline-block");
                     $('.businessNumber_already').css("display", "none");
-                }else {
+                } else {
                     $('.businessNumber_already').css("display", "inline-block");
                     $('.businessNumber_ok').css("display", "none");
                 }
             }
         });
     } else {
-         $('.businessNumber_expression').css("display", "inline-block");
+        $('.businessNumber_expression').css("display", "inline-block");
+        $('.businessNumber_ok').css("display", "none");
+        $('.businessNumber_already').css("display", "none");
     }
 }
 function email_check() {
@@ -72,33 +74,35 @@ function phoneCheck() {
     let freePhone = 0;
     const validatePone = /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-(\d{3,4})-(\d{4})$/;
     if (!validatePone.test(phone)) {
-            $('.phone_expression').css("display", "inline-block");
-        } else {
-            $('.phone_expression').css("display", "none");
+        $('.phone_expression').css("display", "inline-block");
+        $('.phone_ok').css("display", "none");
+        $('.phone_already').css("display", "none");
+    } else {
+        $('.phone_expression').css("display", "none");
         $.ajax({
-        url: "/join/phoneCheck",
-        type: 'post',
-        data: { "phone": phone },
-        success: function (cnt) {
-            if (cnt == 1) {
-                $('.phone_already').css("display", "inline-block");
-                $('.phone_ok').css("display", "none");
-            } else {
-                $('.phone_ok').css("display", "inline-block");
-                $('.phone_already').css("display", "none");
+            url: "/join/phoneCheck",
+            type: 'post',
+            data: { "phone": phone },
+            success: function (cnt) {
+                if (cnt == 1) {
+                    $('.phone_already').css("display", "inline-block");
+                    $('.phone_ok').css("display", "none");
+                } else {
+                    $('.phone_ok').css("display", "inline-block");
+                    $('.phone_already').css("display", "none");
+                }
+
+            },
+            error: function () {
+                alert("에러입니다");
             }
-            console.log('memer-> ' + memberPhone);
-        },
-        error: function () {
-            alert("에러입니다");
-        }
-    });
+        });
     }
 }
 function checkPws() {
     const pw = $('#password').val();
     const email = $('#mail').val();
-    const pw_check = $('#checkPw').val();
+    const pw_check = $('#checkPassword').val();
     var passwordRules = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     if (!passwordRules.test(pw)) {
         $('.pw_string').css("display", "inline-block");
@@ -132,7 +136,7 @@ function checkPws() {
 
 function pw_check() {
     const pw = $('#password').val();
-    const pw_check = $('#checkPw').val();
+    const pw_check = $('#checkPassword').val();
 
     if (pw != pw_check) {
         $('.password_already').css("display", "inline-block");
