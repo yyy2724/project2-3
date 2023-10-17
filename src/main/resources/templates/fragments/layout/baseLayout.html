@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <script th:src="@{/js/chat/websocket.js}" defer></script>
+</head>
 <body>
-
 <div class="header" th:replace="~{fragments/common/header :: headerFragment}"></div>
 <div class="sidebar" th:replace="~{fragments/common/sidebar :: sidebarFragment}"></div>
 <th:block layout:fragment="container">

@@ -31,7 +31,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final ReplyService replyService;
+//    private final ReplyService replyService;
     private final BoardRepository boardRepository;
 
     @GetMapping("/write")

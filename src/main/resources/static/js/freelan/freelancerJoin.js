@@ -19,6 +19,7 @@ $(document).ready(function () {
         var postCode = $('#postcode').val();
         var detailAddress = $('#detailAddress').val();
         var regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        var gender = $('.gender').val();
 
         let inputCode = document.getElementById('certificationNumber').value;
         if (!regExpEm.test(email)) {
@@ -47,22 +48,22 @@ $(document).ready(function () {
         });
 
         $.ajax({
-                url: "/join/phoneCheck",
-                type: 'post',
-                data: { "phone": phone },
-                success: function (cnt) {
-                    if (cnt != 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+            url: "/join/phoneCheck",
+            type: 'post',
+            data: { "phone": phone },
+            success: function (cnt) {
+                if (cnt != 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
                     alert("사용중인 전화번호입니다.");
                     $('#phone').focus();
                     // 폼 전송 중단
                     event.preventDefault();
                     return false;
-                    }
-                },
-                error: function () {
-                    alert("에러입니다");
                 }
-            });
+            },
+            error: function () {
+                alert("에러입니다");
+            }
+        });
         if (!validatePassword(password)) {
             alert("비밀번호는 알파벳, 특수문자, 숫자가 최소 하나씩 포함되어야하고 8자리 이상이어야합니다");
             // 폼 전송 중단
@@ -91,6 +92,12 @@ $(document).ready(function () {
         } else if (detailAddress === "") {
             alert("상세주소를 입력해주세요.");
             $('#detailAddress').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false;
+        } else if (gender == "") {
+            alert("성별을 입력해주세요.")
+            $('#male').focus();
             // 폼 전송 중단
             event.preventDefault();
             return false;

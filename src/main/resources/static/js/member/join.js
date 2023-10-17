@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var now_utc = Date.now()
-    var timeOff = new Date().getTimezoneOffset()*60000;
-    var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+    var timeOff = new Date().getTimezoneOffset() * 60000;
+    var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
     document.getElementById("birth").setAttribute("max", today);
     function validatePassword(password) {
         // 최소 8자리 이상, 알파벳, 특수문자, 숫자가 각각 하나 이상 포함되어야 함
@@ -73,29 +73,35 @@ $(document).ready(function () {
             // 폼 전송 중단
             event.preventDefault();
             return false;
-        }else if (nickName == ""){
+        } else if (nickName == "") {
             alert("닉네임을 입력해주세요.");
             $('#nickName').focus();
             // 폼 전송 중단
             event.preventDefault();
             return false;
+        } else if (gender == "") {
+            alert("성별을 입력해주세요.")
+            $('#male').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false;
         }
         $.ajax({
-                type: "post",
-                url: "/member/emailCheck",
-                data: {email: clientEmail, inputCode: inputCode},
-                success: function (result) {
-                    console.log(result);
-                    if (result != true) {
-                        alert('인증번호가 틀립니다.');
-                        $('#mail').focus();
-                        // 폼 전송 중단
-                        event.preventDefault();
-                        return false;
-                        }
+            type: "post",
+            url: "/member/emailCheck",
+            data: { email: clientEmail, inputCode: inputCode },
+            success: function (result) {
+                console.log(result);
+                if (result != true) {
+                    alert('인증번호가 틀립니다.');
+                    $('#mail').focus();
+                    // 폼 전송 중단
+                    event.preventDefault();
+                    return false;
+                }
 
-                    }
-                });
+            }
+        });
 
         $('#adminJoinForm').submit();
     });

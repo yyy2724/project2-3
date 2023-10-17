@@ -1,58 +1,50 @@
-@import url(/css/common/reset.css);
-@import url(/css/common/header.css);
-@import url(/css/common/sidebar.css);
-
-.member_ok{
-color:#008000;
-display: none;
+/* 폼 전체 스타일 */
+#adminJoinForm {
+        width: auto;
+        padding: 20px 20px 20px 200px;
+        border: 1px solid #eaeaf0;
+        border-radius: 5px;
+        background-color: #eaeaf0;
 }
 
-.member_already{
-color:#6A82FB;
-display: none;
+/* 입력 필드 스타일 */
+#adminJoinForm input[type="text"],
+#adminJoinForm input[type="password"],
+#adminJoinForm input[type="date"],
+#adminJoinForm .form-control {
+    width: 800px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        font-size: 17px;
+            display: flex;
+            margin: 10px 0px;
 }
-.email_expression{
-color:#6A82FB;
-display: none;
-}
-.pw_string{
-color:#6A82FB;
-display: none;
-}
-.pw_length{
-color:#6A82FB;
-display: none;
-}
-.pw_true{
-color:#6A82FB;
-display: none;
-}
-.pw_email{
-color:#6A82FB;
-display: none;
-}
-.password_already{
-color:#ed0909;
-display: none;
-}
-.nick_ok{
-color:#008000;
-display: none;
+.genderList{
+    margin: 10px 0px;
 }
 
-.nick_already{
-color:#6A82FB;
-display: none;
+/* 버튼 스타일 */
+#adminJoinForm button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
-.phone_ok{
-color:#008000;
-display: none;
+
+#adminJoinForm button:hover {
+    background-color: #0056b3;
 }
-.phone_already{
-color:#6A82FB;
-display: none;
+
+/* 피드백 메시지 스타일 */
+#adminJoinForm .feedback span {
+    display: none;
+    color: #d9534f;
 }
-.phone_expression{
-color:#6A82FB;
-display: none;
+
+#adminJoinForm .feedback .member_ok {
+    color: #5bc0de;
 }

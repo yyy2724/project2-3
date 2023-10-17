@@ -15,6 +15,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
     max-width: 100%;
+    margin: 0 0 0 450px;
 }
 .update-header h1 {
     font-size: 24px;
@@ -29,6 +30,7 @@
 ul {
     list-style: none;
     padding: 0;
+
 }
 li {
     margin-bottom: 15px;
@@ -61,4 +63,14 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+.gender-label {
+    display: flex;
+}
+.gender-label .male {
+    margin: 0 15px 0 -7px;
+}
+.gender-label .female {
+    margin: 0 0 0 -7px;
 }
