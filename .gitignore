@@ -19,7 +19,6 @@ bin/
 !**/src/test/**/bin/
 
 application.yml
-
 application-oauth2.yml
 
 ### IntelliJ IDEA ###

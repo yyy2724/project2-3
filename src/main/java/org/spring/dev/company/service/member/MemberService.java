@@ -183,26 +183,71 @@ public class MemberService {
         return 0;
     }
 
-    public Page<MemberDto> pageMemberList(Pageable pageable, String subject, String search) {
+    public Page<MemberDto> pageFreeList(Pageable pageable, String subject, String search) {
 
         Page<MemberEntity> memberEntities = null;
 
         if (subject == null) {
-            memberEntities = memberRepository.findAll(pageable);
+//            memberEntities = memberRepository.findAll(pageable);
+            memberEntities = memberRepository.findFreeAll(pageable);
         } else if (subject.equals("name")) {
+//            memberEntities = memberRepository.findByNameContains(pageable, search);
             memberEntities = memberRepository.findByNameContains(pageable, search);
         } else if (subject.equals("email")) {
             memberEntities = memberRepository.findByEmailContains(pageable, search);
         } else if (subject.equals("phone")) {
             memberEntities = memberRepository.findByPhoneContains(pageable, search);
         } else {
-            memberEntities = memberRepository.findAll(pageable);
+            memberEntities = memberRepository.findFreeAll(pageable);
         }
 
         Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
 
         return memberDtos;
     }
+
+    public Page<MemberDto> pageCompanyList(Pageable pageable, String subject, String search) {
+
+        Page<MemberEntity> memberEntities = null;
+
+        if (subject == null) {
+            memberEntities = memberRepository.findCompanyAll(pageable);
+        } else if (subject.equals("name")) {
+            memberEntities = memberRepository.findByNameCompany(pageable, search);
+        } else if (subject.equals("email")) {
+            memberEntities = memberRepository.findByEmailCompany(pageable, search);
+        } else if (subject.equals("phone")) {
+            memberEntities = memberRepository.findByPhoneCompany(pageable, search);
+        } else {
+            memberEntities = memberRepository.findFreeAll(pageable);
+        }
+
+        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
+
+        return memberDtos;
+    }
+
+    public Page<MemberDto> pageStaffList(Pageable pageable, String subject, String search) {
+
+        Page<MemberEntity> memberEntities = null;
+
+        if (subject == null) {
+            memberEntities = memberRepository.findStaffAll(pageable);
+        } else if (subject.equals("name")) {
+            memberEntities = memberRepository.findByNameStaff(pageable, search);
+        } else if (subject.equals("email")) {
+            memberEntities = memberRepository.findByEmailStaff(pageable, search);
+        } else if (subject.equals("phone")) {
+            memberEntities = memberRepository.findByPhoneStaff(pageable, search);
+        } else {
+            memberEntities = memberRepository.findStaffAll(pageable);
+        }
+
+        Page<MemberDto> memberDtos = memberEntities.map(MemberDto::toMemberDto);
+
+        return memberDtos;
+    }
+
 
 
     @Transactional
@@ -247,20 +292,6 @@ public class MemberService {
                 }));
 
         MemberEntity memberEntity = MemberEntity.toupdate(memberDto, passwordEncoder);
-//                .id(memberDto.getId())
-//                .name(memberDto.getName())
-//                .birth(memberDto.getBirth())
-//                .email(memberDto.getEmail())
-//                .career(memberDto.getCareer())
-//                .phone(memberDto.getPhone())
-//                .postcode(memberDto.getPostcode())
-//                .address(memberDto.getAddress())
-//                .detailAddress(memberDto.getDetailAddress())
-//                .extraAddress(memberDto.getExtraAddress())
-//                .grade(memberDto.getGrade())
-//                .gender(memberDto.getGender())
-//                .password(passwordEncoder.encode(memberDto.getPassword()))
-//                .build();
 
 
         Long id = memberRepository.save(memberEntity).getId();
