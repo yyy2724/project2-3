@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>근태관리</title>
+    <link rel="stylesheet" th:href="@{/css/workTime/commute.css}">
+</head>
+<th:block layout:fragment="container">
+<body>
+<div class="content">
+    <div class="content-header">
+        <h2>근태관리</h2>
+    </div>
+    <div class="content-main">
+        <div class="left">
+            <form th:action="@{/work/workin/{memberId}(memberId=${#authentication.principal.memberEntity.id})}" method="post">
+                <button>
+                    <input type="submit" name="workIn" value="workIn">
+                </button>
+            </form>
+        </div>
+        <div class="right">
+            <form th:action="@{/work/workout/{memberId}(memberId=${#authentication.principal.memberEntity.id})}" method="post">
+                <button>
+                    <input type="submit" name="workOut" value="workOut">
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</th:block>
+</html>

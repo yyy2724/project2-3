@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
 <head>
     <meta charset="UTF-8">
     <title>detail</title>
@@ -7,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/board/detail.css}">
 </head>
 <body>
-
+<th:block layout:fragment="container">
 <div class="container">
     <div class="detail">
         <table class="detail-table" border="1">
@@ -86,6 +88,7 @@
         </div>
     </div>
 </div>
+</th:block>
 </body>
 </html>
 

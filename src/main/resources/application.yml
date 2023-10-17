@@ -2,6 +2,9 @@
 server:
   port: 8023
 
+navar.api.client-id: Fbdqhslq5uCCrvl6yQKk
+navar.api.client-secret: X3343HV9ZA
+
 spring:
   mail:
     host: smtp.gmail.com
