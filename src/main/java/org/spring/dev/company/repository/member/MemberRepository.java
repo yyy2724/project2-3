@@ -42,18 +42,53 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Query("UPDATE MemberEntity m SET m.password = :password WHERE m.email = :email")
     void updateUserPassword1(String email, String password);
 
-    Page<MemberEntity> findByNameContains(Pageable pageable, String search);
-
-    Page<MemberEntity> findByEmailContains(Pageable pageable, String search);
-
-    Page<MemberEntity> findByPhoneContains(Pageable pageable, String search);
-
-
     Optional<MemberEntity> findByEmail(String email);
 
     @Query("SELECT COUNT(*) FROM MemberEntity m WHERE m.companyName = :companyName")
     int findByCompanyName(String companyName);
     @Query("SELECT COUNT(*) FROM MemberEntity m WHERE m.businessNumber = :businessNumber")
     int findByBusinessNumber(String businessNumber);
+
+
+
+    //  프리랜서 리스트, search
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'FREELANCER' ")
+    Page<MemberEntity> findFreeAll(Pageable pageable);
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'FREELANCER' and m.name LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByNameContains(Pageable pageable, String search);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'FREELANCER' and m.email LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByEmailContains(Pageable pageable, String search);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'FREELANCER' and m.phone LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByPhoneContains(Pageable pageable, String search);
+
+    // 회사 리스트, search
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'COMPANY' ")
+    Page<MemberEntity> findCompanyAll(Pageable pageable);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'COMPANY' and m.name LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByNameCompany(Pageable pageable, String search);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'COMPANY' and m.email LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByEmailCompany(Pageable pageable, String search);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'COMPANY' and m.phone LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByPhoneCompany(Pageable pageable, String search);
+
+    // 직원 리스트, search
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'STAFF' ")
+    Page<MemberEntity> findStaffAll(Pageable pageable);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'STAFF' and m.name LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByNameStaff(Pageable pageable, String search);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'STAFF' and m.email LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByEmailStaff(Pageable pageable, String search);
+
+    @Query("select m from MemberEntity m where m.is_display = 1 and m.grade = 'STAFF' and m.phone LIKE CONCAT('%', :search, '%') ")
+    Page<MemberEntity> findByPhoneStaff(Pageable pageable, String search);
+
+
 
 }

@@ -1,6 +1,6 @@
 # git 올릴때 빼고 올릴것
 server:
-  port: 8023
+  port: 8095
 
 spring:
   mail:

@@ -126,17 +126,6 @@ public class MemberController {
         return "member/findPw";
     }
 
-//    @GetMapping("/check/findPw")
-//    public @ResponseBody Map<String, Boolean> findPw(String email, String name){
-//        Map<String, Boolean> json = new HashMap<>();
-//        boolean pwFindCheck = memberService.userEmailCheck(email, name);
-//
-//        System.out.println(pwFindCheck);
-//        json.put("check", pwFindCheck);
-//        return json;
-//    }
-//
-
     @ResponseBody
     @PostMapping("/check")
     public int sendEmail(HttpServletRequest request, String email) {
@@ -204,50 +193,6 @@ public class MemberController {
         return "member/detail";
         }
             return "member/m";
-    }
-
-
-    // 멤버리스트 가져오기(매니저만, 모든권한) -> 프리렌서들꺼는 못보게 / 모든 수정 삭제 가능?? 관지자 창에서 보이게 ->
-// 메니저제외 직원이 프리렌서들 리스트 보게 / 모든 수정 삭제 불가 그냥 보게만? 관리자 제외 사람들이 보이게
-    // 프리렌서는 못봄
-    @GetMapping("/memberList")
-    public String memberList(@PageableDefault(page = 0, size = 10, sort = "id",
-            direction = Sort.Direction.DESC) Pageable pageable,
-                             @RequestParam(value = "subject", required = false) String subject,
-                             @RequestParam(value = "search", required = false) String search,
-                             Model model) {
-
-        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
-
-
-        Long totalCount = memberList.getTotalElements();
-        int pagesize = memberList.getSize();
-        int nowPage = memberList.getNumber();
-        int totalPage = memberList.getTotalPages();
-        int blockNum = 3;
-
-        int startPage =
-                (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage
-                        ? (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
-
-        int endPage =
-                (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
-
-
-        for (int i = startPage; i <= endPage; i++) {
-            System.out.println(i + " , ");
-        }
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-//        model.addAttribute("postVo", postList);
-
-
-        model.addAttribute("memberList", memberList);
-//            return "post/postList";
-
-        return "member/memberList";
-
     }
 
 
@@ -358,7 +303,7 @@ public class MemberController {
                            @RequestParam(value = "search", required = false) String search,
                            Model model) {
 
-        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+        Page<MemberDto> memberList = memberService.pageFreeList(pageable, subject, search);
 
 
         Long totalCount = memberList.getTotalElements();
@@ -397,7 +342,7 @@ public class MemberController {
                               @RequestParam(value = "search", required = false) String search,
                               Model model) {
 
-        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+        Page<MemberDto> memberList = memberService.pageCompanyList(pageable, subject, search);
 
 
         Long totalCount = memberList.getTotalElements();
@@ -436,7 +381,7 @@ public class MemberController {
                             @RequestParam(value = "search", required = false) String search,
                             Model model) {
 
-        Page<MemberDto> memberList = memberService.pageMemberList(pageable, subject, search);
+        Page<MemberDto> memberList = memberService.pageStaffList(pageable, subject, search);
 
 
         Long totalCount = memberList.getTotalElements();
