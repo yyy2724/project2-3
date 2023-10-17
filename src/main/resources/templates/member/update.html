@@ -8,59 +8,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
     <script th:src="@{/js/member/join_check.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/member/memberUpdate.css}">
+    <link rel="stylesheet" th:href="@{/css/member/join.css}">
 </head>
 
 <body>
-    <form th:action="@{/member/update/{memberId}(memberId=${memberDto.id})}" method="post">
-        <ul>
+<form th:action="@{/member/update/{memberId}(memberId=${memberDto.id})}" method="post">
+    <div class="update-form-container">
+        <h1>회원 정보 수정</h1>
+        <ul class="update-form-list">
             <li>
                 <label for="mail">이메일</label>
-                <input type="text" readonly name="email" id="mail" th:value="${memberDto.email}">
+                <input type="text" readonly name="email" id="mail" th:value="${memberDto.email}" class="readonly-input">
             </li>
             <li>
                 <label for="name">이름</label>
-                <input type="text" name="name" id="name" th:value="${memberDto.name}">
+                <input type="text" name="name" id="name" th:value="${memberDto.name}" class="input-field">
             </li>
             <li>
                 <label for="birth">생년월일</label>
-                <input type="date" name="birth" id="birth" th:value="${memberDto.birth}">
+                <input type="date" name="birth" id="birth" th:value="${memberDto.birth}" class="input-field">
             </li>
             <li>
                 <label for="phone">전화번호</label>
-                <input type="text" name="phone" id="phone" th:value="${memberDto.phone}">
+                <input type="text" name="phone" id="phone" th:value="${memberDto.phone}" class="input-field" oninput="phoneCheck()">
                 <span class="phone_ok">사용 가능한 전화번호입니다.</span>
                 <span class="phone_already">이미 가입된 전화번호입니다.</span>
                 <span class="phone_expression">올바른 전화번호을 작성해주세요.</span>
             </li>
             <li>
                 <label for="gender">성별</label>
-                <input type="text" name="gender" id="gender" th:value="${memberDto.gender}">
+                <input type="text" name="gender" id="gender" th:value="${memberDto.gender}" class="input-field">
             </li>
             <li>
-                <span>우편번호</span>
-                <input type="text" name="postcode" id="postcode" th:value="${memberDto.postcode}">
-                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                <label>우편번호</label>
+                <div class="postcode-container">
+                    <input type="text" name="postcode" id="postcode" th:value="${memberDto.postcode}" class="postcode-input">
+                    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="button">
+                </div>
             </li>
             <li>
-                <label for="address">
-                    주소
-                </label>
-                <input type="text" name="address" id="address" th:value="${memberDto.address}">
+                <label for="address">주소</label>
+                <input type="text" name="address" id="address" th:value="${memberDto.address}" class="input-field">
             </li>
             <li>
-                <label for="address">
-                    상세주소
-                </label>
-                <input type="text" name="detailAddress" id="detailAddress" th:value="${memberDto.detailAddress}">
-                <input type="text" name="extraAddress" id="extraAddress" th:value="${memberDto.extraAddress}">
+                <label for="detailAddress">상세주소</label>
+                <input type="text" name="detailAddress" id="detailAddress" th:value="${memberDto.detailAddress}" class="input-field">
+                <input type="text" name="extraAddress" id="extraAddress" th:value="${memberDto.extraAddress}" class="input-field">
             </li>
             <li>
-                <input type="submit" value="수정">
+                <div class="button-container">
+                    <input type="button" value="뒤로가기" onclick="history.back()" class="back-button">
+                    <input type="submit" value="수정" class="submit-button">
+                </div>
             </li>
         </ul>
-    </form>
+    </div>
+</form>
 </body>
+
 
 </html>

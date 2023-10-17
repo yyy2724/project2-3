@@ -45,8 +45,8 @@ public class MemberService {
         MemberEntity memberEntity = MemberEntity.toMember(memberDto, passwordEncoder);
         Long rs = memberRepository.save(memberEntity).getId();
 
-        memberRepository.findById(rs).orElseThrow(IllegalArgumentException::new);
-        System.out.println(rs);
+        memberRepository.findById(rs);
+
         return rs;
     }
 
@@ -342,9 +342,6 @@ public class MemberService {
     public Long freeJoin(MemberDto memberDto) {
         MemberEntity memberEntity = MemberEntity.toFree(memberDto, passwordEncoder);
         Long rs = memberRepository.save(memberEntity).getId();
-
-        memberRepository.findById(rs).orElseThrow(IllegalArgumentException::new);
-        System.out.println(rs);
         return rs;
     }
 

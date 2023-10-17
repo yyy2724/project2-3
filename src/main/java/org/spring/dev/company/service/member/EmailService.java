@@ -52,7 +52,55 @@ public class EmailService {
             // 제목
             mailHandler.setSubject("인증번호입니다.");
             // HTML Layout
-            String htmlContent = "<p>인증번호 : + " + result + "</p>";
+//            String htmlContent = "<p>인증번호 : + " + result + "</p>";
+            String htmlContent = "<html>" +
+                    "<head>" +
+                    "<style>" +
+                    "  body {" +
+                    "    font-family: Arial, sans-serif;" +
+                    "    text-align: center;" +
+                    "  }" +
+                    "  .container {" +
+                    "    background-color: #f2f2f2;" +
+                    "    border-radius: 10px;" +
+                    "    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" +
+                    "    margin: 20px auto;" +
+                    "    max-width: 400px;" +
+                    "    padding: 20px;" +
+                    "  }" +
+                    "  h1 {" +
+                    "    color: #007bff;" +
+                    "    font-size: 24px;" +
+                    "  }" +
+                    "  p {" +
+                    "    font-size: 16px;" +
+                    "    line-height: 1.6;" +
+                    "  }" +
+                    "  .verification-code {" +
+                    "    background-color: #007bff;" +
+                    "    border-radius: 5px;" +
+                    "    color: #ffffff;" +
+                    "    display: inline-block;" +
+                    "    font-size: 20px;" +
+                    "    padding: 10px 20px;" +
+                    "  }" +
+                    "</style>" +
+                    "</head>" +
+                    "<body>" +
+                    "<div class='container'>" +
+                    "  <h1>안녕하세요.</h1>" +
+                    "  <h1>TechForge의 인증코드를 발송합니다</h1>" +
+                    "  <br>" +
+                    "  <p>아래 코드를 회원가입 창으로 돌아가 입력해주세요.</p>" +
+                    "  <br>" +
+                    "  <div align='center'>" +
+                    "    <h3>회원가입 인증 코드입니다.</h3>" +
+                    "    <div class='verification-code'>" + result + "</div>" +
+                    "  </div>" +
+                    "  <br/>" +
+                    "</div>" +
+                    "</body>" +
+                    "</html>";
             mailHandler.setText(htmlContent, true);
 
             mailHandler.send();

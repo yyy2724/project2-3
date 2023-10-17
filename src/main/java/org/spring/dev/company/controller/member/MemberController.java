@@ -11,15 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Member;
+import java.util.List;
 
 
 @RequestMapping("/member")
@@ -30,23 +29,38 @@ public class MemberController {
     private final MemberService memberService;
     private final EmailService emailService;
 
+
     @GetMapping("/login")
     public String login() {
-
+        // 관리자 로그인
         return "member/login";
     }
+
+    @GetMapping("/companyLogin")
+    public String companyLogin(){
+        // 회사로그인
+        return "company/companyLogin";
+    }
+    @GetMapping("/freelancerLogin")
+    public String freelancerLogin(){
+        // 프리렌서 로그인
+        return "freelancer/freelancerLogin";
+    }
+
 
 
     @GetMapping("/join")
     public String adminJoin() {
-
+        // 관리자 회원가입페이지
         return "member/join";
     }
 
     @PostMapping("/adminJoin")
-    public String memberJoin(@ModelAttribute MemberDto memberDto) {
+    public String memberJoin(@ModelAttribute MemberDto memberDto,
+                             @RequestParam(name = "memberImg", required = false)List<MultipartFile> memberImg) {
 //        System.out.println(memberDto.getEmail());
-        Long rs = memberService.memberJoin(memberDto);
+
+            Long rs = memberService.memberJoin(memberDto);
         if (rs == 0) {
             return "member/join";
         }
@@ -56,11 +70,14 @@ public class MemberController {
 
     @GetMapping("/freeJoin")
     public String freeJoin() {
+        // 프리렌서 회원가입
         return "freelancer/join";
     }
 
     @PostMapping("/freeJoin")
     public String freeJoinPost(@ModelAttribute MemberDto memberDto) {
+//        System.out.println(memberDto.getEmail());
+
         Long rs = memberService.freeJoin(memberDto);
         if (rs == 0) {
             return "freelancer/join";
@@ -70,6 +87,7 @@ public class MemberController {
 
     @GetMapping("/companyJoin")
     public String companyJoin() {
+        // 회사 회원가입
         return "company/join";
     }
 
@@ -290,6 +308,7 @@ public class MemberController {
     @GetMapping("/freeDetail/{memberId}")
     public String freeDetail(@PathVariable("memberId") Long memberId, Model model) {
         MemberDto memberDto = memberService.detailMember(memberId);
+        
         model.addAttribute("memberDto", memberDto);
         return "freelancer/detail";
     }
