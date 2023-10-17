@@ -42,8 +42,8 @@ public class BoardController {
     @PostMapping("/write")
     public String writePost(@AuthenticationPrincipal MyUserDetails myUserDetails, BoardDto boardDto, @RequestParam("file") MultipartFile file ) throws IOException {
         boardDto.setBoardFile(file);
-        String email = myUserDetails.getUsername();
-        boardService.boardWrite(boardDto, email);
+//        String email = myUserDetails.getUsername();
+        boardService.boardWrite(boardDto);
         return "redirect:/board/list";
     }
 
