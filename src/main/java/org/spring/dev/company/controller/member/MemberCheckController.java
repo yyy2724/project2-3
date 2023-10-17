@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/join")
 @RestController
 @RequiredArgsConstructor
-public class MemberCheck {
+public class MemberCheckController {
 
     private final MemberService memberService;
 

@@ -35,8 +35,9 @@
           console.log(data.return);
           var newWindow = window.open('', '네이버 연동', 'width=800,height=600');
 
-          newWindow.document.write(date.return);
-          
+          var htmlContent = data.return;
+
+          newWindow.document.body.innerHTML = htmlContent;
         })
         .fail(function( xhr, status, errorThrown) {
           console.log("에러");

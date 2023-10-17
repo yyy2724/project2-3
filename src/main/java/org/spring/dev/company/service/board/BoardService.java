@@ -1,6 +1,7 @@
 package org.spring.dev.company.service.board;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.board.BoardDto;
 import org.spring.dev.company.entity.board.BoardEntity;
 import org.spring.dev.company.entity.board.FileEntity;
@@ -30,7 +31,7 @@ public class BoardService {
     @Transactional
     public void boardWrite(BoardDto boardDto) throws IOException {
 
-//        MemberEntity memberEntity = memberRepository.findByEmail2(email).orElseThrow(()->{
+//        MemberEntity memberEntity = memberRepository.findByEmail(email).orElseThrow(()->{
 //            throw new IllegalArgumentException("아이디가 존재하지 않습니다.");
 //        });
 

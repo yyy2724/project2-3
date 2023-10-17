@@ -30,6 +30,12 @@ public class indexController {
 
     private final BoardRepository boardRepository;
 
+    // 로그인 페이지
+    @GetMapping({"","/","//"})
+    public String login(){
+        return "member/loginList";
+    }
+
 //    main 페이지
 
     /*
@@ -40,7 +46,7 @@ public class indexController {
         return new ArrayList<>();
     }
 
-    @GetMapping({"/","/index"})
+    @GetMapping("/home")
     public String index(Model model,
                         @AuthenticationPrincipal MyUserDetails myUserDetails,
                         @RequestParam(name = "boardType", required = false, defaultValue = "GENERAL") BoardType boardType,

@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<link rel="stylesheet" th:href="@{/css/freelancer/freelancerLogin.css}">
+<script>
+    function redirectToJoinPage() {
+        // 페이지 이동
+        window.location.href = '/member/join';
+    }
+    function pwSearch(){
+        // 페이지 이동
+        window.location.href = '/member/findPw'
+    }
+</script>
+
 <head>
     <meta charset="UTF-8">
-    <title>프리랜서 로그인</title>
-    <link rel="stylesheet" th:href="@{/css/freelancer/login.css}">
+    <title>로그인</title>
 </head>
 <body>
 <div class="container">
@@ -11,10 +24,10 @@
         <div class="login">
             <div class="login-con">
                 <div class="login-form">
-                    <h1>프리랜서 로그인</h1>
+                    <h1>로그인</h1>
 
-                    <form th:action="@{/freelancer/login}" method="post">
-                        <!--                        <input type="hidden" value="secret" name="secret_key">-->
+                    <form th:action="@{/login/login}" method="post">
+<!--                        <input type="hidden" value="secret" name="secret_key">-->
                         <ul>
                             <li>
                                 <input type="email" name="email" id="email" placeholder="아이디를 입력해주세요"
@@ -39,8 +52,7 @@
                                 <button type="button" onclick="redirectToJoinPage()">회원가입</button>
                             </li>
                             <li>
-                                <label for="rememberMe">로그인상태 유지</label>
-                                <input type="checkbox" name="rememberMe" id="rememberMe">
+                                <button type="button" onclick="pwSearch()">비밀번호 찾기</button>
                             </li>
                             <li class="oauth-login">
                                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}"

@@ -45,3 +45,4 @@ document.querySelector('form').addEventListener('submit', function() {
   var editorContent = document.querySelector('.ql-editor').innerHTML;
   document.querySelector('#content').value = editorContent;
 });
+
