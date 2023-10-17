@@ -10,7 +10,7 @@ $(document).ready(function () {
         var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
         return regex.test(password);
     }
-    $('#joinForm').submit(function (event) {
+    $('#freeJoinForm').submit(function (event) {
 
         var email = $('#mail').val();
         var password = $('#password').val();
@@ -20,6 +20,7 @@ $(document).ready(function () {
         var detailAddress = $('#detailAddress').val();
         var regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
         var gender = $('.gender').val();
+
 
         let inputCode = document.getElementById('certificationNumber').value;
         if (!regExpEm.test(email)) {
@@ -64,7 +65,7 @@ $(document).ready(function () {
                 alert("에러입니다");
             }
         });
-        if (!validatePassword(password)) {
+if (!validatePassword(password)) {
             alert("비밀번호는 알파벳, 특수문자, 숫자가 최소 하나씩 포함되어야하고 8자리 이상이어야합니다");
             // 폼 전송 중단
             $('#password').focus();
@@ -102,6 +103,6 @@ $(document).ready(function () {
             event.preventDefault();
             return false;
         }
-        $('#joinForm').submit();
+        $('#freeJoinForm').submit();
     });
 });
