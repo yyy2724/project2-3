@@ -4,27 +4,36 @@ let userId = document.querySelector('#userId');
 let connectBtn = document.querySelector('#connectBtn');
 let sendBtn = document.querySelector('#sendBtn');
 let chatWindowCon = document.querySelector('.window-con');
-let msg = document.querySelector('#message');
+//let msg = document.querySelector('#message');
 let url = "localhost:8023";
 
 connectBtn.addEventListener('click', ()=>{
 
+
     // 웹소켓 접속
     webSocket = new WebSocket("ws://"+url+"/messenger");
 
-    if(userId.value.length <= 0 || userId.value == ""){
-        alert("접속자명을 입력하세요.")
-        userId.focus();
-        return false;
-    }
+     if (userId.value.length <= 0 || userId.value == "") {
+           alert("접속자명을 입력하세요.");
+           userId.focus();
+           return false;
+       }
 
-    alert(userId.value + "님 접속했습니다.");
+      alert(userId.value + "님 접속했습니다.");
 
-    const title = "게시글 작성 완료";
-    const message = "새로운 게시글이 작성되었습니다.";
-    showNotification(title, message);
+//      const title = "게시글 작성 완료";
+//      const message2 = "새로운 게시글이 작성되었습니다.";
+//      showNotification(title, message2);
 
-    };
+       webSocket.onopen = function(event) {
+
+           // "게시글 작성 완료" 메시지를 서버로 전송
+           const message = "게시글 작성 완료";
+           webSocket.send(message);
+
+       };
+
+
 });
 
 function requestNotificationPermission() {
@@ -43,10 +52,10 @@ function requestNotificationPermission() {
     }
 }
 
-function showNotification(title, message) {
+function showNotification(title, message2) {
     if (Notification.permission === 'granted') {
         // 알림 권한이 부여된 경우 알림 생성
-        const notification = new Notification(title, { body: message });
+        const notification = new Notification(title, {body: message2});
     }
 }
 
