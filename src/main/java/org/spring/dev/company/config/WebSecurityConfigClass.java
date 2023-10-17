@@ -65,7 +65,7 @@ public class WebSecurityConfigClass {
         // 이건 나중에 하겠음
         http.authorizeHttpRequests()
                 // 로그인시
-                .antMatchers("/login/logout","/member/m").authenticated()
+                .antMatchers("/member/logout","/member/m").authenticated()
                 // OAUTH 정보 추가 페이지
                 .antMatchers("/member/**").permitAll()
                 // 모두 허용
@@ -125,11 +125,11 @@ public class WebSecurityConfigClass {
 
         // 로그아웃 설정 -> logout(기본)
         http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")) // 직접 로그아웃 URL
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 직접 로그아웃 URL
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login/login")
         ;
 
         return http.build();

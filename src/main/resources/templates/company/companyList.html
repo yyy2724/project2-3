@@ -25,7 +25,7 @@
 
                 <div class="search">
                     <div class="search-con">
-                        <form action="@{/member/companyList}" method="get" class="search">
+                        <form action="/member/companyList" method="get" class="search">
                             <select name="subject" id="subject">
                                 <option value="name">회사명</option>
                                 <option value="email">이메일</option>
@@ -57,9 +57,6 @@
                         <tr th:each="company, iterStat:${companyList}">
                             <th:block th:if="${company.grade.toString()} == 'COMPANY'">
                                 <th:block th:if="${company.is_display} == 1">
-                                    <script>
-                                        i++;
-                                    </script>
                                     <td th:text="${iterStat.count}"></td>
                                     <td th:text="${company.companyName}"></td>
                                     <td th:text="${company.name}"></td>

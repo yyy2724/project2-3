@@ -25,7 +25,7 @@
 
                 <div class="search">
                     <div class="search-con">
-                        <form action="@{/member/freeList}" method="get" class="search">
+                        <form action="/member/freeList" method="get" class="search">
                             <select name="subject" id="subject">
                                 <option value="name">이름</option>
                                 <option value="email">이메일</option>
@@ -55,10 +55,7 @@
                         <tr th:each="free, iterStat:${freeList}">
                             <th:block th:if="${free.grade.toString()} == 'FREELANCER'">
                                 <th:block th:if="${free.is_display} == 1">
-                                    <script>
-                                        i++;
-                                    </script>
-                                    <td th:text="${iterStat.count}"></td>
+                                    <td th:text="${iterStat.count + freeList.pageable.offset}"></td>
                                     <td th:text="${free.name}"></td>
                                     <td th:text="${free.email}"></td>
                                     <td th:text="${free.phone}"></td>
