@@ -132,7 +132,8 @@ public class WebSecurityConfigClass {
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login/login")
+        ;
 
         return http.build();
     }

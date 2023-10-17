@@ -31,7 +31,7 @@
           },
 
           workUpdateButton:{
-            text : '근무 수정',
+            text : '일정 수정',
             click:function(){
               $('.modal').fadeIn();
 
@@ -50,6 +50,39 @@
                   setCalendar(work_type,start_date,end_date,work_id);
                   getCalendar(calendar.getDate() ,memberId)
                   calendar.render();
+                  location.reload()
+                  
+
+                }
+              
+              })
+
+              $('.btn-close').click(function(){
+                $('.modal').fadeOut();
+              })
+            }
+          },
+          workAddButton:{
+            text : '일정 추가',
+            click:function(){
+              $('.modal').fadeIn();
+
+              $('.btn-add').click(function(){
+
+                let work_type = $("#calendar_work_type").val();
+                let start_date = $("#calendar_start_date").val();
+                let end_date = $("#calendar_end_date").val();
+                let work_id = 1
+
+                if(start_date == "" || end_date == ""){
+                  alert("날짜를 선택해주세요!");
+                } else if(end_date - start_date < 0 ){
+                  alert("종료 시간이 시작 날짜보다 먼저입니다.");
+                } else{
+                  setCalendar(work_type,start_date,end_date,work_id);
+                  getCalendar(calendar.getDate() ,memberId)
+                  calendar.render();
+                  location.reload()
 
                 }
               
@@ -64,7 +97,7 @@
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'workUpdateButton'
+          right: 'workUpdateButton workAddButton'
         }
 
       });

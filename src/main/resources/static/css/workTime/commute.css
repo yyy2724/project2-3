@@ -1,0 +1,23 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+
+#content {
+    width: 80vw;
+    text-align: center;
+    margin: 0 auto
+}
+
+/* title */
+content .content-header h2{
+    font-size: 40px;
+}
+/* main */
+content .content-main .left{
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+content .content-main .right{
+    font-size: 22px;
+    padding-bottom: 10px;
+}
