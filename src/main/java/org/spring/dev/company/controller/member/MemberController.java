@@ -171,15 +171,21 @@ public class MemberController {
     }
 
 
-    @Transactional
+    @GetMapping("/disabled/{memberId}")
+    public String disabled(@PathVariable("memberId")Long memberId, Model model){
+        MemberDto memberDto = memberService.detailMember(memberId);
+        model.addAttribute("memberDto", memberDto);
+        return "member/disabled";
+    }
+
     @PostMapping("/disabled/{memberId}")
     public String disMember(@PathVariable("memberId") Long memberId) {
 
         int rs = memberService.disabledMember(memberId);
         if (rs != 0) {
-            return "/index";
-        }
         return "member/detail";
+        }
+            return "member/m";
     }
 
 
@@ -237,10 +243,13 @@ public class MemberController {
 
     @PostMapping("/pwChange/{memberId}")
     public String pwChangePost(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
-        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
-        model.addAttribute("memberDto", memberDto1);
-
-        return "member/detail";
+        int rs = memberService.passwordChange(memberDto, memberId);
+        if (rs != 1){
+            MemberDto memberDto1 = memberService.detailMember(memberId);
+            model.addAttribute("memberDto",memberDto1);
+            return "member/detail";
+        }
+        return "redirect:/member/logout";
     }
 
     @PostMapping("/passCheck")
@@ -440,35 +449,6 @@ public class MemberController {
         return "member/staffList";
     }
 
-    @GetMapping("/freePwChange/{memberId}")
-    public String freePwChange(@PathVariable("memberId") Long memberId, Model model) {
-        MemberDto memberDto = memberService.detailMember(memberId);
-        model.addAttribute("memberDto", memberDto);
-        return "freelancer/pwChange";
-    }
-
-    @PostMapping("/freePwChange/{memberId}")
-    public String freePwChangePost(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
-        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
-        model.addAttribute("memberDto", memberDto1);
-
-        return "freelancer/detail";
-    }
-
-    @GetMapping("/companyPwChange/{memberId}")
-    public String companyPwChange(@PathVariable("memberId") Long memberId, Model model) {
-        MemberDto memberDto = memberService.detailMember(memberId);
-        model.addAttribute("memberDto", memberDto);
-        return "company/pwChange";
-    }
-
-    @PostMapping("/companyPwChange/{memberId}")
-    public String companyPwChangePost(@PathVariable("memberId") Long memberId, @ModelAttribute MemberDto memberDto, Model model) {
-        MemberDto memberDto1 = memberService.passwordChange(memberDto, memberId);
-        model.addAttribute("memberDto", memberDto1);
-
-        return "company/detail";
-    }
 
 }
 

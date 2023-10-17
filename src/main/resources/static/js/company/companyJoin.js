@@ -27,7 +27,6 @@ $(document).ready(function () {
             // 폼 전송 중단
             return false;
         }
-        const memberEmail = 0;
         $.ajax({
             url: "/join/emailCheck", //Controller에서 요청 받을 주소
             type: 'post', //POST 방식으로 전달

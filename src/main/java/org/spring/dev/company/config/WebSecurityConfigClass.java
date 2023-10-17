@@ -1,6 +1,5 @@
 package org.spring.dev.company.config;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -31,9 +31,8 @@ import java.util.Objects;
 public class WebSecurityConfigClass {
 
 
-
     /*private final AuthenticationFailureHandler   customAuthenticationFailureHandler;*/
-    private final CustomAuthenticationHandler   customAuthenticationFailureHandler;
+    private final CustomAuthenticationHandler customAuthenticationFailureHandler;
 
     @Bean
     public MemberEntity memberEntity() {
@@ -53,7 +52,6 @@ public class WebSecurityConfigClass {
     }
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -71,6 +69,11 @@ public class WebSecurityConfigClass {
                 // 모두 허용
                 .anyRequest().permitAll()
         ;
+//        // 자동로그인 설정
+//        http.rememberMe()
+//                .rememberMeParameter("rememberMe")
+//                .tokenValiditySeconds(86400 * 30)
+//                .userDetailsService(userDetailsService());
 
 
         // 로그인 설정
@@ -135,11 +138,17 @@ public class WebSecurityConfigClass {
         return http.build();
     }
 
+
+//    public UserDetailsService userDetailsService(){
+//        return userDetailsService();
+//    }
+
     // OAuth2.0 SNS로그인 설정
     @Bean       // 요청, User
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> myOAuth2UserService() {
         return new MyOAuth2UserService();
     }
+
 
 }
 
