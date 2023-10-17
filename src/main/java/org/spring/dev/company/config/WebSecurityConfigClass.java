@@ -99,7 +99,7 @@ public class WebSecurityConfigClass {
                         }
                 )
                 .loginProcessingUrl("/login/login")
-                .defaultSuccessUrl("/member/m")
+                .defaultSuccessUrl("/home")
                 .failureHandler(customAuthenticationFailureHandler)
 //                .failureUrl("/login/loginFail")
                 .permitAll()
