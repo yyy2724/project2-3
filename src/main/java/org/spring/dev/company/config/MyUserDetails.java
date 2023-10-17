@@ -38,7 +38,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        return memberEntity.getEmail();
+        return memberEntity.getName();
     }
 
 
@@ -61,7 +61,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return memberEntity.getName();
+        return memberEntity.getEmail();
     }
 
     @Override
