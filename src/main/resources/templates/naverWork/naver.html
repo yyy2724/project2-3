@@ -9,6 +9,27 @@
 </head>
 
 <body>
+<<<<<<< Updated upstream
+=======
+<div class="naver">
+  <div class="left">
+    <ul>
+      <li>
+        <a href="워크플레이스 URL" class="naverBtn">네이버API연동</a>
+      </li>
+      <li>
+        <!-- https://developers.worksmobile.com/kr/docs/auth-oauth -->
+        <!-- 클라이언트 앱에서 사용자 인증을 통해 Authorization Code를 발급받으려면 아래와 같은 URL을 호출 -->
+        <form action="https://auth.worksmobile.com/oauth2/v2.0/authorize" method="get">
+          <input type="hidden" name="client_id" value="Fbdqhslq5uCCrvl6yQKk">
+          <input type="hidden" name="redirect_uri" value="http://localhost:8023/naver/code">
+          <input type="hidden" name="scope" value="directory,directory.read,orgunit,orgunit.read,user,user.read">
+          <input type="hidden" name="response_type" value="code">
+          <input type="hidden" name="state" value="test">
+          <input type="submit" value="조직인증"  class="naverBtn">
+        </form>
+      </li>
+>>>>>>> Stashed changes
 
   <button class="naverLogin">네이버 연동</button>
 
