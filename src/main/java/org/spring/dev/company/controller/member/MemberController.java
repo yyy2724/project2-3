@@ -32,14 +32,26 @@ public class MemberController {
 
     @GetMapping("/login")
     public String login() {
-
+        // 관리자 로그인
         return "member/login";
     }
+
+    @GetMapping("/companyLogin")
+    public String companyLogin(){
+        // 회사로그인
+        return "company/companyLogin";
+    }
+    @GetMapping("/freelancerLogin")
+    public String freelancerLogin(){
+        // 프리렌서 로그인
+        return "freelancer/freelancerLogin";
+    }
+
 
 
     @GetMapping("/join")
     public String adminJoin() {
-
+        // 관리자 회원가입페이지
         return "member/join";
     }
 
@@ -58,6 +70,7 @@ public class MemberController {
 
     @GetMapping("/freeJoin")
     public String freeJoin() {
+        // 프리렌서 회원가입
         return "freelancer/join";
     }
 
@@ -74,6 +87,7 @@ public class MemberController {
 
     @GetMapping("/companyJoin")
     public String companyJoin() {
+        // 회사 회원가입
         return "company/join";
     }
 

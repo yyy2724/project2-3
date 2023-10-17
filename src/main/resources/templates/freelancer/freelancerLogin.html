@@ -3,6 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <link rel="stylesheet" th:href="@{/css/member/login.css}">
+<script>
+    function redirectToJoinPage() {
+        // 페이지 이동
+        window.location.href = '/member/join';
+    }
+</script>
+
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -38,9 +45,16 @@
                                 <button type="submit">로그인</button>
                             </li>
                             <li>
-                                <a th:href="@{/member/join}">회원가입</a>
+                                <a th:href="@{/member/freeJoin}">회원가입</a>
                             </li>
-
+                            <li class="oauth-login">
+                                <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}"
+                                                                                  alt="google"></a>
+                                <a th:href="@{/oauth2/authorization/kakao}"><img th:src="@{/images/oauth2/kakao.jpg}"
+                                                                                 alt="kakao"></a>
+                                <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/images/oauth2/naver.jpg}"
+                                                                                 alt="naver"></a>
+                            </li>
                         </ul>
                     </form>
                 </div>
