@@ -8,6 +8,8 @@ import org.spring.dev.company.entity.util.GenderEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -75,6 +77,7 @@ public class MemberEntity extends BaseEntity {
 
     @Column(name = "member_matching")
     private boolean matching;
+
 
     public static MemberEntity toMember(MemberDto memberDto, PasswordEncoder passwordEncoder) {
 
