@@ -18,6 +18,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/board/write.js}" defer></script>
     <script th:src="@{/js/board/calendar.js}" defer></script>
+    <script th:src="@{/js/chat/chat.js}" defer></script>
     <link rel="stylesheet" th:href="@{/css/board/write.css}">
 
 
@@ -26,13 +27,18 @@
 <th:block layout:fragment="container">
     <div class="container">
 
+
         <div class="write">
+            <div class="connect">
+                <input type="text" name="userId" id="userId" placeholder="접속자명">
             <form th:action="@{/board/write}" method="post" enctype="multipart/form-data" th:object="${boardDto}">
+
+
 
                 <label th:for = "title">제목</label>
                 <input type="text" name="title" id="title" required>
 
-                    <label th:for = "content">내용</label>
+                <label th:for = "content">내용</label>
                 <div id="editor"></div>
                 <input type="hidden" name="content" id="content" th:field="*{content}">
 
@@ -99,13 +105,11 @@
                             </div>
                         </main>
                     </div>
-
-
-
                 </div>
 
-                <input type="submit" th:value="글쓰기">
+                <input type="submit" th:value="글쓰기" id="connectBtn">
             </form>
+            </div>
 
         </div>
     </div>

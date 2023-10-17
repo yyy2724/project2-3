@@ -31,7 +31,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final ReplyService replyService;
+//    private final ReplyService replyService;
     private final BoardRepository boardRepository;
 
     @GetMapping("/write")
@@ -42,8 +42,8 @@ public class BoardController {
     @PostMapping("/write")
     public String writePost(@AuthenticationPrincipal MyUserDetails myUserDetails, BoardDto boardDto, @RequestParam("file") MultipartFile file ) throws IOException {
         boardDto.setBoardFile(file);
-//        String email = myUserDetails.getUsername();
-        boardService.boardWrite(boardDto);
+        String email = myUserDetails.getUsername();
+        boardService.boardWrite(boardDto, email);
         return "redirect:/board/list";
     }
 
