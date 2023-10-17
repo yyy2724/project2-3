@@ -47,8 +47,6 @@
                     </thead>
                     <tbody>
                     <tr th:each="staff, iterStat:${staffList}">
-                        <th:block th:if="${staff.grade.toString()} == 'STAFF'">
-                            <th:block th:if="${staff.is_display} == 1">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${staff.name}"></td>
                             <td th:text="${staff.email}"></td>
@@ -79,8 +77,6 @@
                                 </form>
 <!--                                <a th:href="@{/pay/{memberId}(memberId=${staff.id})}">정산하기</a>-->
                             </td>
-                        </th:block>
-                        </th:block>
                     </tr>
                     </tbody>
                  </table>

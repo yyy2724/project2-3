@@ -43,15 +43,11 @@
                         </thead>
                         <tbody>
                         <tr th:each="free, iterStat:${freeList}">
-                            <!--                            <th:block th:if="${free.grade.toString()} == 'FREELANCER'">-->
-                            <!--                                <th:block th:if="${free.is_display} == 1">-->
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${free.name}"></td>
                             <td th:text="${free.email}"></td>
                             <td th:text="${free.phone}"></td>
                             <td><a th:href="@{/member/freeDetail/{memberId}(memberId=${free.id})}">상세보기</a></td>
-                            <!--                                </th:block>-->
-                            <!--                            </th:block>-->
                         </tr>
                         </tbody>
                     </table>

@@ -72,7 +72,7 @@ public class WebSecurityConfigClass {
 //        // 자동로그인 설정
 //        http.rememberMe()
 //                .rememberMeParameter("rememberMe")
-//                .tokenValiditySeconds(86400 * 30)
+////                .tokenValiditySeconds(86400 * 30)
 //                .userDetailsService(userDetailsService());
 
 
