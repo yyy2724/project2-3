@@ -1,9 +1,11 @@
 package org.spring.dev.company.controller.pay;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.pay.PayDto;
 import org.spring.dev.company.dto.workTime.WorkTimeDto;
 import org.spring.dev.company.service.pay.PayService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -55,4 +57,9 @@ public class PayController {
         return map;
     }
 
+    @PostMapping("/free/{approveId}")
+    public void postFRpay(@AuthenticationPrincipal MyUserDetails member,
+                       @PathVariable(name = "approveId") Long approveId){
+            payService.postFRpay(approveId,member);
+    }
 }
