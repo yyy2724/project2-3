@@ -78,7 +78,7 @@ public class WebSecurityConfigClass {
 
         // 로그인 설정
         http.formLogin()
-                .loginPage("/login/login") // 직접 로그인페이지를 설정, 권한이 없는 페이지 -> 자동이동
+                .loginPage("/login/login")// 직접 로그인페이지를 설정, 권한이 없는 페이지 -> 자동이동
                 .usernameParameter("email")  // username -> 아이디
                 .passwordParameter("password")    // password -> 비밀번호
                 .successHandler(
@@ -132,8 +132,7 @@ public class WebSecurityConfigClass {
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/login/login")
-        ;
+                .logoutSuccessUrl("/");
 
         return http.build();
     }
