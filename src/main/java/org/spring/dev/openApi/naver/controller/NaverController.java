@@ -10,15 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/api/naver")
+@RequestMapping("/naver")
 @RequiredArgsConstructor
 public class NaverController {
 
-<<<<<<< Updated upstream
    private final NaverService naverService;
-=======
-    private final NaverService naverService;
->>>>>>> Stashed changes
 
     @GetMapping("/index")
     public String index(){
@@ -38,25 +34,11 @@ public class NaverController {
         Map<String, Object> result = new HashMap<String,Object>();
         result.put("return",naverAuthHtml);
         return result;
-<<<<<<< Updated upstream
     }
 
-    @GetMapping("/get/code")
-    @ResponseBody
-    public Map<String, Object> getNaverToken(
-            @RequestParam("code") String code,
-            @RequestParam("errorCode") String errorCode,
-            @RequestParam("state") String state
-    ){
-        String naverAuthHtml = naverService.getNaverToken(code, errorCode, state);
-        Map<String, Object> result = new HashMap<String,Object>();
-        result.put("return",naverAuthHtml);
-        return result;
-=======
->>>>>>> Stashed changes
-    }
 
-    @GetMapping("/get/code")
+// 토큰을 발급 받아서 db에 저장
+    @GetMapping("/token")
     @ResponseBody
     public Map<String, Object> getNaverToken(
             @RequestParam("code") String code,

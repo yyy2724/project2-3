@@ -61,4 +61,12 @@ public class ScheduleController {
         return scheduleDto;
     }
 
+    @PostMapping("/get/users")
+    @ResponseBody
+    public ScheduleDto getUsers()
+    {
+        ScheduleDto result = scheduleService.getUsers();
+        return ;
+    }
+
 }

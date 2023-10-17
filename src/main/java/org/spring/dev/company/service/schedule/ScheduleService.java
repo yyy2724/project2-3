@@ -52,6 +52,11 @@ public class ScheduleService {
         return ScheduleDto.toDto(result);
     }
 
+    public ScheduleDto getUsers() {
+
+        return null;
+    }
+
 
     //스케줄 생성
 
