@@ -45,7 +45,7 @@ public class NaverService {
 
         ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
 
-        if (result.getStatusCode() == HttpStatus.OK){
+        if (result.getStatusCode() == HttpStatus.OK) {
             try {
                 naverAuthHtml = result.getBody();
                 jsonStr = objectMapper.writeValueAsString(result.getBody());
@@ -53,10 +53,50 @@ public class NaverService {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("json JsonProcessingException : " + e);
             }
-        } else{
+        } else {
             System.out.println(result.getStatusCode());
         }
 
+
+        return naverAuthHtml;
+    }
+
+    public String getNaverToken(String code, String errorCode, String state) {
+
+        String naverAuthHtml = null;
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonStr = null;
+
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://auth.worksmobile.com")
+                .path("/oauth2/v2.0/token")
+                .queryParam("code", code) //code를 받아올 return url
+                .queryParam("client_id", CLIENT_ID)
+                .queryParam("grant_type", "grant_type") // code로 지정 값
+                .queryParam("client_secret", CLIENT_SECRET) //사용할 권환들
+                .encode()
+                .build()
+                .toUri();
+
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+
+        if (result.getStatusCode() == HttpStatus.OK) {
+            try {
+                naverAuthHtml = result.getBody();
+                jsonStr = objectMapper.writeValueAsString(result.getBody());
+                System.out.println(jsonStr);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("json JsonProcessingException : " + e);
+            }
+        } else {
+            System.out.println(result.getStatusCode());
+        }
 
         return naverAuthHtml;
     }

@@ -1,6 +1,6 @@
 # git 올릴때 빼고 올릴것
 server:
-  port: 8095
+  port: 8023
 
 navar.api.client-id: Fbdqhslq5uCCrvl6yQKk
 navar.api.client-secret: X3343HV9ZA

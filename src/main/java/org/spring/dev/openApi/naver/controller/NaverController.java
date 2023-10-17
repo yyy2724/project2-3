@@ -3,13 +3,8 @@ package org.spring.dev.openApi.naver.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.openApi.naver.service.NaverService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +31,19 @@ public class NaverController {
     @ResponseBody
     public Map<String, Object> getNaverCode(){
         String naverAuthHtml = naverService.getNaverCode();
+        Map<String, Object> result = new HashMap<String,Object>();
+        result.put("return",naverAuthHtml);
+        return result;
+    }
+
+    @GetMapping("/get/code")
+    @ResponseBody
+    public Map<String, Object> getNaverToken(
+            @RequestParam("code") String code,
+            @RequestParam("errorCode") String errorCode,
+            @RequestParam("state") String state
+    ){
+        String naverAuthHtml = naverService.getNaverToken(code, errorCode, state);
         Map<String, Object> result = new HashMap<String,Object>();
         result.put("return",naverAuthHtml);
         return result;
