@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 
 <head>
     <meta charset="UTF-8">
@@ -9,20 +8,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script th:src="@{/js/member/join_check.js}"></script>
-    <script th:src="@{/js/member/join.js}"></script>
+<!--    <script th:src="@{/js/member/join_check.js}"></script>-->
+    <script th:src="@{/js/member/memberJoinCheck.js}"></script>
     <script th:src="@{/js/member/address.js}"></script>
     <script th:src="@{/js/member/emailCheck.js}"></script>
     <link rel="stylesheet" th:href="@{/css/member/join.css}">
     <link rel="stylesheet" th:href="@{/css/member/joinCheck.css}">
 </head>
 <body>
-
-
     <form th:action="@{/member/adminJoin}" id="adminJoinForm" method="post" class="pretty-form">
         <div class="form-group">
             <label for="mail">이메일:</label>
-            <input type="text" id="mail" name="email" oninput="email_check()" class="form-control">
+            <input type="text" id="mail" name="email" class="form-control">
             <div class="feedback">
                 <span class="member_ok">사용 가능한 이메일입니다.</span>
                 <span class="member_already">이미 사용중인 이메일 입니다.</span>
@@ -36,7 +33,7 @@
 
         <div class="form-group">
             <label for="password">비밀번호:</label>
-            <input type="password" id="password" name="password" oninput="checkPws()" class="form-control">
+            <input type="password" id="password" name="password" class="form-control">
             <!--<i class="fa-eye" onclick="fa_eye()">보기</i>-->
             <div class="feedback">
                 <span class="pw_string">숫자와 영문자, 특수문자 조합으로 8~16자리를 사용해야 합니다.</span>
@@ -48,7 +45,7 @@
 
         <div class="form-group">
             <label for="checkPw">비밀번호확인:</label>
-            <input type="password" id="checkPw" name=checkPw" oninput="check_pw()" class="form-control">
+            <input type="password" id="checkPw" name="checkPw" class="form-control">
             <div class="feedback">
                 <span class="password_already">비밀번호가 일치하지 않습니다.</span>
             </div>
@@ -56,7 +53,7 @@
 
         <div class="form-group">
             <label for="phone">전화번호:</label>
-            <input type="text" id="phone" name="phone" oninput="phoneCheck()" class="form-control">
+            <input type="text" id="phone" name="phone" class="form-control">
             <div class="feedback">
                 <span class="phone_expression">올바른 전화번호을 작성해주세요.</span>
                 <span class="phone_ok">사용 가능한 전화번호입니다.</span>
@@ -94,10 +91,8 @@
         </div>
 
         <input type="hidden" name="is_display" value="1">
-        <button type="submit" class="btn btn-success">회원가입</button>
+        <button type="submit" id="submit-button" class="btn btn-success">회원가입</button>
     </form>
-
-
 </body>
 
 </html>

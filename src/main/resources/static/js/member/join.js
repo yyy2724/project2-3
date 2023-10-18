@@ -9,7 +9,7 @@ $(document).ready(function () {
         return regex.test(password);
     }
     $('#adminJoinForm').submit(function (event) {
-
+        $('#adminJoinForm').off('submit');
         var email = $('#mail').val();
         var password = $('#password').val();
         var confirmPassword = $('#checkPw').val();
@@ -17,32 +17,32 @@ $(document).ready(function () {
         var postCode = $('#postcode').val();
         var detailAddress = $('#detailAddress').val();
         var regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-        var nickName = $('#nickName').val();
 
-        if (!regExpEm.test(email)) {
-            alert("올바른 이메일이 아닙니다.");
-            $('#mail').focus();
-            // 폼 전송 중단
-            return false;
-        }
+
         $.ajax({
-            url: "/join/emailCheck", //Controller에서 요청 받을 주소
-            type: 'post', //POST 방식으로 전달
+            url: "/join/emailCheck",
+            type: 'post',
             data: { "email": email },
-            success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
-                if (cnt != 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
-                    alert("사용중인 이메일입니다.");
-                    $('#mail').focus();
-                    // 폼 전송 중단
-                    event.preventDefault();
-                    return false;
-                }
+            async: false, // 동기적으로 호출
+            success: function (cnt) {
+                // 이메일 중복 체크 로직
+                checkEmail();
             },
             error: function () {
                 alert("에러입니다");
             }
         });
-        if (!validatePassword(password)) {
+
+
+        checkPhone();
+
+        if (!regExpEm.test(email)) {
+            alert("올바른 이메일이 아닙니다.");
+            $('#mail').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false;
+        } else if (!validatePassword(password)) {
             alert("비밀번호는 알파벳, 특수문자, 숫자가 최소 하나씩 포함되어야하고 8자리 이상이어야합니다");
             // 폼 전송 중단
             $('#password').focus();
@@ -86,24 +86,43 @@ $(document).ready(function () {
             event.preventDefault();
             return false;
         }
+    });
+});
+function checkEmail() {
+var email = $('#mail').val();
         $.ajax({
-            type: "post",
-            url: "/member/emailCheck",
-            data: { email: clientEmail, inputCode: inputCode },
-            success: function (result) {
-                console.log(result);
-                if (result != true) {
-                    alert('인증번호가 틀립니다.');
+            url: "/join/emailCheck",
+            type: 'post',
+            data: { "email": email },
+            success: function (cnt) {
+                if (cnt != 0) {
+                    alert("사용중인 이메일입니다.");
                     $('#mail').focus();
-                    // 폼 전송 중단
                     event.preventDefault();
                     return false;
                 }
-
+            },
+            error: function () {
+                alert("에러입니다");
             }
         });
-
-        $('#adminJoinForm').submit();
-    });
-});
-
+    }
+    function checkPhone() {
+    var phoneInput = $('#phone').val();
+            $.ajax({
+                url: "/join/phoneCheck",
+                type: 'post',
+                data: { "phone": phoneInput },
+                success: function (cnt) {
+                    if (cnt != 0) {
+                        alert("사용중인 전화번호입니다.");
+                        $('#phone').focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("에러입니다");
+                }
+            });
+        }
