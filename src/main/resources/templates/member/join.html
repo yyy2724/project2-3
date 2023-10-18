@@ -17,7 +17,7 @@
     <link rel="stylesheet" th:href="@{/css/member/joinCheck.css}">
 </head>
 <body>
-<th:block layout:fragment="container">
+
 
     <form th:action="@{/member/adminJoin}" id="adminJoinForm" method="post" class="pretty-form">
         <div class="form-group">
@@ -48,7 +48,7 @@
 
         <div class="form-group">
             <label for="checkPw">비밀번호확인:</label>
-            <input type="password" id="checkPw" name "checkPw" oninput="check_pw()" class="form-control">
+            <input type="password" id="checkPw" name=checkPw" oninput="check_pw()" class="form-control">
             <div class="feedback">
                 <span class="password_already">비밀번호가 일치하지 않습니다.</span>
             </div>
@@ -97,7 +97,7 @@
         <button type="submit" class="btn btn-success">회원가입</button>
     </form>
 
-</th:block>
+
 </body>
 
 </html>

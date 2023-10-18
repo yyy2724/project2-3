@@ -1,25 +1,25 @@
 $(document).ready(function () {
-    var now_utc = Date.now()
-    var timeOff = new Date().getTimezoneOffset() * 60000;
-    var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
-    document.getElementById("birth").setAttribute("max", today);
-
 
     function validatePassword(password) {
         // 최소 8자리 이상, 알파벳, 특수문자, 숫자가 각각 하나 이상 포함되어야 함
         var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
         return regex.test(password);
     }
-    $('#joinForm').submit(function (event) {
+    $('#comJoin').submit(function (event) {
 
         var email = $('#mail').val();
         var password = $('#password').val();
-        var confirmPassword = $('#checkPw').val();
+        var confirmPassword = $('#checkPassword').val();
         var phoneInput = $('#phone').val();
         var postCode = $('#postcode').val();
         var detailAddress = $('#detailAddress').val();
         var regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
         var gender = $('.gender').val();
+        var company = $('#companyName').val();
+        var businessNumber = $('#businessNumber').val();
+        var businessNumberEx = /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/;
+        var validatePone = /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-(\d{3,4})-(\d{4})$/;
+        var email_check = document.getElementById('certificationYN').value;
 
         let inputCode = document.getElementById('certificationNumber').value;
         if (!regExpEm.test(email)) {
@@ -64,7 +64,48 @@ $(document).ready(function () {
                 alert("에러입니다");
             }
         });
-        if (!validatePassword(password)) {
+
+        $.ajax({
+            url: "/join/companyCheck",
+            type: 'post',
+            data: { "companyName": company },
+            success: function (cnt) {
+                if (cnt != 0) {
+                    alert("사용중인 회사명입니다.");
+                    $('#companyName').focus();
+                    // 폼 전송 중단
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+
+        if (company === "") {
+            alert("상호명을 입력해주세요.");
+            $('#companyName').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false
+        } else if (businessNumber === "") {
+            alert("사업자번호를 입력해주세요.");
+            $('#businessNumber').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false
+        } else if (Number.isInteger(businessNumber) && !businessNumberEx.test(businessNumber)){
+            alert("올바른 사업자번호를 입력해주세요.");
+            $('#businessNumber').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false
+        } else if (document.getElementById('certificationYN').value != true) {
+            alert("이메일 인증을 완료해주세요.");
+            $('#mail').focus();
+            // 폼 전송 중단
+            event.preventDefault();
+            return false;
+        }else if (!validatePassword(password)) {
             alert("비밀번호는 알파벳, 특수문자, 숫자가 최소 하나씩 포함되어야하고 8자리 이상이어야합니다");
             // 폼 전송 중단
             $('#password').focus();
@@ -77,8 +118,8 @@ $(document).ready(function () {
             // 폼 전송 중단
             event.preventDefault();
             return false;
-        } else if (!/^[0-9]{10,11}$/.test(phoneInput)) {
-            alert("휴대전화번호는 10~11자리의 숫자만 입력 가능합니다.");
+        } else if (validatePone.test(phoneInput)) {
+            alert("회사 대표 전화번호를 입력해주세요");
             $('#phone').focus();
             // 폼 전송 중단
             event.preventDefault();
@@ -102,6 +143,6 @@ $(document).ready(function () {
             event.preventDefault();
             return false;
         }
-        $('#joinForm').submit();
+        $('#comJoin').submit();
     });
 });

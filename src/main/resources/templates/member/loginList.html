@@ -3,25 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
-    <link rel="stylesheet" th:href="@{/css/common/loginList.css}">
+    <link rel="stylesheet" th:href="@{/css/member/loginList.css}">
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="header">
-    <span class="red"></span>
-    <span class="yellow"></span>
-    <span class="green"></span>
-</div>
-<div class="main">
-    <div class="nav">
-        <div class="top">
-            <a th:href="@{/member/login}">직원로그인</a>
+
+<div class="container">
+
+    <div class="section1">
+        <div class="nav">
+            <h1 class="logo">
+                <a th:href="@{/}"><img th:src="@{/images/logo2.png}" alt="logo"></a>
+            </h1>
+            <div class="menu">
+                <ul>
+                    <li><a th:href="@{/member/login}">Company</a></li>
+                    <li><a th:href="@{/member/login}">Staff</a></li>
+                    <li><a th:href="@{/member/login}">Freelancer</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="middle">
-            <a th:href="@{/member/companyLogin}">회사로그인</a>
+    </div>
+
+    <div class="section2">
+
+        <div class="inner-con">
+            <div class="title">
+                <h1>실력있는 프리랜서를 빠르게 🏃‍♀️🏃‍♂️🏃</h1>
+                <h1>Sole Manager와 성공적인 비즈니스를 시작하세요!</h1>
+            </div>
+
+            <div class="login-list">
+                <div class="login">
+                    <ul>
+                        <li>
+                            <a th:href="@{/member/login}">직원 회원가입</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/member/companyLogin}">회사 회원가입</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/member/freelancerLogin}">프리랜서 회원가입</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="img">
+                    <img th:src="@{/images/index_item1.png}" alt="index_item1">
+                </div>
+            </div>
         </div>
-        <div class="bottom">
-            <a th:href="@{/member/freelancerLogin}">프리렌서로그인</a>
-        </div>
+
+
     </div>
 </div>
 </body>
