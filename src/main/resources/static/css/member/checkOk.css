@@ -19,7 +19,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: #007BFF;
-    height: 400px;
+    height: 450px;
     width: 250px;
     align-items: center;
     justify-content: center;
@@ -69,7 +69,10 @@ button:hover {
 .in{
     margin-top: 30px;
 }
+.in1{
+    margin-top: 20px;
+}
 
-#emailText, #certificationNumber {
+#emailText, #certificationNumber, #certificationNumber1 {
     width: 200px;
 }
