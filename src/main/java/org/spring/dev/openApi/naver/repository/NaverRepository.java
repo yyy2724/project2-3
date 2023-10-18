@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NaverRepository extends JpaRepository<NaverTokenEntity,Long> {
+    NaverTokenEntity findFirstByOrderByIdDesc();
 }

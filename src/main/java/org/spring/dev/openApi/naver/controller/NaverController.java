@@ -2,6 +2,7 @@ package org.spring.dev.openApi.naver.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.openApi.naver.dto.OrgResponse;
 import org.spring.dev.openApi.naver.service.NaverService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NaverController {
 
-   private final NaverService naverService;
+    private final NaverService naverService;
 
     @GetMapping("/index")
-    public String index(){
+    public String index() {
 
-        return "naverWork/naver";
+        return "orgUnit/orgUnit";
     }
 
     /*
@@ -37,17 +38,24 @@ public class NaverController {
 
     }
 
-// 토큰을 발급 받아서 db에 저장
+    // 토큰을 발급 받아서 db에 저장
     @GetMapping("/token")
     @ResponseBody
     public Map<String, Object> getNaverToken(
             @RequestParam("code") String code,
             @RequestParam("errorCode") String errorCode,
             @RequestParam("state") String state
-    ){
+    ) {
         String naverAuthHtml = naverService.getNaverToken(code, errorCode, state);
-        Map<String, Object> result = new HashMap<String,Object>();
-        result.put("return",naverAuthHtml);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("return", naverAuthHtml);
         return result;
+    }
+
+    @GetMapping("/orgunit")
+    @ResponseBody
+    public OrgResponse getOrgunitList() {
+        OrgResponse orgUnitList = naverService.getOrgUnitList();
+        return orgUnitList;
     }
 }
