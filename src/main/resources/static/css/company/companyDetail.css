@@ -48,9 +48,9 @@ h1 {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.user-info-list li:last-child {
-    border-bottom: none;
-}
+/*.user-info-list li:last-child {*/
+/*    border-bottom: none;*/
+/*}*/
 
 /* 스타일링된 버튼 */
 .my-page-button {
@@ -62,3 +62,4 @@ h1 {
     margin: 10px;
     border-radius: 10px;
 }
+

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
@@ -8,10 +8,13 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/member/address.js}"></script>
     <script th:src="@{/js/member/emailCheck.js}"></script>
+    <script th:src="@{/js/company/join_check.js}"></script>
     <script th:src="@{/js/company/companyJoin.js}"></script>
     <script th:src="@{/js/company/join_check.js}"></script>
     <link rel="stylesheet" href="/css/company/companyJoin.css">
     <link rel="stylesheet" href="/css/company/companyJoinCheck.css">
+    <link rel="stylesheet" th:href="@{/css/company/companyCheck.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/company/joinCheck.css}">-->
 
 </head>
 <body>
@@ -47,7 +50,7 @@
         <li>
             <span>회사 대표 전화번호</span>
             <input type="text" name="phone" id="phone" oninput="phoneCheck()">
-            <span class="phone_expression">올바른 전화번호을 작성해주세요.</span>
+            <span class="phone_expression">올바른 전화번호를 작성해주세요.</span>
             <span class="phone_ok">사용 가능한 전화번호입니다.</span>
             <span class="phone_already">이미 가입된 전화번호입니다.</span>
         </li>
