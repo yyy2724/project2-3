@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
 
 <head>
     <meta charset="UTF-8">
@@ -8,11 +11,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/member/address.js}"></script>
+    <script th:src="@{/js/member/emailCheck.js}"></script>
     <script th:src="@{/js/member/join_check.js}"></script>
+    <script th:src="@{/js/member/genderChange.js}"></script>
     <link rel="stylesheet" th:href="@{/css/freelancer/freelancerUpdate.css}">
     <link rel="stylesheet" th:href="@{/css/member/joinCheck.css}">
 </head>
 <body>
+<th:block layout:fragment="container">
 <form th:action="@{/member/freeUpdate/{memberId}(memberId=${memberDto.id})}" method="post">
     <input type="hidden" name="id" th:value="${memberDto.id}">
     <ul class="mypage-list">
@@ -62,6 +69,7 @@
         </li>
     </ul>
 </form>
+</th:block>
 </body>
 
 </html>

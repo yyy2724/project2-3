@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
 
 <head>
     <meta charset="UTF-8">
@@ -8,12 +11,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/member/address.js}"></script>
+    <script th:src="@{/js/member/emailCheck.js}"></script>
     <script th:src="@{/js/member/join_check.js}"></script>
     <link rel="stylesheet" th:href="@{/css/member/memberUpdate.css}">
     <link rel="stylesheet" th:href="@{/css/member/joinCheck.css}">
 </head>
 
 <body>
+<th:block layout:fragment="container">
 <form th:action="@{/member/update/{memberId}(memberId=${memberDto.id})}" method="post">
     <div class="update-form-container">
         <h1>회원 정보 수정</h1>
@@ -66,6 +72,7 @@
         </ul>
     </div>
 </form>
+</th:block>
 </body>
 
 

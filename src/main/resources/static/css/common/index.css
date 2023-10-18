@@ -54,6 +54,39 @@ table, th, td{
 .left .notice table tbody tr td{
     padding: 10px 0;
 }
+/* detail */
+.left .detail{
+    margin: 100px auto;
+    font-size: 20px;
+}
+.left .detail h2{
+    text-align: center;
+    padding-bottom: 15px;
+}
+.left .detail table{
+    width: 100%;
+    border: none;
+    text-align: start;
+}
+.left .detail table thead{
+    float: left;
+}
+.left .detail table thead tr th{
+    display: block;
+}
+.left .detail table tbody{
+    display: block; 
+    overflow-x: hidden;
+}
+.left .detail table tbody tr{
+    display: inline-block;
+}
+.left .detail table tbody tr td{
+    display: block;
+}
+.left .detail table th{
+    border-right: 1px solid #152161;
+}
 /* middle */
 .middle{
     width: 900px;

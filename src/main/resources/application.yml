@@ -2,6 +2,9 @@
 server:
   port: 8023
 
+navar.api.client-id: Fbdqhslq5uCCrvl6yQKk
+navar.api.client-secret: X3343HV9ZA
+
 spring:
   mail:
     host: smtp.gmail.com
@@ -25,9 +28,9 @@ spring:
     url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
     username: admin
     password: '00000000'
-#    url: jdbc:mysql://localhost:3306/project02
-#    username: root
-#    password: 1234
+  #    url: jdbc:mysql://localhost:3306/project02
+  #    username: root
+  #    password: 1234
 
 
 

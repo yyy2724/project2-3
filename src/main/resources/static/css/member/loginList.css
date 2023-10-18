@@ -29,13 +29,11 @@ img{
 .section1{
 
     width: 100%;
-    display: flex;
     justify-content: center;
     padding: 5px 20px;
     background-color: #fff;
     gap: 10px;
     box-sizing: border-box;
-
 
 }
 
@@ -100,8 +98,8 @@ img{
 }
 
 .section2 .inner-con{
-    flex-basis: 1600px;
-    height: 800px;
+    flex-basis: 100vw;
+    height: 100vh;
     background: url(/images/index.png) no-repeat 50%/cover;
     display: flex;
     flex-direction: column;
@@ -126,7 +124,7 @@ img{
 }
 
 .section2 .inner-con .login-list{
-padding: 10px;
+    padding: 100px 100px 0 0;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;

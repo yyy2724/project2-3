@@ -45,7 +45,7 @@ public class PayController {
     }
 
 // 해당 멤버에 모든 월급내역 보여주기
-    @GetMapping("/{memberId}/list")
+    @GetMapping("/free/{memberId}/list")
     public Map<String, Object> getMemberPayPrice(
             @PathVariable("memberId") Long memberId){
 
