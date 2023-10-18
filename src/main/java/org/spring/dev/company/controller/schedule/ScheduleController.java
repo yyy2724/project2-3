@@ -18,7 +18,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @GetMapping("/{memberId}/index")
+    @GetMapping("/index/{memberId}")
     public String index(
             @PathVariable(name = "memberId") Long memberId) {
         return "schedule/schedule";
