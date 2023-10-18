@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<!--    <script th:src="@{/js/member/join_check.js}"></script>-->
     <script th:src="@{/js/member/memberJoinCheck.js}"></script>
     <script th:src="@{/js/member/address.js}"></script>
     <script th:src="@{/js/member/emailCheck.js}"></script>
@@ -86,7 +85,9 @@
             <input type="text" id="postcode" name="postcode" class="form-control" placeholder="우편번호">
             <button type="button" onclick="sample6_execDaumPostcode()" class="btn btn-secondary">우편번호 찾기</button>
             <input type="text" id="address" name="address" class="form-control" placeholder="주소">
+            <span class="address_already">주소를 입력해주세요.</span>
             <input type="text" id="detailAddress" name="detailAddress" class="form-control" placeholder="상세주소">
+            <span class="detail_already">상세주소를 입력해주세요.</span>
             <input type="text" id="extraAddress" name="extraAddress" class="form-control" placeholder="참고항목">
         </div>
 
