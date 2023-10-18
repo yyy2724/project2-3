@@ -20,6 +20,11 @@
     padding-left: 15px;
 }
 
+.header .nav .left-nav img{
+    width: 120px;
+    height: 60px;
+}
+
 .header .nav .right-nav>ul{
     display: flex;
     justify-content: space-between;

@@ -76,14 +76,19 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#">공지사항</a>
+                    <li><a th:href="@{/board/list}">공지사항</a>
                         <ul class="small">
                             <li>
-                                <!--security 관리자 권한 부여-->
-                                <a th:href="@{/board/write}">작성하기</a>
+                                <a th:href="@{/board/calendar}">전체일정</a>
                             </li>
                             <li>
-                                <a th:href="@{/board/list}">보러가기</a>
+                                <a th:href="@{/board/list?boardType=GENERAL}">공지사항</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/list?boardType=INTERNAL}">사내게시판</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/write}">바로 작성하기</a>
                             </li>
                         </ul>
                     </li>

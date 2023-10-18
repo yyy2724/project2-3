@@ -43,7 +43,7 @@
 
                 <label th:for = "content">내용</label>
                 <div id="editor"></div>
-                <input type="hidden" name="content" id="content">
+                <input type="hidden" name="content" id="content" th:field="*{content}">
 
                 <label th:for = "writer">작성자</label>
                 <input type="text" name="writer" id="writer" required>
