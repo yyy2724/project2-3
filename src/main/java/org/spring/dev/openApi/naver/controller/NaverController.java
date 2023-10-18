@@ -29,13 +29,13 @@ public class NaverController {
 
     @GetMapping("/code")
     @ResponseBody
-    public Map<String, Object> getNaverCode(){
+    public Map<String, Object> getNaverCode() {
         String naverAuthHtml = naverService.getNaverCode();
-        Map<String, Object> result = new HashMap<String,Object>();
-        result.put("return",naverAuthHtml);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("return", naverAuthHtml);
         return result;
-    }
 
+    }
 
 // 토큰을 발급 받아서 db에 저장
     @GetMapping("/token")
