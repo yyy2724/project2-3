@@ -1,9 +1,11 @@
 package org.spring.dev.company.service.board;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.board.ReplyDto;
 import org.spring.dev.company.entity.board.BoardEntity;
 import org.spring.dev.company.entity.board.ReplyEntity;
+import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.board.BoardRepository;
 import org.spring.dev.company.repository.board.ReplyRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
@@ -23,10 +25,14 @@ public class ReplyService {
     private final MemberRepository memberRepository;
 
 
-    public Integer write(ReplyDto replyDto) {
+    public Integer write(ReplyDto replyDto, MyUserDetails myUserDetails) {
 
         BoardEntity boardEntity = boardRepository.findById(replyDto.getBoardId()).orElseThrow(()->{
             throw new IllegalArgumentException("게시글 아이디가 존재하지 않습니다.");
+        });
+
+        MemberEntity memberEntity = memberRepository.findByEmail(myUserDetails.getMemberEntity().getEmail()).orElseThrow(()->{
+            throw new IllegalArgumentException("아이디가 존재하지 않습니다.");
         });
 
         ReplyEntity replyEntity = ReplyEntity.builder()
@@ -34,6 +40,7 @@ public class ReplyService {
                 .content(replyDto.getContent())
                 .writer(replyDto.getWriter())
                 .boardEntity(boardEntity)
+                .memberEntity(memberEntity)
                 .build();
 
         Long replyId = replyRepository.save(replyEntity).getId();
@@ -68,7 +75,6 @@ public class ReplyService {
 
         return replyDtoList;
 
-//        return replyEntityList.stream().map(ReplyDto::toReplyDto).collect(Collectors.toList());
 
     }
 
@@ -110,20 +116,24 @@ public class ReplyService {
         });
 
         List<ReplyDto> replyDtoList = new ArrayList<>();
-        List<ReplyEntity> replyEntityList = replyRepository.findAllByBoardEntityOrderByIdDesc(boardEntity);
+//        List<ReplyEntity> replyEntityList = replyRepository.findAllByBoardEntityOrderByIdDesc(boardEntity);
 
+        List<ReplyEntity> replyEntityList = replyRepository.findAllByBoardEntity(boardEntity);
 
         for (ReplyEntity replyEntity : replyEntityList) {
             ReplyDto replyDto = ReplyDto.builder()
                     .id(replyEntity.getId())
                     .writer(replyEntity.getWriter())
                     .content(replyEntity.getContent())
-                    .memberEntity(replyEntity.getMemberEntity())
+                    .email(replyEntity.getMemberEntity().getEmail())
                     .createTime(replyEntity.getCreateTime())
                     .boardId(replyEntity.getBoardEntity().getId())
                     .build();
             replyDtoList.add(replyDto);
+            System.out.println(replyEntity.getMemberEntity()+"<<< reply1");
         }
+
+        System.out.println(replyDtoList+"<<< reply2");
 
         return replyDtoList;
     }

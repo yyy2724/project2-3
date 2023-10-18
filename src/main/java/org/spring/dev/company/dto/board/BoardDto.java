@@ -49,6 +49,7 @@ public class BoardDto {
                 .writer(boardEntity.getWriter())
                 .boardType(boardEntity.getBoardType())
                 .hit(boardEntity.getHit())
+                .memberEntity(boardEntity.getMemberEntity())
                 .createTime(boardEntity.getCreateTime())
                 .build();
     }

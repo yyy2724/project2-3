@@ -1,4 +1,9 @@
-
+$(document).ready(function () {
+var now_utc = Date.now()
+    var timeOff = new Date().getTimezoneOffset() * 60000;
+    var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
+    document.getElementById("birth").setAttribute("max", today);
+});
 function email_check() {
     const email = $('#mail').val(); //id값이 "id"인 입력란의 값을 저장
     const regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -43,13 +48,15 @@ function phoneCheck() {
         data: { "phone": phone },
         success: function (cnt) {
             if (cnt == 1) {
-                $('.phone_already').css("display", "inline-block");
-                $('.phone_ok').css("display", "none");
-            } else {
                 $('.phone_ok').css("display", "inline-block");
                 $('.phone_already').css("display", "none");
+            } else {
+                $('.phone_already').css("display", "inline-block");
+                $('.phone_ok').css("display", "none");
             }
-            console.log('memer-> ' + memberPhone);
+                $('.phone_already').css("display", "none");
+                $('.phone_ok').css("display", "none");
+
         },
         error: function () {
             alert("에러입니다");

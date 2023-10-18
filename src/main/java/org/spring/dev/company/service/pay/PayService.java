@@ -1,16 +1,23 @@
 package org.spring.dev.company.service.pay;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.pay.PayDto;
 import org.spring.dev.company.dto.workTime.WorkTimeDto;
+import org.spring.dev.company.entity.approval.ApprovalEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.pay.PayEntity;
 import org.spring.dev.company.entity.worktime.WorkTimeEntity;
+import org.spring.dev.company.repository.approval.ApprovalRepository;
 import org.spring.dev.company.repository.pay.PayRepository;
 import org.spring.dev.company.repository.worktime.WorkTimeRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +28,7 @@ public class PayService {
 
     private final WorkTimeRepository workTimeRepository;
     private final PayRepository payRepository;
+    private final ApprovalRepository approvalRepository;
 
     public Integer postPayList(Long memberId, String workMonth) {
         PayEntity payEntity = new PayEntity();
@@ -74,5 +82,27 @@ public class PayService {
         }
 
         return payDtoList;
+    }
+
+    public void postFRpay(Long approveId, MyUserDetails member) {
+        PayEntity payEntity = new PayEntity();
+
+        Optional<ApprovalEntity> approvalEntity = approvalRepository.findById(approveId);
+
+        LocalDateTime start = approvalEntity.get().getStart();
+        LocalDateTime end = approvalEntity.get().getEnd();
+
+        Long days = ChronoUnit.DAYS.between(start,end);
+
+        Long totalPrice  = days * 100000;
+
+        payEntity.setMemberEntity(approvalEntity.get().getMemberEntity());
+        payEntity.setIs_display(1);
+        payEntity.setMonthly(totalPrice.intValue());
+        payEntity.setIsPay(1);
+        payEntity.setPayDay(LocalDate.now());
+
+        payRepository.save(payEntity).getId();
+
     }
 }

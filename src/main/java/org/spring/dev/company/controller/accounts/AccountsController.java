@@ -35,7 +35,7 @@ public class AccountsController {
     public AccountsDto  postAccounts(
             @RequestBody AccountsDto accountsDto){
 
-        return accountsService.postAccout(accountsDto);
+        return accountsService.postAccount(accountsDto);
     }
 
 

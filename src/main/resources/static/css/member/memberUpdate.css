@@ -1,4 +1,8 @@
 /* my_page_update_styles.css */
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+
 .update-form-container {
     background-color: #f7f7f7;
     max-width: 400px;

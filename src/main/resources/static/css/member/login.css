@@ -24,7 +24,10 @@
 .login .login-con .login-form{
     flex-basis: 400px;
     height: 400px;
+<<<<<<< HEAD
+=======
     width: 370px;
+>>>>>>> 4417d06703d0ebda053faca57bab116a3957b34e
     box-sizing: border-box;
     align-items: center;
 
