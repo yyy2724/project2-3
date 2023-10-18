@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>월급내역</title>
+    <link rel="stylesheet" th:href="@{/css/pay/payList.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script th:src="@{/js/pay/payList.js}" defer="defer"></script>
+</head>
+<th:block layout:fragment="container">
+<body>
+<div class="container-con">
+    <div class="payList">
+        <div class="payList-con">
+            <div class="payList-header">
+                <h1>월급내역</h1>
+            </div>
+            <div class="select">
+                <div class="year">
+                    <form th:action="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}" method="get">
+                        <select name="workYear" id="workYear">
+                            <!--java script 에서 optiont설정-->
+                        </select>
+
+                            <input type="submit" value="선택하기">
+
+                    </form>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>달</th>
+                    <th>지급 날짜</th>
+                    <th>지급액</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pay : ${payList}">
+                    <td th:hidden="${pay.id}"></td>
+                    <td th:text="${#temporals.format(pay.payDay, 'MM')}"></td>
+                    <td th:text="${#temporals.format(pay.payDay, 'yyyy-MM-DD')}}"></td>
+                    <td th:text="${pay.monthly}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</th:block>
+</html>

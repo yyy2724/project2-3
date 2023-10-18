@@ -6,22 +6,41 @@ import org.spring.dev.company.dto.pay.PayDto;
 import org.spring.dev.company.dto.workTime.WorkTimeDto;
 import org.spring.dev.company.service.pay.PayService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/pay")
 public class PayController {
 
     private final PayService payService;
 
+//    payList
+    @GetMapping("/payList/{memberId}")
+    public String getPayList(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                             @PathVariable("memberId") Long memberId,
+                             @RequestParam(value = "workYear", required = false) String workYear,
+                             Model model
+                             ){
+
+        // 년에 해당하는 근무기록 가져오기
+        List<PayDto> result = payService.getPayYearList(memberId, workYear);
+
+        model.addAttribute("payList",result);
+
+        return "pay/payList";
+    }
+
     // 정산하기 버튼 눌렀을 떄 들어가기
 //    월급 달마다
     @PostMapping("/{memberId}")
+    @ResponseBody
     public Map<String,Object> getMemberPayMontly(
             @PathVariable("memberId") Long memberId,
             @RequestParam(value = "workMonth", required = false) String workMonth){
@@ -33,7 +52,8 @@ public class PayController {
         map.put("result", result);
         return map;
     }
-    @GetMapping("/{memberId}/yearList")
+    @GetMapping("/yearList/{memberId}")
+    @ResponseBody
     public List<PayDto> getMemberPayYearly(
             @PathVariable("memberId") Long memberId,
             @RequestParam(value = "workYear", required = false) String workYear){
@@ -46,6 +66,7 @@ public class PayController {
 
 // 해당 멤버에 모든 월급내역 보여주기
     @GetMapping("/free/{memberId}/list")
+    @ResponseBody
     public Map<String, Object> getMemberPayPrice(
             @PathVariable("memberId") Long memberId){
 
