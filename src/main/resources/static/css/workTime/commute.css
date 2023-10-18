@@ -41,29 +41,31 @@ body{
 }
 .content .content-main .left{
     text-align: center;
-    width: 400px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
 }
 .content .content-main .right{
     text-align: center;
-    width: 400px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
 }
-button{
+.content .content-main button{
     cursor: pointer;
     width: inherit;
     height: inherit;
-    border-radius: 10px;
+    border-radius: 50%;
     border: none;
     background-color: #152161;
 }
-button:hover{
-    color: #c5c5c5;;
+.content .content-main button:hover{
+    background-color: #152061a4;
+    box-shadow: 5px 5px 5px 5px #152161;
+    color: #c5c5c5;
 }
-input{
+.content .content-main input{
     cursor: pointer;
     border: none;
-    background-color: #152161;
-    font-size: 80px;
+    background-color: transparent;
+    font-size: 60px;
     color: white;
 }
