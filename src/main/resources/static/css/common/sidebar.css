@@ -58,6 +58,7 @@
     line-height: 40px;
     padding-top: 20px;
     font-size: 22px;
+    transition: all 0.5s;
 }
 
 .big >li a{
@@ -83,6 +84,6 @@
 }
 
 .big >li:hover .small{
-    height: 200px;
+    height: 180px;
     transition-duration: 1s;
 }

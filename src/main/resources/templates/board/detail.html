@@ -20,17 +20,19 @@
                 <td><span>작성자</span><span th:text="${board.writer}"></span></td>
             </tr>
             <tr>
-                <td><span>작성일자</span><span
-                        th:text="${#temporals.format(board.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+                <td><span>회원아이디</span><span th:text="${board.memberEntity.email}"></span></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>작성일자</span>
+                    <span th:text="${#temporals.format(board.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                </td>
             </tr>
             <tr>
                 <td><span>게시기간</span><span th:text="${board.startDate}"></span><span th:text="${board.endDate}"></span></td>
             </tr>
             <tr>
                 <td><span>조회수</span><span th:text="${board.hit}"></span></td>
-            </tr>
-            <tr>
-                <!--                    <td><span>회원아이디</span><span th:text="${board.memberEntity.email}"></span></td>-->
             </tr>
             <tr>
                 <td><span>첨부파일</span>

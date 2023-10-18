@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,9 +34,22 @@ public class WebSocketController {
     // client 메세지를 받고 -> 응답 메세지 전송 -> client
     @OnMessage
     public void onMessage(String message, Session session) throws Exception{
-        for(Session session1 : clientinfo){
-            //client 메세지 -> 전송 메세지
-            session1.getBasicRemote().sendText(message);
+
+
+        if (message.equals("게시글 작성 완료")) {
+//            String username = (String) session.getUserProperties().get("username");
+            String notification = "새로운 공지가 등록되었습니다.";
+            broadcastNotification(notification);
+        }
+    }
+
+    private void broadcastNotification(String notification) {
+        for (Session session : clientinfo) {
+            try {
+                session.getBasicRemote().sendText("notification:" + notification);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -17,7 +17,12 @@
 }
 
 .header .nav .left-nav{
-    padding-left: 15px;
+    padding-left: 5px;
+}
+
+.header .nav .left-nav a img{
+    width: 200px;
+    height: 80px;
 }
 
 .header .nav .right-nav>ul{
@@ -30,6 +35,10 @@
 
 .header .nav .right-nav>ul>li{
     padding: 10px;
+}
+.header .nav .right-nav>ul>li span{
+    font-size: 20px;
+    border-bottom: 1px solid black;
 }
 .header .nav .right-nav>ul>li a{
     font-size: 20px;
