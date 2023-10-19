@@ -28,7 +28,7 @@ public class WorkTimeController {
 
 //    근태관리(출근/퇴근)
     @GetMapping("/commute")
-    public String dasfd(@AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String getCommute(@AuthenticationPrincipal MyUserDetails myUserDetails){
 
         return "workTime/commute";
     }

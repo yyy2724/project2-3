@@ -106,13 +106,26 @@
                     <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"   aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h2>
-                                    <div class="exit">
+                                <div class="btn">
+                                    <span class="red">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                    </div>
+                                    </span>
+                                    <span class="yellow">
+                                        <a href="">⏤</a>
+                                    </span>
+                                    <span class="green">
+                                        <a href="">⎔</a>
+                                    </span>
+                                </div>
+                                <div class="modal-header">
+                                    <h2 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h2>
+                                    <!-- <div class="exit">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> -->
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
@@ -121,10 +134,14 @@
                                             <input type="text" class="form-control" id="calendar_content" name="content">
                                         </div>
                                         <div class="date">
-                                            <label for="calendar_start_date" class="col-form-label">시작 날짜</label>
-                                            <input type="datetime-local" class="form-control" id="calendar_start_date" name="start">
-                                            <label for="calendar_end_date" class="col-form-label">종료 날짜</label>
-                                            <input type="datetime-local" class="form-control" id="calendar_end_date" name="end">
+                                            <div class="start">
+                                                <label for="calendar_start_date" class="col-form-label">시작 날짜</label>
+                                                <input type="datetime-local" class="form-control" id="calendar_start_date" name="start">
+                                            </div>
+                                            <div class="end">
+                                                <label for="calendar_end_date" class="col-form-label">종료 날짜</label>
+                                                <input type="datetime-local" class="form-control" id="calendar_end_date" name="end">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

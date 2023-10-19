@@ -1,14 +1,8 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout/baseLayout}">
-=======
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
 <!--      layout:decorate="~{fragments/layout/baseLayout}"-->
 >
->>>>>>> 4417d06703d0ebda053faca57bab116a3957b34e
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,16 +19,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/board/write.js}" defer></script>
     <script th:src="@{/js/board/calendar.js}" defer></script>
-<<<<<<< HEAD
-    <link rel="stylesheet" th:href="@{/css/board/write.css}">
-
-=======
     <script th:src="@{/js/chat/chat.js}" defer></script>
 
     <link rel="stylesheet" th:href="@{/css/board/write.css}">
 
 
->>>>>>> 4417d06703d0ebda053faca57bab116a3957b34e
 
 </head>
 <body>
@@ -54,7 +43,7 @@
 
                 <label th:for = "content">내용</label>
                 <div id="editor"></div>
-                <input type="hidden" name="content" id="content">
+                <input type="hidden" name="content" id="content" th:field="*{content}">
 
                 <label th:for = "writer">작성자</label>
                 <input type="text" name="writer" id="writer" required>
