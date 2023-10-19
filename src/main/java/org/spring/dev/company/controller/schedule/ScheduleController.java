@@ -55,6 +55,7 @@ public class ScheduleController {
     @ResponseBody
     public ScheduleDto updateSchedule(
             @PathVariable(name = "scheduleId") Long scheduleId,
+
             @RequestBody(required = true) ScheduleDto scheduleDto)
     {
         ScheduleDto result = scheduleService.postSchedule(scheduleId,scheduleDto);

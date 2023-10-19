@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.openApi.naver.dto.NaverTokenDto;
+import org.spring.dev.openApi.naver.dto.OrgResponse;
 import org.spring.dev.openApi.naver.entity.NaverTokenEntity;
 import org.spring.dev.openApi.naver.repository.NaverRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,5 +97,35 @@ public class NaverService {
         }
 
         return accessToken;
+    }
+
+    public OrgResponse getOrgUnitList() {
+
+        //db에 저장한 가장 최신 토큰을 가져온다.
+        NaverTokenEntity naverTokenEntity =naverRepository.findFirstByOrderByIdDesc();
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+naverTokenEntity.getAccess_token());
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://www.worksapis.com")
+                .path("/v1.0/orgunits")
+                .encode()
+                .build()
+                .toUri();
+
+        ResponseEntity<OrgResponse> result = restTemplate.exchange(uri, HttpMethod.GET, entity, OrgResponse.class);
+
+        if (result.getStatusCode() == HttpStatus.OK) {
+
+            System.out.println("정상적으로 실행");
+
+        } else {
+            System.out.println(result.getStatusCode());
+        }
+
+        return result.getBody();
     }
 }

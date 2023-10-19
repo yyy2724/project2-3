@@ -7,8 +7,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/member/address.js}"></script>
-    <script th:src="@{/js/member/emailCheck.js}"></script>
-    <script th:src="@{/js/company/join_check.js}"></script>
     <script th:src="@{/js/company/companyJoin.js}"></script>
     <link rel="stylesheet" th:href="@{/css/company/companyCheck.css}">
     <link rel="stylesheet" th:href="@{/css/company/companyJoin.css}">
@@ -41,9 +39,9 @@
             <span class="member_ok">사용 가능한 이메일입니다.</span>
             <span class="member_already">이미 사용중인 이메일 입니다.</span>
             <span class="email_expression">올바른 이메일을 작성해주세요.</span>
-            <button type="button" id="emailCheck" onclick="emailSend2()">인증번호 받기</button>
+            <button type="button" id="emailCheck" >인증번호 받기</button>
             <input type="text" id="certificationNumber">
-            <button type="button" id="certificationBtn" onclick="emailCertification()">이메일인증확인</button>
+            <button type="button" id="certificationBtn">이메일인증확인</button>
         </li>
         <li>
             <span>회사 대표 전화번호</span>

@@ -4,6 +4,7 @@ import lombok.*;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.pay.PayEntity;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,9 @@ public class PayDto {
 
     private Long id;
 
-    private Integer monthly;
+    private String monthly;
+
+    private Integer price;
 
     private LocalDate payDay; //2023-10-25
 
@@ -33,6 +36,7 @@ public class PayDto {
     public static PayDto toDto(PayEntity payEntity) {
         return PayDto.builder()
                 .id(payEntity.getId())
+                .price(payEntity.getPrice())
                 .monthly(payEntity.getMonthly())
                 .payDay(payEntity.getPayDay())
                 .isPay(payEntity.getIsPay())
