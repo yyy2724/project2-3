@@ -15,6 +15,7 @@
 <body>
 <main>
 <!--main-->
+<input id="memberId" type="hidden" th:value="${#authentication.principal.memberEntity.id}">
 <div class="container">
     <!--내용 채우기-->
     <div class="workCalendar">

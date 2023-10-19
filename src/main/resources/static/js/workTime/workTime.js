@@ -1,8 +1,8 @@
 
       //브라우저가 dom를 읽고 객체를 생성하는 데로 실행 = 페이지 로딩되면 실행
       document.addEventListener('DOMContentLoaded', function() {
-        let calendarEl = document.getElementById('calendar');
-        let memberId = 1; // 로그인 만들어지는데로 userDetail에서 가져오기
+      let calendarEl = document.getElementById('calendar');
+      let memberId = $("#memberId").val();
       let Calendar = FullCalendar.Calendar;
 
       let calendar = new FullCalendar.Calendar(calendarEl,{
@@ -30,8 +30,8 @@
             }
           },
 
-          workUpdateButton:{
-            text : '근무 수정',
+          workAddButton:{
+            text : '근무 추가',
             click:function(){
               $('.modal').fadeIn();
 
@@ -40,14 +40,13 @@
                 let work_type = $("#calendar_work_type").val();
                 let start_date = $("#calendar_start_date").val();
                 let end_date = $("#calendar_end_date").val();
-                let work_id = 1
 
                 if(start_date == "" || end_date == ""){
                   alert("날짜를 선택해주세요!");
                 } else if(end_date - start_date < 0 ){
                   alert("종료 시간이 시작 날짜보다 먼저입니다.");
                 } else{
-                  setCalendar(work_type,start_date,end_date,work_id);
+                  setCalendar(work_type,start_date,end_date,memberId);
                   getCalendar(calendar.getDate() ,memberId)
                   calendar.render();
                   location.reload()
@@ -61,38 +60,8 @@
                 $('.modal').fadeOut();
               })
             }
-          },
-          workAddButton:{
-            text : '근무 추가',
-            click:function(){
-              $('.modal').fadeIn();
-
-              $('.btn-add').click(function(){
-
-                let work_type = $("#calendar_work_type").val();
-                let start_date = $("#calendar_start_date").val();
-                let end_date = $("#calendar_end_date").val();
-                let work_id = 1
-
-                if(start_date == "" || end_date == ""){
-                  alert("날짜를 선택해주세요!");
-                } else if(end_date - start_date < 0 ){
-                  alert("종료 시간이 시작 날짜보다 먼저입니다.");
-                } else{
-                  setCalendar(work_type,start_date,end_date,work_id);
-                  getCalendar(calendar.getDate() ,memberId)
-                  calendar.render();
-                  location.reload()
-
-                }
-              
-              })
-
-              $('.btn-close').click(function(){
-                $('.modal').fadeOut();
-              })
-            }
           }
+          
         },
         
         headerToolbar: {
@@ -110,7 +79,8 @@
         let jsonData = {
           workTimeStart : start,
           workTimeEnd : end,
-          workType : work_type
+          workType : work_type,
+          memberId: memberId
         }
 
         $.ajax({
@@ -144,7 +114,7 @@
             console.log(changeDay(element.workTimeStart))
             console.log(changeDay(element.workTimeEnd))
             calendar.addEvent({
-              title: "test",
+              title: element.title,
               start: changeDay(element.workTimeStart),
               end: changeDay(element.workTimeEnd)
             })

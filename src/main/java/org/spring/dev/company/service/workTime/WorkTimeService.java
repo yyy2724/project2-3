@@ -39,6 +39,7 @@ public class WorkTimeService {
 
         return workTimeDtoList;
     }
+
     public Long postWorkTimeIn(Long memberId) {
         Long result = null;
 
@@ -74,7 +75,7 @@ public class WorkTimeService {
         //출근 기록이있다면
         WorkTimeEntity workTimeEntity = workTimeRepository.getDayTime(date);
         //퇴근 기록이 아직 없을때 생성
-        if (workTimeEntity.getWorkTimeEnd() == null){
+        if (workTimeEntity.getWorkTimeEnd() == null) {
             workTimeEntity.setWorkTimeEnd(LocalDateTime.now());
             result = workTimeRepository.save(workTimeEntity).getId();
             return result;
@@ -93,7 +94,7 @@ public class WorkTimeService {
         if (workType == null) {
             // 달만 선택
             workTimeEntityList = workTimeRepository.findByWorkTimeMemberId(memberId);
-        }else{
+        } else {
             workTimeEntityList = workTimeRepository.findByWorkTimeWorkType(memberId, workType);
         }
 
@@ -101,17 +102,29 @@ public class WorkTimeService {
         if (!workTimeEntityList.isEmpty()) {
             for (WorkTimeEntity workTimeEntity : workTimeEntityList) {
                 WorkTimeDto workTimeDto = WorkTimeDto.toDto(workTimeEntity);
+                if (workTimeDto.getWorkType() == WorkType.NORMAL) {
+                    workTimeDto.setTitle("근무");
+                } else if (workTimeDto.getWorkType() == WorkType.ABSENT) {
+                    workTimeDto.setTitle("결석");
+                } else if (workTimeDto.getWorkType() == WorkType.EARLY) {
+                    workTimeDto.setTitle("조퇴");
+                } else if (workTimeDto.getWorkType() == WorkType.TARDY) {
+                    workTimeDto.setTitle("지각");
+                } else if (workTimeDto.getWorkType() == WorkType.VACATION) {
+                    workTimeDto.setTitle("휴가");
+                }
                 workTimeDtoList.add(workTimeDto);
             }
         }
         return workTimeDtoList;
     }
+
     //    listdate
     public List<WorkTimeDto> getWorkTimeWorkDateList(Long memberId, String workDate) {
         List<WorkTimeDto> workTimeDtoList = new ArrayList<>();
         List<WorkTimeEntity> workTimeEntityList = workTimeRepository.findByWorkTimeDate(workDate, memberId);
 
-        if(!workTimeEntityList.isEmpty()){
+        if (!workTimeEntityList.isEmpty()) {
             for (WorkTimeEntity workTimeEntity : workTimeEntityList) {
                 WorkTimeDto workTimeDto = WorkTimeDto.toDto(workTimeEntity);
                 workTimeDtoList.add(workTimeDto);
@@ -125,19 +138,20 @@ public class WorkTimeService {
      */
     public WorkTimeDto getWorkTimeUpdate(Long id) {
         Optional<WorkTimeEntity> optionalWorkTimeEntity
-                = Optional.ofNullable(workTimeRepository.findById(id).orElseThrow(() ->{
+                = Optional.ofNullable(workTimeRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("수정할 사항이 없습니다.");
         }));
-        if(optionalWorkTimeEntity.isPresent()){
+        if (optionalWorkTimeEntity.isPresent()) {
             WorkTimeDto workTimeDto = WorkTimeDto.toDto(optionalWorkTimeEntity.get());
             return workTimeDto;
         }
         return null;
     }
+
     @Transactional
     public WorkTimeDto postWorkTimeUpdate(WorkTimeDto workTimeDto, Long memberId) {
 
-        MemberEntity memberEntity =  new MemberEntity();
+        MemberEntity memberEntity = new MemberEntity();
         memberEntity.setId(memberId);
         workTimeDto.setMemberEntity(memberEntity);
 
@@ -167,7 +181,7 @@ public class WorkTimeService {
     public Long postWorkTimeAdd(Long memberId, WorkTimeDto workTimeDto) {
         Long result = null;
 //        memberId확인
-        MemberEntity memberEntity =  new MemberEntity();
+        MemberEntity memberEntity = new MemberEntity();
         memberEntity.setId(memberId);
 //        workTimeDto에 있는 memberEntity를 가져와
         workTimeDto.setMemberEntity(memberEntity);
@@ -180,7 +194,7 @@ public class WorkTimeService {
                 = (addWorkTimeEntity.getWorkTimeEnd().getHour() - addWorkTimeEntity.getWorkTimeStart().getHour()) * 60;
         addWorkTimeEntity.setTotal(total);
 
-        if(memberId != null){
+        if (memberId != null) {
             result = workTimeRepository.save(addWorkTimeEntity).getId();
             return result;
         }
@@ -205,10 +219,10 @@ public class WorkTimeService {
         WorkTimeEntity workTimeEntity = workTimeRepository.getDayTime(date);
         if (workTimeEntity == null) {
 
-        } else{
-            if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null){
+        } else {
+            if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null) {
                 Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
-                long workTimeTotal =  total.toMinutes();
+                long workTimeTotal = total.toMinutes();
                 workTimeRepository.updateWorkTotalTime(workTimeTotal, date);
             }
         }

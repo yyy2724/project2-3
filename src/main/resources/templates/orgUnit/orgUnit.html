@@ -11,15 +11,12 @@
 </head>
 <th:block layout:fragment="container">
     <h1>조직도 보여주어어어어어어어어~</h1>
+    <button id="getUnit">조직도 연동</button>
 
 
-    <div id="container">
-
-
-    </div>
 
     <script>
-        var container = document.getElementById("container");
+
 
         $.ajax({
             url: "/naver/orgunit",
