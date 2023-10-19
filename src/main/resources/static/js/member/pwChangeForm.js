@@ -43,4 +43,4 @@ function passChangeForm() {
         }
         $('#pwChangeForm').submit();
     });
-});
+}

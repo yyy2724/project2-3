@@ -5,7 +5,6 @@ function emailSend() {
     console.log('입력 이메일' + clientEmail);
 
     if (emailYN == true) {
-        alert('이메일 형식입니다.');
 
         $.ajax({
             type: "post",
