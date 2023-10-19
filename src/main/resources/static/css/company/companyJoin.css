@@ -1,3 +1,58 @@
 @import "/css/common/reset.css";
 
 
+/* 폼 전체 스타일 */
+#comJoin {
+    width: auto;
+    padding: 20px 20px 20px 250px;
+    border: 1px solid #eaeaf0;
+    border-radius: 5px;
+    background-color: #eaeaf0;
+}
+
+/* 입력 필드 스타일 */
+#comJoin input[type="text"],
+#comJoin input[type="password"],
+#comJoin input[type="date"],
+#comJoin .form-control {
+    width: 800px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 17px;
+    display: flex;
+    margin: 10px 0;
+}
+.genderList{
+    margin: 10px 0;
+}
+
+/* 버튼 스타일 */
+#comJoin button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#comJoin button:hover {
+    background-color: #0056b3;
+}
+
+/* 피드백 메시지 스타일 */
+#comJoin .feedback span {
+    display: none;
+    color: #d9534f;
+}
+
+#comJoin .feedback .member_ok {
+    color: #5bc0de;
+}
+
+.h11 {
+    padding-left: 570px;
+    width: 800px
+}

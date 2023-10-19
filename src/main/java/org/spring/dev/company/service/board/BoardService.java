@@ -51,7 +51,7 @@ public class BoardService {
                     .memberEntity(memberEntity)
                     .build();
             Long boardId = boardRepository.save(boardEntity).getId();
-            boardRepository.findById(boardId).orElseThrow(()->{
+            BoardEntity boardEntity1 = boardRepository.findById(boardId).orElseThrow(()->{
                 throw new IllegalArgumentException("게시글 작성을 실패했습니다.");
             });
 
@@ -79,6 +79,8 @@ public class BoardService {
             boardRepository.findById(boardId).orElseThrow(()->{
                 throw new IllegalArgumentException("게시글 작성을 실패했습니다.");
             });
+
+
 
             FileEntity fileEntity = FileEntity.builder()
                     .boardEntity(boardEntity)
