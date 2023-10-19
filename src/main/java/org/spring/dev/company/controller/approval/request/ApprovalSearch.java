@@ -12,10 +12,10 @@ import static java.lang.Math.min;
 @Builder
 public class ApprovalSearch {
 
-    private static final int MAX_SIZE = 2000;
+    private static final int MAX_SIZE = 1000;
 
     @Builder.Default
-    private Integer page = 1;
+    private Integer page = 0;
 
     @Builder.Default
     private Integer size = 10;
@@ -24,10 +24,11 @@ public class ApprovalSearch {
         return (long) (max(1, page) - 1) * min(size, MAX_SIZE);
     }
 
+
     public ApprovalServiceSearch toServiceRequest() {
         return ApprovalServiceSearch.builder()
-                .page(page)
-                .size(size)
+                .page(page != null ? page : 0)
+                .size(size != null ? size : 10)
                 .build();
     }
 }

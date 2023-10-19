@@ -8,6 +8,8 @@ import org.spring.dev.company.entity.approval.ApprovalEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.entity.util.ApproType;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class ApprovalResponse {
@@ -22,13 +24,19 @@ public class ApprovalResponse {
 
     private ApprovalStatus status;
 
+    private Long memberId;
+
+    private LocalDateTime start;
+
     @Builder
-    private ApprovalResponse(Long id, String title, String content, ApproType type, ApprovalStatus status) {
+    private ApprovalResponse(Long id, String title, String content, ApproType type, ApprovalStatus status, Long memberId, LocalDateTime start) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.type = type;
         this.status = status;
+        this.memberId = memberId;
+        this.start = start;
     }
 
     //    @Builder
@@ -48,6 +56,8 @@ public class ApprovalResponse {
                 .content(approval.getContent())
                 .type(approval.getType())
                 .status(approval.getStatus())
+                .memberId(approval.getMemberEntity().getId())
+                .start(approval.getStart())
                 .build();
     }
 }
