@@ -3,7 +3,6 @@ let webSocket;
 let url = "localhost:8023";
 
 
-
     // 웹소켓 접속
     webSocket = new WebSocket("ws://"+url+"/messenger");
 
@@ -49,7 +48,7 @@ function showNotification(title, message) {
         setTimeout(notification.close.bind(notification), 10000);
 
         notification.onclick = function () {
-            window.open('localhost:8023/board/list');
+            window.open('localhost:8023/board/list?boardType=GENERAL');
         };
     }
 }
