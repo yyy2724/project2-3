@@ -184,7 +184,7 @@ $(document).ready(function () {
 
     function emailSend2() {
 
-        const clientEmail = $("#mail").val();
+        const clientEmail = emailInput.val();
 
         $.ajax({
             type: "post",
