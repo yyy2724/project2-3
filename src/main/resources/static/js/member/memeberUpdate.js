@@ -1,39 +1,21 @@
-
 $(document).ready(function () {
     $('#submit-button').prop('disabled', true);
-
-    // 체크한 결과 확인을 위한 변수
+    // 인증 체크
     var emailValidated = false;
-    var phoneValidated = false;
+    var emailCheckValidated = false;
     var passwordValidated = false;
     var addressValidated = false;
-    var companyValidated = false;
-    var busNumValidated = false;
 
-    // 다른 필드에 대한 변수들 추가
-    var companyInput = $('#companyName');
-    var busNumInput = $('#businessNumber');
     var emailInput = $('#mail');
-    var phoneInput = $('#phone');
     var passwordInput = $('#password');
     var passCheckInput = $('#checkPassword');
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
+    var certificationNumberInput = $('#certificationNumber');
 
-
-
-    // 다른 필드에 대한 oninput 이벤트 핸들러 추가
-    companyInput.on('input', function () {
-        companyName();
-    });
-    busNumInput.on('input', function () {
-        businessNumber();
-    });
+    // 다른 필드에 대한 oninput 이벤트 핸들러
     emailInput.on('input', function () {
         memberEmail();
-    });
-    phoneInput.on('input', function () {
-        phoneCheck();
     });
     passwordInput.on('input', function () {
         passwordCheck();
@@ -48,62 +30,6 @@ $(document).ready(function () {
         addressCheck();
     });
 
-
-    // 회사명 유효성 검사
-    function companyName() {
-        var company = companyInput.val();
-        $.ajax({
-            url: "/join/companyCheck",
-            type: 'post',
-            data: { "companyName": company },
-            success: function (cnt) {
-                if (cnt == 0) {
-                    $('.company_ok').css("display", "inline-block");
-                    $('.company_already').css("display", "none");
-                    companyValidated = true;
-                    checkAllFields();
-                } else {
-                    $('.company_already').css("display", "inline-block");
-                    $('.company_ok').css("display", "none");
-                    companyValidated = false;
-                    checkAllFields();
-                }
-            }
-        });
-    }
-    function businessNumber() {
-        var busNum = busNumInput.val();
-        var businessNumberEx = /^\d{3}-?\d{2}-?\d{5}$/;
-        if (businessNumberEx.test(busNum)) {
-            $('.businessNumber_expression').css("display", "none");
-            $.ajax({
-                url: "/join/businessNumberCheck",
-                type: 'post',
-                data: { "businessNumber": busNum },
-                success: function (cnt) {
-                    if (cnt == 0) {
-                        $('.businessNumber_ok').css("display", "inline-block");
-                        $('.businessNumber_already').css("display", "none");
-                        busNumValidated = true;
-                        checkAllFields();
-                    } else {
-                        $('.businessNumber_already').css("display", "inline-block");
-                        $('.businessNumber_ok').css("display", "none");
-                        busNumValidated = false;
-                        checkAllFields();
-                    }
-                }
-            });
-        } else {
-            $('.businessNumber_expression').css("display", "inline-block");
-            $('.businessNumber_ok').css("display", "none");
-            $('.businessNumber_already').css("display", "none");
-            busNumValidated = false;
-            checkAllFields();
-        }
-    }
-
-    // 이메일 유효성 검사
     function memberEmail() {
         var email = emailInput.val();
         const regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -132,46 +58,6 @@ $(document).ready(function () {
                         emailValidated = true;
                         checkAllFields();
                     }
-                },
-                error: function () {
-                    alert("에러입니다");
-                }
-            });
-        }
-    }
-
-
-    // 전화번호 유효성 검사 (이하 생략)
-    function phoneCheck() {
-        var phone = phoneInput.val();
-        var validatePone = /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-?\d{3,4}-?\d{4}$/;
-        if (!validatePone.test(phone)) {
-            $('.phone_expression').css("display", "inline-block");
-            $('.phone_already').css("display", "none");
-            $('.phone_ok').css("display", "none");
-            phoneValidated = false; // 예제에서는 간단히 true로 설정
-            checkAllFields();
-        } else {
-            $('.phone_expression').css("display", "none");
-            $.ajax({
-                url: "/join/phoneCheck",
-                type: 'post',
-                data: { "phone": phone },
-                success: function (cnt) {
-                    if (cnt != 0) {
-                        // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                        phoneValidated = false; // 예제에서는 간단히 true로 설정
-                        checkAllFields();
-                        $('.phone_already').css("display", "inline-block");
-                        $('.phone_ok').css("display", "none");
-                    } else {
-                        // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                        phoneValidated = true; // 예제에서는 간단히 true로 설정
-                        checkAllFields();
-                        $('.phone_ok').css("display", "inline-block");
-                        $('.phone_already').css("display", "none");
-                    }
-
                 },
                 error: function () {
                     alert("에러입니다");
@@ -251,12 +137,47 @@ $(document).ready(function () {
         }
     }
 
+    function emailSend2() {
+       const clientEmail = emailInput.val();
+        $.ajax({
+            type: "post",
+            url: "/member/check",
+            data: { email: clientEmail },
+            success: function (data) {
+                alert('인증번호를 보냈습니다.');
+            }, error: function (e) {
+                alert('오류입니다. 잠시 후 다시 시도해주세요.');
+            }
+        });
 
+    }
+
+    function emailCertification() {
+        let clientEmail = emailInput.val();
+        let inputCode = certificationNumberInput.val();
+        $.ajax({
+            type: "post",
+            url: "/member/emailCheck",
+            data: { email: clientEmail, inputCode: inputCode },
+            success: function (result) {
+                console.log(result);
+                if (result == true) {
+                    alert("인증완료");
+                    emailCheckValidated = true;
+                    checkAllFields();
+                }else {
+                    alert("인증실패");
+                    emailCheckValidated = false;
+                    checkAllFields();
+                }
+            }
+        });
+    }
     function checkAllFields() {
-        if (companyValidated && busNumValidated && emailValidated && phoneValidated && passwordValidated && addressValidated) {
-            $('#submit-button').prop('disabled', false);
-        } else {
-            $('#submit-button').prop('disabled', true);
-        }
+            if (emailValidated && emailCheckValidated && passwordValidated && addressValidated) {
+                $('#submit-button').prop('disabled', false);
+            } else {
+                $('#submit-button').prop('disabled', true);
+            }
     }
 });
