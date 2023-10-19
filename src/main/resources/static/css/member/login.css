@@ -40,10 +40,6 @@ ul,li{
 }
 
 .login .login-con .login-form{
-    flex-basis: 400px;
-    height: 400px;
-    width: 370px;
-
     box-sizing: border-box;
     background-color: white;
     border-radius: 10px;

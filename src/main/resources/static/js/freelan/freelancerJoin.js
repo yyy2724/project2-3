@@ -19,6 +19,7 @@ $(document).ready(function () {
     var passCheckInput = $('#checkPw');
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
+    var emailCheck = $('#emailCheck');
     var certification = $('#certificationBtn');
     var emailCheckNum = $('#certificationNumber');
 
@@ -182,7 +183,7 @@ $(document).ready(function () {
 
     function emailSend2() {
 
-        const clientEmail = $("#mail").val();
+        const clientEmail = emailInput.val();
 
         $.ajax({
             type: "post",

@@ -42,11 +42,11 @@
             </div>
 
             <!--            <label for="checkPw">비밀번호확인:</label>-->
-        <div class="form-group">
-            <label for="checkPw">비밀번호확인:</label>
-            <input type="password" id="checkPw" name="checkPw" class="form-control">
-            <div class="feedback">
-                <span class="password_already">비밀번호가 일치하지 않습니다.</span>
+            <div class="form-group">
+                <input type="password" id="checkPw" name="checkPw" class="form-control" placeholder="비밀번호 확인">
+                <div class="feedback">
+                    <span class="password_already">비밀번호가 일치하지 않습니다.</span>
+                </div>
             </div>
         </div>
 
@@ -78,7 +78,9 @@
         <div class="form-group" id="form3">
             <div class="form1-3">
                 <input type="text" id="postcode" name="postcode" class="form-control" placeholder="우편번호">
-                <button type="button" id="uphyeon" onclick="sample6_execDaumPostcode()" class="btn btn-secondary">우편번호 찾기</button>
+                <button type="button" id="uphyeon" onclick="sample6_execDaumPostcode()" class="btn btn-secondary">우편번호
+                    찾기
+                </button>
             </div>
             <input type="text" id="address" name="address" class="form-control" placeholder="주소">
             <span class="address_already">주소를 입력해주세요.</span>
@@ -87,10 +89,9 @@
             <input type="text" id="extraAddress" name="extraAddress" class="form-control" placeholder="참고항목">
 
             <input type="hidden" name="is_display" value="1">
-            <button type="submit" id="submit-button" class="btn btn-success">회원가입</button>
+            <input type="submit" id="submit-button" class="btn btn-success" value="회원가입">
         </div>
 
-        </div>
     </form>
 </div>
 </body>
