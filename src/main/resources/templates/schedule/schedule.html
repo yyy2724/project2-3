@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5",
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout/baseLayout}">
 <head>
@@ -13,7 +14,7 @@
 </head>
 <th:block layout:fragment="container">
 <body>
-<main>
+<input id="memberId" type="hidden" th:value="${#authentication.principal.memberEntity.id}">
 <!--main-->
 <div class="container">
     <!--내용 채우기-->
@@ -48,13 +49,17 @@
                     <input type="datetime-local" class="form-control" id="calendar_end_date" name="end">
                 </div>
             </div>
-            <select id="calendar_work_type">
+            <select  id="calendar_work_type">
                 <option value="NORMAL">근무</option>
-                <option value="EARLY">조퇴</option>
-                <option value="ABSENT">결석</option>
-                <option value="TARDY">지각</option>
-                <option value="noVACATION">휴가</option>
             </select>
+            <div>
+                    <!--일정 제목-->
+                <input type="text" id="cl_title" maxlength='15'>
+            </div>
+            <div>
+                    <!--색상표-->
+                <input type="color" id="cl_color_hex">
+            </div>
         </div>
 
         <div class="modal-footer">
@@ -68,7 +73,6 @@
       </div>
     </div>
 
-</main>
 </body>
 </th:block>
 </html>

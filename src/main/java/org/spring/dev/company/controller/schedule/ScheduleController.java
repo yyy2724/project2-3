@@ -1,8 +1,10 @@
 package org.spring.dev.company.controller.schedule;
 
 import lombok.AllArgsConstructor;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.schedule.ScheduleDto;
 import org.spring.dev.company.service.schedule.ScheduleService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,8 @@ public class ScheduleController {
 
     @GetMapping("/index/{memberId}")
     public String index(
-            @PathVariable(name = "memberId") Long memberId) {
+            @PathVariable(name = "memberId") Long memberId,
+            @AuthenticationPrincipal MyUserDetails MyUserDetails) {
         return "schedule/schedule";
     }
 
