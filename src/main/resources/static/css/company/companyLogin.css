@@ -63,7 +63,7 @@ ul,li{
     display: flex;
     flex-direction: column;
     padding: 20px;
-    height: 40vh;
+    height: 50vh;
     width: 40vw;
 }
 
