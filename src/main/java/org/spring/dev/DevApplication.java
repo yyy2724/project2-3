@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 @EnableScheduling
@@ -19,5 +20,7 @@ public class DevApplication {
 	public ServerEndpointExporter serverEndpointExporter(){
 		return new ServerEndpointExporter();
 	}
+
+
 
 }

@@ -1,47 +1,57 @@
-@import "/css/common/reset.css";
-
-.container{
-    width: 100%;
+/* reset */
+body{
+    background-color: #eaeaf0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+*{
+    margin:0;
+    padding:0
+}
+ul,li{
+    list-style:none;
 }
 
+/* container */
+.container{
+    width: inherit;
+    height: inherit;
+}
+.container .container-con{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+}
+/* login */
 .login{
-    width: 100%;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    /* border: 1px solid; */
 }
 
 .login .login-con{
-    height: 50vh;
-    padding: 100px;
+    height: inherit;
     display: flex;
     justify-content: center;
     box-sizing: border-box;
-    /* border: 1px solid; */
+    margin: auto;
 }
 
 .login .login-con .login-form{
-    flex-basis: 400px;
-    height: 400px;
     box-sizing: border-box;
-    align-items: center;
-
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: #007BFF;
+    padding: 10px;
 }
 
 .login .login-con .login-form h1{
-    box-sizing: border-box;
-    width: 100%;
-    color: black;
-    font-size: 20px;
-    font-weight: 800;
+    padding: 20px;
     text-align: center;
-    align-items: center;
-    padding: 30px 30px 0 30px;
+    font-weight: bold;
 }
 
 .login .login-con .login-form div{
@@ -50,26 +60,24 @@
 
 .login .login-con .login-form form ul{
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px 20px 0 20px;
+    padding: 20px;
+    height: 50vh;
+    width: 40vw;
 }
 
 .login .login-con .login-form form ul>li{
-    padding: 4px 0 0 0;
+    padding: 10px 0 0 0;
+    height: 10vh;
+    width: 38vw;
 }
 
 .login .login-con .login-form form ul>li:nth-child(1) input{
     border: 1px solid #cccccc;
-
-    background-color: white;
-    color : black;
 }
 .login .login-con .login-form form ul>li:nth-child(2) input{
     border: 1px solid #cccccc;
-
     background-color: white;
     color : black;
 }
@@ -89,16 +97,11 @@
 .login .login-con .login-form form ul>li:nth-child(5)>a:nth-child(3){
     padding: 2px 0 0 0;
 }
-
 .login .login-con .login-form form ul>li>input{
-    box-sizing: border-box;
-    width: 100%;
-    height: 40px;
-    padding: 10px 0;
-    background-color: purple;
-    color: white;
-    border: 0;
-    cursor:pointer;
+    width: 38vw;
+    height: 5vh;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .login .login-con .login-form form ul>li>button{
@@ -110,6 +113,7 @@
     border: 1px solid purple;
     font-weight: bold;
     cursor:pointer;
+    font-size: 17px;
 }
 
 
@@ -117,22 +121,10 @@
     padding: 30px 0 0 0;
 }
 
-.oauth-login {
+li.oauth-login {
+    padding: 10px;
     display: flex;
-    justify-content: space-between;
-}
-
-.oauth-login>a:nth-child(1){
-    width: 128px;
-    height: 35px;
-}
-.oauth-login>a:nth-child(2){
-    width: 101px;
-    height: 35px;
-}
-.oauth-login>a:nth-child(3){
-    width: 101px;
-    height: 35px;
+    justify-content: space-around;
 }
 
 .oauth-login > a > img {
@@ -140,15 +132,3 @@
     height: 100%;
     object-fit: contain;
 }
-
-
-
-li .gender-label {
-    display: flex;
-    align-items: center;
-}
-
-li .gender-label input[type="radio"] {
-    margin-right: 10px;
-}
-

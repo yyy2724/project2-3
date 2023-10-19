@@ -31,6 +31,14 @@ public class PayService {
     private final ApprovalRepository approvalRepository;
 
     public Integer postPayList(Long memberId, String workMonth) {
+
+        //이미 정산 내역이 있다면
+        List<PayEntity> payEntityList = payRepository.findByPayMonth(memberId,workMonth);
+
+        if(payEntityList.size() != 0){
+            return 0;
+        }
+
         PayEntity payEntity = new PayEntity();
         MemberEntity memberEntity = new MemberEntity();
         List<WorkTimeEntity> workTimeEntityList = workTimeRepository.findByWorkTimeMonth(memberId, workMonth);
@@ -42,7 +50,8 @@ public class PayService {
         Integer pay = (sum / 60) * 10000; // 월급 계산
 
         memberEntity.setId(memberId); // memberId가져오기
-        payEntity.setMonthly(pay); // 월급 저장
+        payEntity.setMonthly(workMonth); // 월급 구분
+        payEntity.setPrice(pay); // 월급 저장
         payEntity.setIsPay(1); // 월급 지급 여부 설정 1
         payEntity.setIs_display(1); //
         payEntity.setMemberEntity(memberEntity); // member정보 저장
@@ -98,7 +107,7 @@ public class PayService {
 
         payEntity.setMemberEntity(approvalEntity.get().getMemberEntity());
         payEntity.setIs_display(1);
-        payEntity.setMonthly(totalPrice.intValue());
+        payEntity.setPrice(totalPrice.intValue());
         payEntity.setIsPay(1);
         payEntity.setPayDay(LocalDate.now());
 

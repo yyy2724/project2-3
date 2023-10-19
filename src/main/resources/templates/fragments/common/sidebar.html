@@ -6,84 +6,101 @@
     <div class="side">
         <th:block sec:authorize="hasAnyRole('STAFF')">
             <div class="admin">
-        <!--security 관리자 권한 부여-->
                     <ul>
                         <li><span>관리자</span></li>
                     </ul>
             </div>
         </th:block>
+
         <th:block sec:authorize="hasAnyRole('FREELANCER')">
             <div class="freelancer">
-        <!--security 프리랜서 권한 부여-->
                 <ul>
                     <li><span>프리랜서</span></li>
                 </ul>
             </div>
         </th:block>
+
         <th:block sec:authorize="hasAnyRole('COMPANY')">
             <div class="company">
-        <!--security 회사 권한 부여-->
                 <ul>
                     <li><span>회사</span></li>
                 </ul>
             </div>
         </th:block>
+
         <div class="sideBar">
             <div class="sideBar-sec">
                 <ul class="big">
                     <li><a href="#">내 정보</a>
                         <ul class="small">
-                            <!--security 관리자 권한 부여-->
                             <th:block sec:authorize="hasAnyRole('STAFF')">
                                 <li>
-                                    <a th:href="@{/member/detail/{id}}">마이페이지</a>
+                                    <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
                                 </li>
                             </th:block>
-                            <!--security 프리랜서 권한 부여-->
+
                             <th:block sec:authorize="hasAnyRole('FREELANCER')">
                                 <li>
-                                    <a th:href="@{/member/freeDetail/{memberId}}">프리랜서마이페이지</a>
+                                    <a th:href="@{/member/freeDetail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
                                 </li>
                             </th:block>
-                            <!--security 회사 권한 부여-->
+
                             <th:block sec:authorize="hasAnyRole('COMPANY')">
                                 <li>
-                                    <a th:href="@{/member/freeDetail/{memberId}}">회사마이페이지</a>
+                                    <a th:href="@{/member/companyDetail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
                                 </li>
                             </th:block>
+
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
-                                <a th:href="@{/member/update}">수정하기</a>
+                                <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">월급내역</a>
                             </li>
-                            <li>
-                                <a th:href="@{/}">월급내역</a>
-                            </li>
+                            </th:block>
+                            <th:block sec:authorize="hasAnyRole('FREELANCER')">
+                                <li>
+                                    <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">지급내역</a>
+                                </li>
+                            </th:block>
                         </ul>
                     </li>
+
                     <li><a href="#">근무/근태</a>
                         <ul class="small">
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
-                                <a th:href="@{/work}">출근/퇴근</a>
+                                <a th:href="@{/work/commute}">출근/퇴근</a>
                             </li>
                             <li>
                                 <a th:href="@{/work}">근무기록</a>
                             </li>
+                            </th:block>
+
                             <li>
-                                <a th:href="@{/pay/{memberId}}">월급내역</a>
+                                <a th:href="@{/pay/}">월급내역</a>
                             </li>
-                            <!--security 프리랜서 권한 부여-->
+
+                            <th:block sec:authorize="hasAnyRole('FREELANCER')">
                             <li>
-                                <a th:href="@{/}">일정관리</a>
+                                <a th:href="@{/schedule/index/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">일정관리</a>
                             </li>
+                            </th:block>
                         </ul>
                     </li>
+
                     <li><a href="#">공지사항</a>
                         <ul class="small">
                             <li>
                                 <!--security 관리자 권한 부여-->
-                                <a th:href="@{/board/write}">작성하기</a>
+                                <a th:href="@{/board/calendar}">전체일정</a>
                             </li>
                             <li>
-                                <a th:href="@{/board/list}">보러가기</a>
+                                <a th:href="@{/board/list?boardType=GENERAL}">전체공지</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/list?boardType=INTERNAL}">사내게시판</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/write}">바로 작성하기</a>
                             </li>
                         </ul>
                     </li>
@@ -104,28 +121,36 @@
                             </li>
                         </ul>
                     </li>
-                    <!--security 관리자 권한 부여-->
                     <li><a href="#">직원관리</a>
                         <ul class="small">
-                            <!--직원목록에 들어가면 정산하기-->
-                            <!--security 관리자 권한 부여-->
+
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
                                 <a th:href="@{/member/staffList}">직원목록</a>
                             </li>
-                            <!--security 회사 권한 부여-->
+                            </th:block>
+
+                            <th:block sec:authorize="hasAnyRole('COMPANY')">
                             <li>
                                 <a th:href="@{/member/freeList}">프리랜서목록</a>
                             </li>
-                            <!--security 프리랜서 권한 부여-->
+                            </th:block>
+
+                            <th:block sec:authorize="hasAnyRole('FREELANCER')">
                             <li>
                                 <a th:href="@{/member/companyList}">회사목록</a>
                             </li>
+                            </th:block>
+
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
                                 <a th:href="@{/}">조직도</a>
                             </li>
+                            </th:block>
                         </ul>
                     </li>
-                    <!--security 프리랜서 권한 부여-->
+
+                    <th:block sec:authorize="hasAnyRole('FREELANCER')">
                     <li><a href="#">공고</a>
                         <ul class="small">
                             <li>
@@ -136,6 +161,9 @@
                             </li>
                         </ul>
                     </li>
+                    </th:block>
+
+                    <th:block sec:authorize="hasAnyRole('COMPANY')">
                     <!--security 회사 권한 부여-->
                     <li><a href="#">공고</a>
                         <ul class="small">
@@ -147,6 +175,7 @@
                             </li>
                         </ul>
                     </li>
+                    </th:block>
                 </ul>
             </div>
         </div>

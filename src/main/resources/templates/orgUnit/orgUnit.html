@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragments/layout/baseLayout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>조직도</title>
+    <link rel="stylesheet" th:href="@{/css/workTime/commute.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/workTime/commute.js}" defer="defer"></script>
+</head>
+<th:block layout:fragment="container">
+    <h1>조직도 보여주어어어어어어어어~</h1>
+    <button id="getUnit">조직도 연동</button>
+
+
+
+    <script>
+
+
+        $.ajax({
+            url: "/naver/orgunit",
+            method: "GET",
+            async: false,
+        }).done(function (data) {
+            $.each(data.orgUnits, function (index, element) {
+                console.log(data.orgUnits);
+
+                if (element.orgUnitName != null) {
+                    var span = document.createElement("span"); // <span> 요소 생성
+                    span.className = "orgUnitName"; // 클래스 추가
+                    span.innerHTML = element.orgUnitName; // 내용 추가
+                    container.appendChild(span); // 부모 요소에 추가
+                }
+            })
+        }).fail(function (xhr, status, errorThrown) {
+            console.log("에러");
+        });
+    </script>
+
+</th:block>
+
+</html>

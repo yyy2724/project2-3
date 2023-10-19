@@ -18,8 +18,11 @@ public class PayEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pay_monthly") // 월급
-    private Integer monthly;
+    @Column(name = "pay_monthly") // 월급 구분 ex) 몇 월달 월급인지
+    private String monthly;
+
+    @Column(name = "pay_price") // 월급
+    private Integer price;
 
     @Column(name = "pay_day") // 월급 기록 날
     private LocalDate payDay; //2023-10-25

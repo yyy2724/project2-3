@@ -3,12 +3,10 @@ package org.spring.dev.company.controller.board;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.board.BoardDto;
-import org.spring.dev.company.dto.board.ReplyDto;
 import org.spring.dev.company.entity.board.BoardEntity;
 import org.spring.dev.company.entity.util.BoardType;
 import org.spring.dev.company.repository.board.BoardRepository;
 import org.spring.dev.company.service.board.BoardService;
-import org.spring.dev.company.service.board.ReplyService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,20 +16,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
-@SessionAttributes("searchHistory")
 public class BoardController {
 
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+
+    @ModelAttribute("searchHistory") // 검색 이력을 세션에 저장하기 위한 모델 어트리뷰트
+    public List<String> initializeSearchHistory() {
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/calendar")
+    public String calendar(BoardDto boardDto){
+        return "/board/calendar";
+    }
 
     @GetMapping("/write")
     public String write(BoardDto boardDto){
@@ -41,13 +46,16 @@ public class BoardController {
     @PostMapping("/write")
     public String writePost(@AuthenticationPrincipal MyUserDetails myUserDetails, BoardDto boardDto, @RequestParam("file") MultipartFile file ) throws IOException {
         boardDto.setBoardFile(file);
-        boardService.boardWrite(boardDto, myUserDetails);
-        return "redirect:/board/list";
-    }
+        String boardType = boardService.boardWrite(boardDto, myUserDetails);
 
-    @ModelAttribute("searchHistory") // 검색 이력을 세션에 저장하기 위한 모델 어트리뷰트
-    public List<String> initializeSearchHistory() {
-        return new ArrayList<>();
+        System.out.println(boardType);
+
+        if(boardType.equals("GENERAL")){
+            return "redirect:/board/list?boardType=GENERAL";
+        } else {
+            return "redirect:/board/list?boardType=INTERNAL";
+        }
+
     }
 
     @GetMapping("/list")
@@ -56,13 +64,10 @@ public class BoardController {
                        @RequestParam(value = "subject", required = false) String subject,
                        @RequestParam(value = "search", required = false) String search,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                       @ModelAttribute("searchHistory") List<String> searchHistory) {
+                       @ModelAttribute("searchHistory") List<String> searchHistory,
+                       @RequestParam("boardType") String boardType2) {
 
         Page<BoardEntity> boardList;
-
-        if (search != null && !search.isEmpty()) {
-            searchHistory.add(search);
-        }
 
         if (search != null && !search.isEmpty()) {
             if ("title".equals(subject)) {
@@ -91,7 +96,7 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("boardType", boardType);
         model.addAttribute("search", search);
-        model.addAttribute("key", "boardList");
+        model.addAttribute("boardType2", boardType2);
 
         return "board/list";
     }

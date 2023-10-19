@@ -13,11 +13,10 @@ import java.util.List;
 public interface PayRepository extends JpaRepository<PayEntity, Long> {
 
     @Modifying
-    @Query(value = "SELECT * "+
-            "FROM c_pay "+
-            "WHERE MONTH(pay_day) = :month "+
+    @Query(value = "SELECT * FROM c_pay " +
+            "WHERE pay_monthly = :month " +
             "AND member_id = :id", nativeQuery = true)
-    List<PayEntity> findByPayMonth(@Param("id") Long memberId, @Param("month") String payMonth);
+    List<PayEntity> findByPayMonth(@Param("id") Long memberId, @Param("month") String workMonth);
 
     List<PayEntity> findBymemberEntity_Id(Long memberId);
 

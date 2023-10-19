@@ -6,7 +6,7 @@
 <script>
     function redirectToJoinPage() {
         // 페이지 이동
-        window.location.href = '/member/join';
+        window.location.href = '/member/freeJoin';
     }
     function pwSearch(){
         // 페이지 이동
@@ -24,7 +24,7 @@
         <div class="login">
             <div class="login-con">
                 <div class="login-form">
-                    <h1>로그인</h1>
+                    <h1>프리랜서 로그인</h1>
 
                     <form th:action="@{/login/login}" method="post">
 <!--                        <input type="hidden" value="secret" name="secret_key">-->
@@ -55,12 +55,9 @@
                                 <button type="button" onclick="pwSearch()">비밀번호 찾기</button>
                             </li>
                             <li class="oauth-login">
-                                <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}"
-                                                                                  alt="google"></a>
-                                <a th:href="@{/oauth2/authorization/kakao}"><img th:src="@{/images/oauth2/kakao.jpg}"
-                                                                                 alt="kakao"></a>
-                                <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/images/oauth2/naver.jpg}"
-                                                                                 alt="naver"></a>
+                                <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/images/oauth2/google.png}" alt="google"></a>
+                                <a th:href="@{/oauth2/authorization/kakao}"><img th:src="@{/images/oauth2/kakao.jpg}" alt="kakao"></a>
+                                <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/images/oauth2/naver.jpg}" alt="naver"></a>
                             </li>
                         </ul>
                     </form>

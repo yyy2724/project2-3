@@ -3,6 +3,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <link rel="stylesheet" th:href="@{/css/member/login.css}">
+<script>
+    function redirectToJoinPage() {
+        // 페이지 이동
+        window.location.href = '/member/companyJoin';
+    }
+    function pwSearch(){
+        // 페이지 이동
+        window.location.href = '/member/findPw'
+    }
+</script>
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -13,7 +23,7 @@
         <div class="login">
             <div class="login-con">
                 <div class="login-form">
-                    <h1>로그인</h1>
+                    <h1>회사 로그인</h1>
 
                     <form th:action="@{/login/login}" method="post">
 <!--                        <input type="hidden" value="secret" name="secret_key">-->
@@ -33,14 +43,15 @@
                                 <p id="valid" th:text="${exception}" class="alert alert-danger"
                                    style="color:#ff0000;font-size:8px"></p>
                             </div>
-
                             <li>
                                 <button type="submit">로그인</button>
                             </li>
                             <li>
-                                <a th:href="@{/member/companyJoin}">회원가입</a>
+                                <button type="button" onclick="redirectToJoinPage()">회원가입</button>
                             </li>
-
+                            <li>
+                                <button type="button" onclick="pwSearch()">비밀번호 찾기</button>
+                            </li>
                         </ul>
                     </form>
                 </div>

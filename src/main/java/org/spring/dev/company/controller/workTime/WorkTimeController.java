@@ -4,8 +4,10 @@ package org.spring.dev.company.controller.workTime;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.workTime.WorkTimeDto;
 import org.spring.dev.company.service.workTime.WorkTimeService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,15 @@ import java.util.Map;
 public class WorkTimeController {
 
     private final WorkTimeService workTimeService;
+
+
+//    근태관리(출근/퇴근)
+    @GetMapping("/commute")
+    public String getCommute(@AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        return "workTime/commute";
+    }
+
 
     @GetMapping("")
     public String mySchedule(){
@@ -67,10 +78,11 @@ public class WorkTimeController {
     /*
     TODO 출근
      */
-    @PostMapping("/workin")
+    @PostMapping("/workin/{memberId}")
     @ResponseBody
     public Map<String, Object> postWorkIn(
-            @RequestParam("memberId") Long memberId
+            @PathVariable(name = "memberId") Long memberId,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
         Map<String, Object> map = new HashMap<>();
         Long result = workTimeService.postWorkTimeIn(memberId);
@@ -87,10 +99,11 @@ public class WorkTimeController {
     /*
          TODO 퇴근
      */
-    @PostMapping("/workout")
+    @PostMapping("/workout/{memberId}")
     @ResponseBody
     public Map<String, Object> postWorkOut(
-            @RequestParam("memberId") Long memberId
+            @PathVariable(name = "memberId") Long memberId,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
     ) {
         Map<String, Object> map = new HashMap<>();
         Long result = workTimeService.postWorkTimeOut(memberId);

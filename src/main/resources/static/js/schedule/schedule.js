@@ -1,11 +1,13 @@
 
       //브라우저가 dom를 읽고 객체를 생성하는 데로 실행 = 페이지 로딩되면 실행
       document.addEventListener('DOMContentLoaded', function() {
+        // let memberId = document.getElementById('memberId').value;
+        let memberId = $("#memberId").val();
         let calendarEl = document.getElementById('calendar');
-        let memberId = 1; // 로그인 만들어지는데로 userDetail에서 가져오기
-      let Calendar = FullCalendar.Calendar;
+        let Calendar = FullCalendar.Calendar;
 
       let calendar = new FullCalendar.Calendar(calendarEl,{
+
         initialView: 'dayGridMonth',
         defaultDate: new Date(),
         customButtons:{
@@ -31,7 +33,7 @@
           },
 
           workUpdateButton:{
-            text : '근무 수정',
+            text : '일정 수정',
             click:function(){
               $('.modal').fadeIn();
 
@@ -40,16 +42,51 @@
                 let work_type = $("#calendar_work_type").val();
                 let start_date = $("#calendar_start_date").val();
                 let end_date = $("#calendar_end_date").val();
-                let work_id = 1
+                let title = $("#cl_title").val();
+                let colorHex = $("#cl_color_hex").val();
 
                 if(start_date == "" || end_date == ""){
                   alert("날짜를 선택해주세요!");
                 } else if(end_date - start_date < 0 ){
                   alert("종료 시간이 시작 날짜보다 먼저입니다.");
                 } else{
-                  setCalendar(work_type,start_date,end_date,work_id);
+                  setCalendar(work_type,start_date,end_date,memberId,colorHex,title);
                   getCalendar(calendar.getDate() ,memberId)
                   calendar.render();
+                  location.reload()
+                  
+
+                }
+              
+              })
+
+              $('.btn-close').click(function(){
+                $('.modal').fadeOut();
+              })
+            }
+          },
+          workAddButton:{
+            text : '일정 추가',
+            click:function(){
+              $('.modal').fadeIn();
+
+              $('.btn-add').click(function(){
+
+                let work_type = $("#calendar_work_type").val();
+                let start_date = $("#calendar_start_date").val();
+                let end_date = $("#calendar_end_date").val();
+                let title = $("#cl_title").val();
+                let colorHex = $("#cl_color_hex").val();
+
+                if(start_date == "" || end_date == ""){
+                  alert("날짜를 선택해주세요!");
+                } else if(end_date - start_date < 0 ){
+                  alert("종료 시간이 시작 날짜보다 먼저입니다.");
+                } else{
+                  setCalendar(work_type,start_date,end_date,memberId,colorHex,title);
+                  getCalendar(calendar.getDate() ,memberId)
+                  calendar.render();
+                  location.reload()
 
                 }
               
@@ -64,21 +101,24 @@
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'workUpdateButton'
+          right: 'workUpdateButton workAddButton'
         }
 
       });
 
-      function setCalendar(work_type,start,end,memberId){
+      function setCalendar(work_type,start,end,memberId, colorHex,title){
 
         let jsonData = {
-          workTimeStart : start,
-          workTimeEnd : end,
-          workType : work_type
+          startDateTime : start,
+          endDateTime : end,
+          type : work_type,
+          memberId : memberId,
+          color : colorHex,
+          content : title,
         }
 
         $.ajax({
-          url: "/schedule/" + memberId + "/update",
+          url: "/schedule/" + memberId,
           method:"POST",
           dataType:"json",
           contentType: "application/json",
