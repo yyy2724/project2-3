@@ -37,6 +37,8 @@ public class WorkTimeDto {
 
     private WorkType workType;
 
+    private String title;
+
     public static WorkTimeDto toDto(WorkTimeEntity workTimeEntity) {
         return WorkTimeDto.builder()
                 .id(workTimeEntity.getId())
