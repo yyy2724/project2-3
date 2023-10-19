@@ -12,6 +12,8 @@ $(document).ready(function () {
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
     var certificationNumberInput = $('#certificationNumber');
+    var emailCheck = $('#emailCheck');
+    var certification = $('#certificationBtn');
 
     // 다른 필드에 대한 oninput 이벤트 핸들러
     emailInput.on('input', function () {
@@ -28,6 +30,12 @@ $(document).ready(function () {
     });
     detailAddressInput.on('input', function () {
         addressCheck();
+    });
+    emailCheckInput.on('click', function(){
+        emailSend2();
+    });
+    emailCheckInput.on('click', function(){
+        emailSend2();
     });
 
     function memberEmail() {
