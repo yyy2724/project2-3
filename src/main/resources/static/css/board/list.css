@@ -36,6 +36,11 @@ body{
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+.list .list-con .title h2{
+    font-size: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 /* search */
 .list .list-con .search{
     padding: 50px;
