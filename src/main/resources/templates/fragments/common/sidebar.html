@@ -53,8 +53,13 @@
 
                             <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
-                                <a th:href="@{/pay/payList}">월급내역</a>
+                                <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">월급내역</a>
                             </li>
+                            </th:block>
+                            <th:block sec:authorize="hasAnyRole('FREELANCER')">
+                                <li>
+                                    <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">지급내역</a>
+                                </li>
                             </th:block>
                         </ul>
                     </li>

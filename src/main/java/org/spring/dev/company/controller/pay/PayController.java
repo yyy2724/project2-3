@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,24 @@ public class PayController {
                              @RequestParam(value = "workYear", required = false) String workYear,
                              Model model
                              ){
-
+        // 현재 년도 가져오기
+        if(workYear == null){
+            LocalDate now = LocalDate.now();
+            int year = now.getYear();
+            workYear = toString(year);
+        }
         // 년에 해당하는 근무기록 가져오기
         List<PayDto> result = payService.getPayYearList(memberId, workYear);
 
+        model.addAttribute("year", workYear);
         model.addAttribute("payList",result);
 
         return "pay/payList";
+    }
+
+    // 현재 년도 int형을 String으로 바꾸기
+    private String toString(int year) {
+        return String.format("%s", year);
     }
 
     // 정산하기 버튼 눌렀을 떄 들어가기

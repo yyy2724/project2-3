@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 function getYears(getYear){
 
-    // 기존 opton 삭제
+    // 기존 option 삭제
     $('#workYear option').remove();
 
     // 올해 기준으로 -10 +5

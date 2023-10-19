@@ -24,16 +24,21 @@
                     <h1>지급내역</h1>
                 </th:block>
             </div>
-            <div class="select">
-                <div class="year">
-                    <form th:action="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}" method="get">
-                        <select name="workYear" id="workYear">
+            <div class="search">
+                <div class="form">
+                    <form th:action="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}" method="get" class="year">
+                        <select name="workYear" id="workYear" class="workYear">
                             <!--java script 에서 optiont설정-->
                         </select>
-
-                            <input type="submit" value="선택하기">
-
+                        <button type="submit">
+                            <img th:src="@{/images/worktime/zoom.png}" alt="검색" class="zoom">
+                        </button>
+                            <!-- <input type="submit" value="선택하기" class="choice"> -->
                     </form>
+                    <div th:each="year:${year}" class="yearSpan">
+                        <span th:text="${year}"></span>
+                        <span> 년을 선택하셨습니다.</span>
+                    </div>
                 </div>
             </div>
 
