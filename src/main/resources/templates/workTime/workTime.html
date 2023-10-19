@@ -15,6 +15,7 @@
 <body>
 <main>
 <!--main-->
+<input id="memberId" type="hidden" th:value="${#authentication.principal.memberEntity.id}">
 <div class="container">
     <!--내용 채우기-->
     <div class="workCalendar">
@@ -38,10 +39,10 @@
                   <a href="#none" class="btn-close">✕</a>
               </span>
               <span class="yellow">
-                  <a href="">⏤</a>
+                  <a href="">⎻</a>
               </span>
               <span class="green">
-                  <a href="">⎔</a>
+                  <a href="">◦</a>
               </span>
           </div>
         <div class="modal-header">

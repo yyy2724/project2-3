@@ -47,10 +47,10 @@ public class ApprovalService {
         ApprovalEntity approval = approvalRepository.findById(approvalId).orElseThrow(ApprovalException::new);
 
         if (approval.getType().equals(member.getGrade())) {
-            approval.approval(approval, request, start);
+            approval.approval(start);
 
         } else throw new IllegalArgumentException("결재 권한이 없습니다.");
-
+        System.out.println();
     }
 
     // 결재 리스트
@@ -71,11 +71,23 @@ public class ApprovalService {
 
     // 프로젝트 완료
     @Transactional
-    public void projectComplete(Long id, String complete, LocalDateTime end) {
+    public void projectComplete(Long id, LocalDateTime end) {
         ApprovalEntity approval = approvalRepository.findById(id).orElseThrow(ApprovalException::new);
 
-        if (complete.equals("COMPLETE")) approval.complete(end);
+        approval.complete(end);
     }
 
+    public List<ApprovalResponse> projectList(ApprovalServiceSearch search, Long id) {
 
+        return approvalRepository.findAllProject(search, id).stream()
+                .map(ApprovalResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    public List<ApprovalResponse> payList(ApprovalServiceSearch search, Long id) {
+
+        return approvalRepository.findAllPay(search, id).stream()
+                .map(ApprovalResponse::of)
+                .collect(Collectors.toList());
+    }
 }

@@ -11,16 +11,15 @@ import static java.lang.Math.min;
 @Builder
 public class ApprovalServiceSearch {
 
-    private static final int MAX_SIZE = 2000;
+    private static final int MAX_SIZE = 1000;
 
     @Builder.Default
-    private Integer page = 1;
+    private int page = 0;
 
     @Builder.Default
-    private Integer size = 10;
+    private int size = 10;
 
     public long getOffset() {
         return (long) (max(1, page) - 1) * min(size, MAX_SIZE);
     }
-
 }

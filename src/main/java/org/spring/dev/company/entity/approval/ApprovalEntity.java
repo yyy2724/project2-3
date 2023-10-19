@@ -8,6 +8,7 @@ import org.spring.dev.company.entity.util.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -60,13 +61,9 @@ public class ApprovalEntity extends BaseEntity {
         this.end = end;
     }
 
-    public void approval(ApprovalEntity approval, String request, LocalDateTime start) {
-        if (request.equals("APPROVAL")) {
-            approval.start = start;
-            approval.status = ApprovalStatus.APPROVAL;
-        }
-
-        if (request.equals("UNAUTHORIZED")) approval.status = ApprovalStatus.UNAUTHORIZED;
+    public void approval(LocalDateTime start) {
+            this.start = start;
+            this.status = ApprovalStatus.APPROVAL;
     }
 
     public void complete(LocalDateTime end) {

@@ -91,10 +91,16 @@
                         <ul class="small">
                             <li>
                                 <!--security 관리자 권한 부여-->
-                                <a th:href="@{/board/write}">작성하기</a>
+                                <a th:href="@{/board/calendar}">전체일정</a>
                             </li>
                             <li>
-                                <a th:href="@{/board/list}">보러가기</a>
+                                <a th:href="@{/board/list?boardType=GENERAL}">전체공지</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/list?boardType=INTERNAL}">사내게시판</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/write}">바로 작성하기</a>
                             </li>
                         </ul>
                     </li>
@@ -102,13 +108,16 @@
                     <li><a href="#">결재</a>
                         <ul class="small">
                             <li>
-                                <a th:href="@{/api/v1/approval/create}">결재하기</a>
+                                <a th:href="@{/approval/create}">결재하기</a>
                             </li>
                             <li>
-                                <a th:href="@{/api/v1/approval}">결재내역</a>
+                                <a th:href="@{/approval/list}">결재대기</a>
                             </li>
                             <li>
-                                <a th:href="@{/}">결재승인</a>
+                                <a th:href="@{/approval/project}">진행 중인 프로젝트</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/approval/pay}">정산하기</a>
                             </li>
                         </ul>
                     </li>
