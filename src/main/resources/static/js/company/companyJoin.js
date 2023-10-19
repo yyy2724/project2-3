@@ -8,6 +8,8 @@ $(document).ready(function () {
     var passwordValidated = false;
     var addressValidated = false;
     var companyValidated = false;
+    var busNumValidated = false;
+    var emailCheckValidated = false;
 
     // 다른 필드에 대한 변수들 추가
     var companyInput = $('#companyName');
@@ -18,6 +20,8 @@ $(document).ready(function () {
     var passCheckInput = $('#checkPassword');
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
+    var certification = $('#certificationBtn');
+    var emailCheckNum = $('#certificationNumber');
 
 
 
@@ -45,6 +49,12 @@ $(document).ready(function () {
     });
     detailAddressInput.on('input', function () {
         addressCheck();
+    });
+    emailCheck.on('click', function (){
+        emailSend2();
+    });
+    certification.on('click', function (){
+        emailCertification();
     });
 
 
@@ -83,12 +93,12 @@ $(document).ready(function () {
                         if (cnt == 0) {
                             $('.businessNumber_ok').css("display", "inline-block");
                             $('.businessNumber_already').css("display", "none");
-                            companyValidated = true;
+                            busNumValidated = true;
                             checkAllFields();
                         } else {
                             $('.businessNumber_already').css("display", "inline-block");
                             $('.businessNumber_ok').css("display", "none");
-                            companyValidated = true;
+                            busNumValidated = true;
                             checkAllFields();
                         }
                     }
@@ -234,8 +244,54 @@ $(document).ready(function () {
     }
 
 
+    function emailSend2() {
+
+        const clientEmail = $("#mail").val();
+
+        $.ajax({
+            type: "post",
+            url: "/member/check",
+            data: {email: clientEmail},
+            success: function (data) {
+                alert('인증번호를 보냈습니다.');
+            }, error: function (e) {
+                alert('오류입니다. 잠시 후 다시 시도해주세요.');
+            }
+
+        });
+
+
+    }
+
+    function emailCertification() {
+
+        let clientEmail = emailInput.val();
+
+        let inputCode = emailCheckNum.val();
+
+        $.ajax({
+                type: "post",
+                url: "/member/emailCheck",
+                data: {email: clientEmail, inputCode: inputCode},
+                success: function (result) {
+                    console.log(result);
+                    if (result == true) {
+                        alert("인증완료");
+                        emailCheckValidated = true;
+                        checkAllFields();
+
+                    } else {
+                        alert('인증번호가 틀립니다.');
+                        emailCheckValidated = false;
+                        checkAllFields();
+                    }
+                }
+            }
+        );
+    }
+
     function checkAllFields() {
-        if (emailValidated && phoneValidated && passwordValidated && addressValidated) {
+        if (emailValidated && emailCheckValidated && busNumValidated && phoneValidated && passwordValidated && addressValidated && companyValidated) {
             $('#submit-button').prop('disabled', false);
         } else {
             $('#submit-button').prop('disabled', true);

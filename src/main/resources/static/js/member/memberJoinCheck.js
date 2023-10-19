@@ -10,6 +10,7 @@ $(document).ready(function () {
     var phoneValidated = false;
     var passwordValidated = false;
     var addressValidated = false;
+    var emailCheckValidated = false;
 
     // 다른 필드에 대한 변수들 추가
     var emailInput = $('#mail');
@@ -18,6 +19,9 @@ $(document).ready(function () {
     var passCheckInput = $('#checkPw');
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
+    var emailCheck = $('#emailCheck');
+    var certification = $('#certificationBtn');
+    var emailCheckNum = $('#certificationNumber');
 
     // 다른 필드에 대한 oninput 이벤트 핸들러 추가
     emailInput.on('input', function () {
@@ -37,6 +41,12 @@ $(document).ready(function () {
     });
     detailAddressInput.on('input', function () {
         addressCheck();
+    });
+    emailCheck.on('click', function (){
+        emailSend2();
+    });
+    certification.on('click', function (){
+        emailCertification();
     });
 
 
@@ -172,8 +182,54 @@ $(document).ready(function () {
     }
 
 
+    function emailSend2() {
+
+        const clientEmail = $("#mail").val();
+
+        $.ajax({
+            type: "post",
+            url: "/member/check",
+            data: {email: clientEmail},
+            success: function (data) {
+                alert('인증번호를 보냈습니다.');
+            }, error: function (e) {
+                alert('오류입니다. 잠시 후 다시 시도해주세요.');
+            }
+
+        });
+
+
+    }
+
+    function emailCertification() {
+
+        let clientEmail = emailInput.val();
+
+        let inputCode = emailCheckNum.val();
+
+        $.ajax({
+                type: "post",
+                url: "/member/emailCheck",
+                data: {email: clientEmail, inputCode: inputCode},
+                success: function (result) {
+                    console.log(result);
+                    if (result == true) {
+                        alert("인증완료");
+                        emailCheckValidated = true;
+                        checkAllFields();
+
+                    } else {
+                        alert('인증번호가 틀립니다.');
+                        emailCheckValidated = false;
+                        checkAllFields();
+                    }
+                }
+            }
+        );
+    }
+
     function checkAllFields() {
-        if (emailValidated && phoneValidated && passwordValidated && addressValidated) {
+        if (emailValidated && emailCheckValidated && phoneValidated && passwordValidated && addressValidated) {
             $('#submit-button').prop('disabled', false);
         } else {
             $('#submit-button').prop('disabled', true);

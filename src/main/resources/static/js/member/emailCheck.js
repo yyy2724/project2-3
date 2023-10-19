@@ -1,13 +1,6 @@
 function emailSend2() {
 
     const clientEmail = $("#mail").val();
-    const emailYN = isEmail(clientEmail);
-
-
-    console.log('입력 이메일' + clientEmail);
-
-    if (emailYN == true) {
-
 
         $.ajax({
             type: "post",
@@ -22,15 +15,6 @@ function emailSend2() {
         });
 
 
-    } else {
-
-    }
-
-}
-
-function isEmail(asValue) {
-    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
 }
 
 function emailCertification() {
@@ -38,9 +22,6 @@ function emailCertification() {
     let clientEmail = document.getElementById('mail').value;
 
     let inputCode = document.getElementById('certificationNumber').value;
-
-    console.log('이메일' + clientEmail);
-    console.log('인증코드' + inputCode);
 
     $.ajax({
             type: "post",
