@@ -29,7 +29,7 @@ public class BoardService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void boardWrite(BoardDto boardDto, MyUserDetails myUserDetails) throws IOException {
+    public String boardWrite(BoardDto boardDto, MyUserDetails myUserDetails) throws IOException {
 
         MemberEntity memberEntity = memberRepository.findByEmail(myUserDetails.getMemberEntity().getEmail()).orElseThrow(()->{
             throw new IllegalArgumentException("아이디가 존재하지 않습니다.");
@@ -55,6 +55,12 @@ public class BoardService {
                 throw new IllegalArgumentException("게시글 작성을 실패했습니다.");
             });
 
+            if(boardEntity1.getBoardType().toString().equals("GENERAL")){
+                return "GENERAL";
+            } else {
+                return "INTERNAL";
+            }
+
         }else {
             MultipartFile boardFile = boardDto.getBoardFile();
             String oldName = boardFile.getOriginalFilename();
@@ -76,7 +82,7 @@ public class BoardService {
                     .memberEntity(memberEntity)
                     .build();
             Long boardId = boardRepository.save(boardEntity).getId();
-            boardRepository.findById(boardId).orElseThrow(()->{
+            BoardEntity boardEntity1 = boardRepository.findById(boardId).orElseThrow(()->{
                 throw new IllegalArgumentException("게시글 작성을 실패했습니다.");
             });
 
@@ -92,7 +98,14 @@ public class BoardService {
                 throw new IllegalArgumentException("파일 등록을 실패했습니다.");
             });
 
+            if(boardEntity1.getBoardType().toString().equals("GENERAL")){
+                return "GENERAL";
+            } else {
+                return "INTERNAL";
+            }
+
         }
+
     }
 
     public Page<BoardDto> boardList(Pageable pageable) {

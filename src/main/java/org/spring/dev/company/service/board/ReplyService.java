@@ -133,8 +133,6 @@ public class ReplyService {
             System.out.println(replyEntity.getMemberEntity()+"<<< reply1");
         }
 
-        System.out.println(replyDtoList+"<<< reply2");
-
         return replyDtoList;
     }
 }
