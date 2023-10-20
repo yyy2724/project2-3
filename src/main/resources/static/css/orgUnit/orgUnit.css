@@ -11,6 +11,36 @@
 .container-con .container-header{
     text-align: center;
 }
+.container-con .list{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 100px;
+    font-size: 35px;
+    font-weight: bold;
+}
+.container-con .list ul#parent{
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    display: inline-flex;
+}
+.container-con .list ul:first-child:not(#parent){
+    width: 150px;
+    height: 150px;
+    align-items: center;
+    border-radius: 50%;
+    border: 2px solid darkblue;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    float: inline-start;
+}
+.container-con .list ul:not(:first-child){
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid red;
+}
 .container-con .btn{
     text-align: center;
     display: flex;
