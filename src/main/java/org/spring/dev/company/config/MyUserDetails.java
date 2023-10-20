@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -23,16 +22,19 @@ public class MyUserDetails implements UserDetails, OAuth2User {
     private MemberEntity memberEntity;
 
     private Map<String, Object> attributes;
+    private int is_display;
 
     // 일반
     public MyUserDetails(MemberEntity memberEntity) {
         this.memberEntity = memberEntity;
+        this.is_display = memberEntity.getIs_display();
     }
 
     // oAuth2
     public MyUserDetails(MemberEntity memberEntity, Map<String, Object> attributes) {
         this.memberEntity = memberEntity;
         this.attributes = attributes;
+        this.is_display = memberEntity.getIs_display();
     }
 
 
@@ -54,6 +56,10 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         return collection;
     }
 
+    public void setIs_display(int is_display) {
+        this.is_display = is_display;
+    }
+
     @Override
     public String getPassword() {
         return memberEntity.getPassword();
@@ -63,6 +69,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
     public String getUsername() {
         return memberEntity.getEmail();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -81,7 +88,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return is_display == 1;
     }
 
 
