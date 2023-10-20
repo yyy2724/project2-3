@@ -206,10 +206,7 @@ $(document).ready(function () {
             }, error: function (e) {
                 alert('오류입니다. 잠시 후 다시 시도해주세요.');
             }
-
         });
-
-
     }
 
     function emailCertification() {
