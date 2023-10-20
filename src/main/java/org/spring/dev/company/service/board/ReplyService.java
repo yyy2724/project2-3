@@ -38,7 +38,6 @@ public class ReplyService {
         ReplyEntity replyEntity = ReplyEntity.builder()
                 .id(replyDto.getId())
                 .content(replyDto.getContent())
-                .writer(replyDto.getWriter())
                 .boardEntity(boardEntity)
                 .memberEntity(memberEntity)
                 .build();
@@ -64,7 +63,6 @@ public class ReplyService {
         for (ReplyEntity replyEntity : replyEntityList) {
             ReplyDto replyDto = ReplyDto.builder()
                     .id(replyEntity.getId())
-                    .writer(replyEntity.getWriter())
                     .content(replyEntity.getContent())
                     .memberEntity(replyEntity.getMemberEntity())
                     .createTime(replyEntity.getCreateTime())
@@ -86,13 +84,11 @@ public class ReplyService {
         ReplyDto replyDto1 = ReplyDto.builder()
                 .id(replyEntity.getId())
                 .content(replyEntity.getContent())
-                .writer(replyEntity.getWriter())
                 .createTime(replyEntity.getCreateTime())
                 .updateTime(replyEntity.getUpdateTime())
                 .build();
 
         replyEntity.setContent(replyDto.getContent());
-        replyEntity.setWriter(replyDto.getWriter());
 
         return ResponseEntity.ok(replyRepository.save(replyEntity));
 
@@ -121,7 +117,6 @@ public class ReplyService {
         for (ReplyEntity replyEntity : replyEntityList) {
             ReplyDto replyDto = ReplyDto.builder()
                     .id(replyEntity.getId())
-                    .writer(replyEntity.getWriter())
                     .content(replyEntity.getContent())
                     .approType(replyEntity.getMemberEntity().getGrade().toString())
                     .name(replyEntity.getMemberEntity().getName())

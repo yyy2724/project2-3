@@ -1,4 +1,8 @@
-const writer = document.querySelector('#writer');
+// Quill 초기화
+var quill = new Quill('#editor', {
+  theme: 'snow' // 에디터 테마 설정 (예: 'snow' 또는 'bubble')
+});
+
 const content = document.querySelector('#content');
 const boardId = document.querySelector('#boardId');
 const replyWriteBtn = document.querySelector('#replyWriteBtn');
@@ -6,8 +10,10 @@ const replyWriteBtn = document.querySelector('#replyWriteBtn');
 
 replyWriteBtn.addEventListener('click', ()=>{
 
+    var editorContent = document.querySelector('.ql-editor').innerHTML;
+    document.querySelector('#content').value = editorContent;
+
     const reply_data={
-        'writer' : writer.value,
         'content' : content.value,
         'boardId' : boardId.value,
     };
@@ -32,8 +38,19 @@ replyWriteBtn.addEventListener('click', ()=>{
              });
 });
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0'); // 일
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월 (0부터 시작하므로 1을 더해줍니다)
+        const year = date.getFullYear();
+        let hour = date.getHours();
+        const minute = date.getMinutes().toString().padStart(2, '0');
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12 || 12;
 
-// 호이스팅
+        return `${month}월 ${day}일 ${ampm}${hour}:${minute}`;
+}
+
 function replyListFn(boardIdVal){
 
         const url = "/reply/list/"+boardIdVal;
@@ -55,16 +72,15 @@ function replyListFn(boardIdVal){
 
                data.forEach(el=>{
 
+                const contentHTML = (new DOMParser()).parseFromString(el.content, 'text/html').body.textContent;
                innerData+=`<tr class="reply${el.id}">
                            <td>
-                                <input type="text" value='${el.id}' name="replyId2" id="replyId2" readonly>
-                               <input type="text" value='${el.boardId}' readonly><br>
-                               <input type="text" value='${el.email}' readonly><br>
-                               <input type="text" value='${el.approvalType}' readonly><br>
-                               <input type="text" value='${el.name}' readonly><br>
-                               <input type="text" value="${el.writer}"  class="updateWriter" readonly ><br>
-                               <input type="text" value="${el.content}"  class="updateContent" readonly><br>
-                                   <span >${el.createTime}</span><br>
+                                <input type="hidden" value='${el.id}' name="replyId2" id="replyId2" readonly>
+                               <input type="hidden" value='${el.boardId}' readonly><br>
+                               <input type="text" value='${el.name}' readonly class="replyName"><br>
+                               <input type="text" value='${el.approType}' readonly class="replyAppro"><br>
+                               <span class="replyTime">${formatDate(el.createTime)}</span><br>
+                               <input type="text" value="${contentHTML}"  class="updateContent" readonly><br>
                                <div class="list">
                                    <span>
                                        <button type="button" value="${el.id}" onclick="showUpdate(event, ${el.id})">수정</button>

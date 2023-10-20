@@ -31,7 +31,6 @@ public class ReplyController {
     @GetMapping("/list/{boardId}")
     public ResponseEntity<List<ReplyDto>> memberList(@PathVariable("boardId") Long boardId){
         List<ReplyDto> replyDtos = replyService.replyFindAll(boardId);
-        System.out.println("replyDtos ==> " + replyDtos);
         return new ResponseEntity<>(replyDtos,HttpStatus.OK);
     }
 
