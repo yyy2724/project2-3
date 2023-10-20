@@ -192,7 +192,7 @@ public class MemberController {
         if (rs != 0) {
         return "member/detail";
         }
-            return "member/m";
+            return "redirect:/member/logout";
     }
 
 

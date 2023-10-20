@@ -40,6 +40,7 @@ public class WebSecurityConfigClass {
         return new MemberEntity();
     }
 
+
 //    @Bean
 //    public AuthenticationFailureHandler authenticationFailureHandler() {
 //        return new SimpleUrlAuthenticationFailureHandler("/login/loginFail");
@@ -132,7 +133,7 @@ public class WebSecurityConfigClass {
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/login/login")
+                .logoutSuccessUrl("/")
         ;
 
         return http.build();
