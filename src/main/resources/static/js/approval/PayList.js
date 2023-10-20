@@ -38,9 +38,9 @@ function displayResults(approvals) {
     table.innerHTML = `
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Type</th>
+                <th>번호</th>
+                <th>제목</th>
+                <th>대상</th>
             </tr>
         </thead>
         <tbody>
