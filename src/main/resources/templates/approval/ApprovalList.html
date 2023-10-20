@@ -49,14 +49,19 @@
     </div>
     <!-- 모달 창 구현 -->
     <div id="modal" class="modal" data-approval-id="">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content" style="
+    padding: 50px 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+">
+            <span class="close" onclick="closeModal()">×</span>
             <h2>제목</h2>
-            <h2 id="modalTitle"></h2>
+            <h2 id="modalTitle">freelancer test</h2>
             <span>내용</span> <br>
-            <h3 id="modalContent"></h3>
+            <h3 id="modalContent">&lt;p&gt;freelancer test&lt;/p&gt;</h3>
             <span>번호</span>
-            <h3 id="modalId"></h3>
+            <h3 id="modalId">8</h3>
             <button onclick="approval()">승인</button>
         </div>
     </div>
