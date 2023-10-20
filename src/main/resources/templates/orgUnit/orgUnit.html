@@ -12,32 +12,58 @@
 <th:block layout:fragment="container">
     <h1>조직도 보여주어어어어어어어어~</h1>
     <button id="getUnit">조직도 연동</button>
+    <button id="newToken">새로운 토큰 발급</button>
+    <button id="reToken">토큰 유효 기간 연장</button>
+
+    <div id="unitList">
+
+    </div>
+
 
 
 
     <script>
+        let getUnit = document.getElementById("getUnit");
+        let unitList = document.getElementById("unitList");
 
+        getUnit.addEventListener("click", function () {
+
+            // naver token을 발급받기 위한 code를 return url로 받고 return은 /naver/token으로 지정해 다시 우리쪽 컨트롤러가 받아서 db에 저장
+
+            $.ajax({
+                url: "/naver/code",
+                method: "GET",
+                async: false,
+            }).done(function (data) {
+
+                    console.log(data.return);
+
+                    document.write(data.return);
+
+            }).fail(function (xhr, status, errorThrown) {
+                console.log("에러");
+            });
+        })
 
         $.ajax({
-            url: "/naver/orgunit",
-            method: "GET",
-            async: false,
-        }).done(function (data) {
-            $.each(data.orgUnits, function (index, element) {
-                console.log(data.orgUnits);
+                url: "/naver/orgunit",
+                method: "GET",
+                async: false,
+            }).done(function (data) {
+                $.each(data.orgUnits, function (index, element) {
+                    console.log(data.orgUnits);
 
-                if (element.orgUnitName != null) {
-                    var span = document.createElement("span"); // <span> 요소 생성
-                    span.className = "orgUnitName"; // 클래스 추가
-                    span.innerHTML = element.orgUnitName; // 내용 추가
-                    container.appendChild(span); // 부모 요소에 추가
-                }
-            })
-        }).fail(function (xhr, status, errorThrown) {
-            console.log("에러");
-        });
+                    if (element.orgUnitName != null) {
+                        var span = document.createElement("span"); // <span> 요소 생성
+                        span.className = "orgUnitName"; // 클래스 추가
+                        span.innerHTML = element.orgUnitName; // 내용 추가
+                        unitList.appendChild(span);
+                    }
+                })
+            }).fail(function (xhr, status, errorThrown) {
+                alert("조직도를 가져오지 못했습니다 다시 연동하거나 관리자에게 문의 바랍니다.")
+            });
     </script>
-
 </th:block>
 
 </html>
