@@ -46,7 +46,7 @@ public class WorkTimeService {
         String date = LocalDate.now().toString();
         WorkTimeEntity workTimeEntity = new WorkTimeEntity();
         // 출근 기록이 없다면 생성
-        if (workTimeRepository.getDayTime(date) == null) {
+        if (workTimeRepository.getDayTimeMember(date,memberId) == null) {
             MemberEntity memberEntity = new MemberEntity();
             memberEntity.setId(memberId);
 
@@ -73,7 +73,7 @@ public class WorkTimeService {
         Long result = null;
         String date = LocalDate.now().toString();
         //출근 기록이있다면
-        WorkTimeEntity workTimeEntity = workTimeRepository.getDayTime(date);
+        WorkTimeEntity workTimeEntity = workTimeRepository.getDayTimeMember(date,memberId);
         //퇴근 기록이 아직 없을때 생성
         if (workTimeEntity.getWorkTimeEnd() == null) {
             workTimeEntity.setWorkTimeEnd(LocalDateTime.now());
@@ -216,15 +216,18 @@ public class WorkTimeService {
 
         String date = LocalDate.now().minusDays(1).toString();
         System.out.println(date);
-        WorkTimeEntity workTimeEntity = workTimeRepository.getDayTime(date);
-        if (workTimeEntity == null) {
+        List<WorkTimeEntity> workTimeEntityList = workTimeRepository.getDayTime(date);
+        if (workTimeEntityList == null) {
 
         } else {
-            if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null) {
-                Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
-                long workTimeTotal = total.toMinutes();
-                workTimeRepository.updateWorkTotalTime(workTimeTotal, date);
+            for (WorkTimeEntity workTimeEntity: workTimeEntityList) {
+                if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null) {
+                    Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
+                    long workTimeTotal = total.toMinutes();
+                    workTimeRepository.updateWorkTotalTime(workTimeTotal, date, workTimeEntity.getId());
+                }
             }
+
         }
     }
 }
