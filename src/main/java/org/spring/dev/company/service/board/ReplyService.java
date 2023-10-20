@@ -116,8 +116,6 @@ public class ReplyService {
         });
 
         List<ReplyDto> replyDtoList = new ArrayList<>();
-//        List<ReplyEntity> replyEntityList = replyRepository.findAllByBoardEntityOrderByIdDesc(boardEntity);
-
         List<ReplyEntity> replyEntityList = replyRepository.findAllByBoardEntity(boardEntity);
 
         for (ReplyEntity replyEntity : replyEntityList) {
@@ -125,12 +123,12 @@ public class ReplyService {
                     .id(replyEntity.getId())
                     .writer(replyEntity.getWriter())
                     .content(replyEntity.getContent())
-                    .email(replyEntity.getMemberEntity().getEmail())
+                    .approType(replyEntity.getMemberEntity().getGrade().toString())
+                    .name(replyEntity.getMemberEntity().getName())
                     .createTime(replyEntity.getCreateTime())
                     .boardId(replyEntity.getBoardEntity().getId())
                     .build();
             replyDtoList.add(replyDto);
-            System.out.println(replyEntity.getMemberEntity()+"<<< reply1");
         }
 
         return replyDtoList;

@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface IntentionRepository extends JpaRepository<IntentionEntity, Long> {
     Optional<IntentionEntity> findByNameAndUpper(String token, IntentionEntity upper);
-
 }

@@ -9,6 +9,7 @@ import org.spring.dev.company.entity.util.BoardType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;

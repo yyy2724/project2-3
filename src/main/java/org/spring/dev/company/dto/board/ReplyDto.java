@@ -4,6 +4,7 @@ import lombok.*;
 import org.spring.dev.company.entity.board.BoardEntity;
 import org.spring.dev.company.entity.board.ReplyEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
+import org.spring.dev.company.entity.util.ApproType;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,10 @@ public class ReplyDto {
     private LocalDateTime updateTime;
     private BoardEntity boardEntity;
     private MemberEntity memberEntity;
-    private String email;
+
+    // 회원정보
+    private String name;
+    private String approType;
 
     public static ReplyDto toReplyDto(ReplyEntity replyEntity) {
         ReplyDto replyDto = new ReplyDto();
