@@ -21,11 +21,33 @@ public class NaverService {
 
     private final NaverRepository naverRepository;
 
-    @Value("${navar.api.client-id}")
+    @Value("${naver.api.client-id}")
     String CLIENT_ID;
 
-    @Value("${navar.api.client-secret}")
+    @Value("${naver.api.client-secret}")
     String CLIENT_SECRET;
+
+    @Value("${naver.auth-url}")
+    String NAVER_URL;
+
+    @Value("${naver.work-url}")
+    String NAVER_WORK_URL;
+
+    @Value("${naver.auth.uri.authorize}")
+    String NAVER_URI_AUTH;
+
+    @Value("${naver.auth.uri.token}")
+    String NAVER_URI_TOKEN;
+
+    @Value("${naver.scope}")
+    String NAVER_SCOPE;
+
+    @Value("${naver.org.units}")
+    String NAVER_ORG_UNITS;
+
+    @Value("${naver.redirect-url}")
+    String NAVER_REDIRECT_URL;;
+
 
     public String getNaverCode() {
         String naverAuthHtml = null;
@@ -39,13 +61,13 @@ public class NaverService {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         URI uri = UriComponentsBuilder
-                .fromUriString("https://auth.worksmobile.com")
-                .path("/oauth2/v2.0/authorize")
-                .queryParam("redirect_uri", "http://localhost:8023/naver/token") //code를 받아올 return url
+                .fromUriString(NAVER_URL)
+                .path(NAVER_URI_AUTH)
+                .queryParam("redirect_uri", NAVER_REDIRECT_URL) //code를 받아올 return url
                 .queryParam("client_id", CLIENT_ID)
                 .queryParam("response_type", "code") // code로 지정 값
-                .queryParam("scope", "directory,directory.read,orgunit,orgunit.read,user,user.read") //사용할 권환들
-                .queryParam("state", "CSRF") //
+                .queryParam("scope", NAVER_SCOPE) //사용할 권환들
+                .queryParam("state", "CSRF") // CSRF 고정
                 .encode()
                 .build()
                 .toUri();
@@ -76,11 +98,11 @@ public class NaverService {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         URI uri = UriComponentsBuilder
-                .fromUriString("https://auth.worksmobile.com")
-                .path("/oauth2/v2.0/token")
+                .fromUriString(NAVER_URL)
+                .path(NAVER_URI_TOKEN)
                 .queryParam("code", code)
                 .queryParam("client_id", CLIENT_ID)
-                .queryParam("grant_type", "authorization_code") //
+                .queryParam("grant_type", "authorization_code") // 고정
                 .queryParam("client_secret", CLIENT_SECRET) //사용할 권환들
                 .encode()
                 .build()
@@ -110,8 +132,8 @@ public class NaverService {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         URI uri = UriComponentsBuilder
-                .fromUriString("https://www.worksapis.com")
-                .path("/v1.0/orgunits")
+                .fromUriString(NAVER_WORK_URL)
+                .path(NAVER_ORG_UNITS)
                 .encode()
                 .build()
                 .toUri();
