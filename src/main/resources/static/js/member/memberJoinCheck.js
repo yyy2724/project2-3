@@ -5,6 +5,7 @@ $(document).ready(function () {
     var timeOff = new Date().getTimezoneOffset() * 60000;
     var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
     document.getElementById("birth").setAttribute("max", today);
+
     // 체크한 결과 확인을 위한 변수
     var emailValidated = false;
     var phoneValidated = false;
@@ -42,10 +43,10 @@ $(document).ready(function () {
     detailAddressInput.on('input', function () {
         addressCheck();
     });
-    emailCheck.on('click', function (){
+    emailCheck.on('click', function () {
         emailSend2();
     });
-    certification.on('click', function (){
+    certification.on('click', function () {
         emailCertification();
     });
 
@@ -67,7 +68,7 @@ $(document).ready(function () {
                 type: 'post',
                 data: { "email": email },
                 success: function (cnt) {
-                    if (cnt != 0) {
+                    if (cnt !== 0) {
                         $('.member_already').css("display", "inline-block");
                         $('.member_ok').css("display", "none");
                         emailValidated = false;
@@ -95,6 +96,7 @@ $(document).ready(function () {
             $('.phone_expression').css("display", "inline-block");
             $('.phone_already').css("display", "none");
             $('.phone_ok').css("display", "none");
+            phoneValidated = false;
         } else {
             $('.phone_expression').css("display", "none");
             $.ajax({
@@ -102,10 +104,10 @@ $(document).ready(function () {
                 type: 'post',
                 data: { "phone": phone },
                 success: function (cnt) {
-                    if (cnt != 0) {
+                    if (cnt !== 0) {
                         // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                        //                        phoneValidated = false; // 예제에서는 간단히 true로 설정
-                        //                        checkAllFields();
+                        phoneValidated = false; // 예제에서는 간단히 true로 설정
+                        checkAllFields();
                         $('.phone_already').css("display", "inline-block");
                         $('.phone_ok').css("display", "none");
                     } else {
@@ -132,19 +134,22 @@ $(document).ready(function () {
         var passwordRules = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
         if (!passwordRules.test(password)) {
             $('.pw_string').css("display", "inline-block");
+            passwordValidated = false;
         } else {
             $('.pw_string').css("display", "none");
             if (checkNumber < 0 || checkEnglish < 0) {
                 $('.pw_length').css("display", "inline-block");
+                passwordValidated = false;
             } else {
                 $('.pw_length').css("display", "none");
                 if (/(\w)\1\1/.test(password)) {
                     $('.pw_true').css("display", "inline-block");
+                    passwordValidated = false;
                 } else {
                     $('.pw_true').css("display", "none");
                     if (password.search(email) > 0) {
                         $('.pw_email').css("display", "inline-block");
-
+                        passwordValidated = false;
                     } else {
                         $('.pw_email').css("display", "none");
                         if (password != passCheck) {
@@ -168,10 +173,14 @@ $(document).ready(function () {
         $('.post_already').css("display", "none");
         if (address === "") {
             $('.address_already').css("display", "inline-block");
+            addressValidated = false; // 예제에서는 간단히 true로 설정
+            checkAllFields();
         } else {
             $('.address_already').css("display", "none");
             if (detailAddress === "") {
                 $('.detail_already').css("display", "inline-block");
+                addressValidated = false; // 예제에서는 간단히 true로 설정
+                checkAllFields();
             } else {
                 $('.detail_already').css("display", "none");
                 // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
@@ -189,16 +198,13 @@ $(document).ready(function () {
         $.ajax({
             type: "post",
             url: "/member/check",
-            data: {email: clientEmail},
+            data: { email: clientEmail },
             success: function (data) {
                 alert('인증번호를 보냈습니다.');
             }, error: function (e) {
                 alert('오류입니다. 잠시 후 다시 시도해주세요.');
             }
-
         });
-
-
     }
 
     function emailCertification() {
@@ -208,23 +214,24 @@ $(document).ready(function () {
         let inputCode = emailCheckNum.val();
 
         $.ajax({
-                type: "post",
-                url: "/member/emailCheck",
-                data: {email: clientEmail, inputCode: inputCode},
-                success: function (result) {
-                    console.log(result);
-                    if (result == true) {
-                        alert("인증완료");
-                        emailCheckValidated = true;
-                        checkAllFields();
+            type: "post",
+            url: "/member/emailCheck",
+            data: { email: clientEmail, inputCode: inputCode },
+            success: function (result) {
+                console.log(result);
+                if (result == true) {
+                    alert("인증완료");
+                    emailCheckValidated = true;
+                    emailValidated = true;
+                    checkAllFields();
 
-                    } else {
-                        alert('인증번호가 틀립니다.');
-                        emailCheckValidated = false;
-                        checkAllFields();
-                    }
+                } else {
+                    alert('인증번호가 틀립니다.');
+                    emailCheckValidated = false;
+                    checkAllFields();
                 }
             }
+        }
         );
     }
 

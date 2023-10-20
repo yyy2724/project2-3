@@ -1,13 +1,5 @@
 $(document).ready(function () {
-    // 초기에는 버튼 비활성화
     $('#submit-button').prop('disabled', false);
-
-    var phoneValidated = true;
-    var addressValidated = true;
-    var nameValidated = true;
-    var emailValidated = true;
-    var emailCheckValidated = true;
-    var birthValidated = true;
 
     var phoneInput = $('#phone');
     var addressInput = $('#address');
@@ -19,13 +11,19 @@ $(document).ready(function () {
     var carClick = $('#certificationBtn');
     var birthInput = $('#birth');
     // th:data-birth 속성에서 날짜 값을 가져옵니다.
-        var dateString = birthInput.data('birth');
-        // 날짜 값을 "YYYYMMDD"에서 "YYYY-MM-DD" 형식으로 변환합니다.
-        var formattedDate = dateString.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-        // 변환된 날짜를 input 요소의 value 속성에 설정합니다.
-        birthInput.val(formattedDate);
+    var dateString = birthInput.data('birth');
+    // 날짜 값을 "YYYYMMDD"에서 "YYYY-MM-DD" 형식으로 변환합니다.
+    var formattedDate = dateString.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+    // 변환된 날짜를 input 요소의 value 속성에 설정합니다.
+    birthInput.val(formattedDate);
 
-    // 초기 값 저장
+    var phoneValidated = true;
+    var addressValidated = true;
+    var nameValidated = true;
+    var emailValidated = true;
+    var emailCheckValidated = true;
+    var birthValidated = true;
+
     var initialValues = {
         email: emailInput.val(),
         phone: phoneInput.val(),
@@ -34,7 +32,6 @@ $(document).ready(function () {
         name: nameInput.val(),
         birth: birthInput.val()
     };
-
     emailInput.on('input', function () {
         if (emailInput.val() !== initialValues.email) {
             emailValidated = false;
@@ -113,15 +110,14 @@ $(document).ready(function () {
         }
     });
     birthInput.on('input', function () {
-            if (birthInput.val() !== initialValue.birth) {
-                birthValidated = false;
-                birtCheck();
-            } else {
-                birthValidated = true;
-                checkAllFields();
-            }
-        });
-
+        if (birthInput.val() !== initialValue.birth) {
+            birthValidated = false;
+            birtCheck();
+        } else {
+            birthValidated = true;
+            checkAllFields();
+        }
+    });
 
 
     // 이메일 유효성 검사
@@ -269,15 +265,16 @@ $(document).ready(function () {
             checkAllFields();
         }
     }
+
     function birtCheck() {
-            if (birthInput.val().trim() === "") {
-                birthValidated = false;
-                checkAllFields();
-            } else {
-                birthValidated = true;
-                checkAllFields();
-            }
+        if (birthInput.val().trim() === "") {
+            birthValidated = false;
+            checkAllFields();
+        } else {
+            birthValidated = true;
+            checkAllFields();
         }
+    }
 
     function checkAllFields() {
         if (emailValidated && emailCheckValidated && phoneValidated && addressValidated && nameValidated && birthValidated) {

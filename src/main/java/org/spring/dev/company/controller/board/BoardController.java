@@ -104,11 +104,8 @@ public class BoardController {
     @GetMapping("/detail/{id}")
     private String detail(@PathVariable("id") Long id, Model model){
         BoardDto boardDto = boardService.detail(id);
-//        List<ReplyDto> replyDtoList = replyService.list(boardDto.getId());
-//        Collections.reverse(replyDtoList);
         model.addAttribute("board", boardDto);
-//        model.addAttribute("replyList", replyDtoList);
-
+        model.addAttribute("boardType", boardDto.getBoardType().toString());
         return "board/detail";
     }
 

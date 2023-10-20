@@ -116,10 +116,9 @@ public class MemberService {
 
 
         MemberEntity memberEntity1 = memberEntity.get();
-        memberEntity1.setId(memberDto.getId());
+        memberEntity1.setEmail(memberDto.getEmail());
         memberEntity1.setName(memberDto.getName());
         memberEntity1.setPhone(memberDto.getPhone());
-        memberEntity1.setGender(memberDto.getGender());
         memberEntity1.setPostcode(memberDto.getPostcode());
         memberEntity1.setAddress(memberDto.getAddress());
         memberEntity1.setDetailAddress(memberDto.getDetailAddress());
@@ -370,6 +369,7 @@ public class MemberService {
         }));
 
         MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setEmail(memberDto.getEmail());
         memberEntity.setName(memberDto.getName());
         memberEntity.setBirth(memberDto.getBirth());
         memberEntity.setPhone(memberDto.getPhone());
@@ -419,6 +419,7 @@ public class MemberService {
                     return new IllegalArgumentException("아이디가 없습니다.");
         }));
         MemberEntity memberEntity = optionalMemberEntity.get();
+        memberEntity.setEmail(memberDto.getEmail());
         memberEntity.setPhone(memberDto.getPhone());
         memberEntity.setCompanyName(memberDto.getCompanyName());
         memberEntity.setBusinessNumber(memberDto.getBusinessNumber());
