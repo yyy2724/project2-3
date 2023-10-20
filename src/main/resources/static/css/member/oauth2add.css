@@ -15,10 +15,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
     max-width: 100%;
-<<<<<<< HEAD
-=======
     margin: 0 0 0 450px;
->>>>>>> 4417d06703d0ebda053faca57bab116a3957b34e
 }
 .update-header h1 {
     font-size: 24px;
@@ -33,10 +30,6 @@
 ul {
     list-style: none;
     padding: 0;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4417d06703d0ebda053faca57bab116a3957b34e
 }
 li {
     margin-bottom: 15px;
@@ -69,9 +62,6 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
     background-color: #0056b3;
-<<<<<<< HEAD
-}
-=======
 }
 
 .gender-label {
@@ -83,4 +73,3 @@ input[type="submit"]:hover {
 .gender-label .female {
     margin: 0 0 0 -7px;
 }
->>>>>>> 4417d06703d0ebda053faca57bab116a3957b34e

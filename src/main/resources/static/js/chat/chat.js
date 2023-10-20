@@ -21,10 +21,6 @@ connectBtn.addEventListener('click', ()=>{
 
       alert(userId.value + "님 접속했습니다.");
 
-//      const title = "게시글 작성 완료";
-//      const message2 = "새로운 게시글이 작성되었습니다.";
-//      showNotification(title, message2);
-
        webSocket.onopen = function(event) {
 
            // "게시글 작성 완료" 메시지를 서버로 전송

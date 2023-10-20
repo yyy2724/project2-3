@@ -41,7 +41,7 @@ public class NaverService {
         URI uri = UriComponentsBuilder
                 .fromUriString("https://auth.worksmobile.com")
                 .path("/oauth2/v2.0/authorize")
-                .queryParam("redirect_uri", "http://localhost:8023/naver/code") //code를 받아올 return url
+                .queryParam("redirect_uri", "http://localhost:8023/naver/token") //code를 받아올 return url
                 .queryParam("client_id", CLIENT_ID)
                 .queryParam("response_type", "code") // code로 지정 값
                 .queryParam("scope", "directory,directory.read,orgunit,orgunit.read,user,user.read") //사용할 권환들
