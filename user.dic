@@ -1,4 +1,5 @@
 	NNP
+null	NNP
 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	NNP
 È¸ï¿½ï¿½ï¿?	NNP
 ???‘œ?ž	NNP
@@ -6,6 +7,8 @@
 ï¿½è¿¹ï¿½ï¿½	NNP
 ´ëÇ¥ÀÚ	NNP
 È¸ï¿½ï¿½ï¿??	NNP
+È¸»ç¸í	NNP
+±è¿¹Áø	NNP
 ê¹??–‘34234	NNP
 ê¹??˜ˆì§?	NNP
 ï¿½ï¿½Ç¥ï¿½ï¿½	NNP
@@ -15,11 +18,15 @@ rla	NNP
 ê¹??–‘34234sdfa	NNP
 0	NNP
 1	NNP
+ÇÁ¸®	NNP
 rrr	NNP
 null	NNP
 123123	NNP
 ?šŒ?‚¬	NNP
+ÀÌÁöÈÆ	NNP
+È¸»ç	NNP
 sadfsadf	NNP
 ë°•ì •?˜„	NNP
 qwe	NNP
 ê¹??–‘34234sdfasdf	NNP
+¹ÚÁ¤Çö	NNP

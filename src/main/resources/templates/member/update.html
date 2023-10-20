@@ -38,6 +38,10 @@
                 <input type="text" name="name" id="name" th:data-membername="${memberDto.name}" th:value="${memberDto.name}" class="input-field">
             </li>
             <li>
+                <label for="birth">생년월일:</label>
+                <input type="date" name="birth" id="birth" th:data-birth="${memberDto.birth}" class="input-field">
+            </li>
+            <li>
                 <label for="phone">전화번호</label>
                 <input type="text" name="phone" id="phone" th:data-phone="${memberDto.phone}" th:value="${memberDto.phone}" class="input-field">
                 <span class="phone_expression">올바른 전화번호을 작성해주세요.</span>
