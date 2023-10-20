@@ -7,8 +7,10 @@ $(document).ready(function () {
     var nameValidated = true;
     var emailValidated = true;
     var emailCheckValidated = true;
-    var birthValidated = true;
+    var companyValidated = true;
+    var busNumValidated = true;
 
+    // 가져올것들
     var phoneInput = $('#phone');
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
@@ -17,13 +19,8 @@ $(document).ready(function () {
     var emailClick = $('#emailCheck');
     var cerNumInput = $('#certificationNumber');
     var carClick = $('#certificationBtn');
-    var birthInput = $('#birth');
-    // th:data-birth 속성에서 날짜 값을 가져옵니다.
-        var dateString = birthInput.data('birth');
-        // 날짜 값을 "YYYYMMDD"에서 "YYYY-MM-DD" 형식으로 변환합니다.
-        var formattedDate = dateString.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-        // 변환된 날짜를 input 요소의 value 속성에 설정합니다.
-        birthInput.val(formattedDate);
+    var companyInput = $('#companyName');
+    var busNumInput = $('#businessNumber');
 
     // 초기 값 저장
     var initialValues = {
@@ -32,7 +29,8 @@ $(document).ready(function () {
         address: addressInput.val(),
         detailAddress: detailAddressInput.val(),
         name: nameInput.val(),
-        birth: birthInput.val()
+        company: companyInput.val(),
+        busNum: busNumInput.val()
     };
 
     emailInput.on('input', function () {
@@ -112,16 +110,26 @@ $(document).ready(function () {
             checkAllFields();
         }
     });
-    birthInput.on('input', function () {
-            if (birthInput.val() !== initialValue.birth) {
-                birthValidated = false;
-                birtCheck();
-            } else {
-                birthValidated = true;
-                checkAllFields();
-            }
-        });
 
+    companyInput.on('input', function(){
+        if (companyInput.val() !== initialValues.company){
+            companyValidated = false;
+            companyCheck();
+        }else{
+            companyValidated = true;
+            checkAllFields();
+        }
+    });
+
+    busNumInput.on('input', function (){
+        if (busNumInput.val() !== initialValues.busNum){
+            busNumValidated = false;
+            busNumCheck();
+        }else {
+            busNumValidated = true;
+            checkAllFields();
+        }
+    });
 
 
     // 이메일 유효성 검사
@@ -205,7 +213,7 @@ $(document).ready(function () {
 
     function phoneCheck() {
         var phone = phoneInput.val();
-        var validatePone = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+        var validatePone = /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-?\d{3,4}-?\d{4}$/;
         if (!validatePone.test(phone)) {
             $('.phone_expression').css("display", "inline-block");
             $('.phone_already').css("display", "none");
@@ -269,18 +277,62 @@ $(document).ready(function () {
             checkAllFields();
         }
     }
-    function birtCheck() {
-            if (birthInput.val().trim() === "") {
-                birthValidated = false;
-                checkAllFields();
-            } else {
-                birthValidated = true;
-                checkAllFields();
-            }
-        }
+    function companyCheck(){
+        var company = companyInput.val();
+                $.ajax({
+                    url: "/join/companyCheck",
+                    type: 'post',
+                    data: { "companyName": company },
+                    success: function (cnt) {
+                        if (cnt == 0) {
+                            $('.company_ok').css("display", "inline-block");
+                            $('.company_already').css("display", "none");
+                            companyValidated = true;
+                        } else {
+                            $('.company_already').css("display", "inline-block");
+                            $('.company_ok').css("display", "none");
+                            companyValidated = false;
+                        }
+                        checkAllFields();
+                    }
+                });
+    }
+
+    function busNumCheck(){
+        var busNum = busNumInput.val();
+                var businessNumberEx = /^\d{3}-?\d{2}-?\d{5}$/;
+                if (businessNumberEx.test(busNum)) {
+                    $('.businessNumber_expression').css("display", "none");
+                    $.ajax({
+                        url: "/join/businessNumberCheck",
+                        type: 'post',
+                        data: { "businessNumber": busNum },
+                        success: function (cnt) {
+                            if (cnt == 0) {
+                                $('.businessNumber_ok').css("display", "inline-block");
+                                $('.businessNumber_already').css("display", "none");
+                                busNumValidated = true;
+                                checkAllFields();
+                            } else {
+                                $('.businessNumber_already').css("display", "inline-block");
+                                $('.businessNumber_ok').css("display", "none");
+                                busNumValidated = true;
+                                checkAllFields();
+                            }
+                        }
+                    });
+
+                } else {
+                    $('.businessNumber_expression').css("display", "inline-block");
+                    $('.businessNumber_ok').css("display", "none");
+                    $('.businessNumber_already').css("display", "none");
+                    busNumValidated = false;
+                    checkAllFields();
+                }
+    }
 
     function checkAllFields() {
-        if (emailValidated && emailCheckValidated && phoneValidated && addressValidated && nameValidated && birthValidated) {
+        if (emailValidated && emailCheckValidated && phoneValidated && addressValidated && nameValidated && companyValidated && busNumValidated) {
             $('#submit-button').prop('disabled', false);
         } else {
             $('#submit-button').prop('disabled', true);
