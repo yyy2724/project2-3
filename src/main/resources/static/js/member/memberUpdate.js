@@ -1,19 +1,72 @@
 $(document).ready(function () {
     // 초기에는 버튼 비활성화
-    $('#submit-button').prop('disabled', true);
+    $('#submit-button').prop('disabled', false);
 
     var phoneValidated = true;
     var addressValidated = true;
     var nameValidated = true;
+    var emailValidated = true;
+    var emailCheckValidated = true;
 
     var phoneInput = $('#phone');
     var addressInput = $('#address');
     var detailAddressInput = $('#detailAddress');
     var nameInput = $('#name');
+    var emailInput = $('#mail');
+    var emailClick = $('#emailCheck');
+    var cerNumInput = $('#certificationNumber');
+    var carClick = $('#certificationBtn');
+
+    // 초기 값 저장
+    var initialValues = {
+        email: emailInput.val(),
+        phone: phoneInput.val(),
+        address: addressInput.val(),
+        detailAddress: detailAddressInput.val(),
+        name: nameInput.val()
+    };
+
+    emailInput.on('input', function () {
+        if (emailInput.val() !== initialValues.email) {
+            emailValidated = false;
+            emailCheckValidated = false;
+            checkAllFields();
+            emailChange();
+        } else {
+            emailValidated = true;
+            emailCheckValidated = true;
+            checkAllFields();
+        }
+    });
+    emailClick.on('click', function () {
+        if (emailInput.val() !== initialValues.email) {
+            emailValidated = false;
+            emailCheckValidated = false;
+            checkAllFields();
+            emailSend2();
+        } else {
+            emailValidated = true;
+            emailCheckValidated = true;
+            checkAllFields();
+        }
+    });
+    carClick.on('click', function () {
+        if (emailInput.val() !== initialValues.email) {
+            emailValidated = false;
+            emailCheckValidated = false;
+            checkAllFields();
+            emailCertification();
+        } else {
+            emailValidated = true;
+            emailCheckValidated = true;
+            checkAllFields();
+        }
+    });
 
     phoneInput.on('input', function () {
-        if (phoneInput.val() !== "${memberDto.phone}") {
+        if (phoneInput.val() !== initialValues.phone) {
             phoneValidated = false;
+            checkAllFields();
             phoneCheck();
         } else {
             phoneValidated = true;
@@ -22,7 +75,7 @@ $(document).ready(function () {
     });
 
     addressInput.on('input', function () {
-        if (addressInput.val() !== "${memberDto.address}") {
+        if (addressInput.val() !== initialValues.address) {
             addressValidated = false;
             addressCheck();
         } else {
@@ -32,7 +85,7 @@ $(document).ready(function () {
     });
 
     detailAddressInput.on('input', function () {
-        if (detailAddressInput.val() !== "${memberDto.detailAddress}") {
+        if (detailAddressInput.val() !== initialValues.detailAddress) {
             addressValidated = false;
             addressCheck();
         } else {
@@ -42,8 +95,7 @@ $(document).ready(function () {
     });
 
     nameInput.on('input', function () {
-    var originalValue = nameInput.data('membername');
-        if (nameInput.val() !== originalValue) {
+        if (nameInput.val() !== initialValues.name) {
             nameValidated = false;
             nameCheck();
         } else {
@@ -51,149 +103,121 @@ $(document).ready(function () {
             checkAllFields();
         }
     });
+
+
+
+    // 이메일 유효성 검사
+    function emailChange() {
+        var email = emailInput.val();
+        const regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        // 이메일 유효성 검사 로직을 추가
+        if (!regExpEm.test(email)) {
+            $('.email_expression').css("display", "inline-block");
+            $('.member_ok').css("display", "none");
+            $('.member_already').css("display", "none");
+            emailCheckValidated = false;
+            checkAllFields();
+        } else {
+            $('.email_expression').css("display", "none");
+            $.ajax({
+                url: "/join/emailCheck",
+                type: 'post',
+                data: { "email": email },
+                success: function (cnt) {
+                    if (cnt != 0) {
+                        $('.member_already').css("display", "inline-block");
+                        $('.member_ok').css("display", "none");
+                        emailValidated = false;
+                        checkAllFields();
+                    } else {
+                        $('.member_ok').css("display", "inline-block");
+                        $('.member_already').css("display", "none");
+                        emailValidated = true;
+                        checkAllFields();
+                    }
+                },
+                error: function () {
+                    alert("에러입니다");
+                }
+            });
+        }
+    }
+
+    function emailSend2() {
+
+        const clientEmail = emailInput.val();
+        $.ajax({
+            type: "post",
+            url: "/member/check",
+            data: { email: clientEmail },
+            success: function (data) {
+                alert('인증번호를 보냈습니다.');
+            }, error: function (e) {
+                alert('오류입니다. 잠시 후 다시 시도해주세요.');
+            }
+        });
+    }
+    function emailCertification() {
+
+        let clientEmail = emailInput.val();
+        let inputCode = cerNumInput.val();
+
+        $.ajax({
+            type: "post",
+            url: "/member/emailCheck",
+            data: { email: clientEmail, inputCode: inputCode },
+            success: function (result) {
+                console.log(result);
+                if (result == true) {
+                    alert("인증완료");
+                    emailValidated = true;
+                    emailCheckValidated = true;
+                    checkAllFields();
+
+                } else {
+                    alert('인증번호가 틀립니다.');
+                    emailCheckValidated = false;
+                    checkAllFields();
+                }
+            }
+        }
+        );
+    }
+
 
     function phoneCheck() {
         var phone = phoneInput.val();
-                if (phone.trim() === "") {
-                    phoneValidated = false; // 예제에서는 간단히 true로 설정
-                    checkAllFields();
-                }
-                var validatePhone = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
-                if (!validatePhone.test(phone)) {
-                            $('.phone_expression').css("display", "inline-block");
-                            $('.phone_already').css("display", "none");
-                            $('.phone_ok').css("display", "none");
-                        } else {
-                            $('.phone_expression').css("display", "none");
-                            $.ajax({
-                                url: "/join/phoneCheck",
-                                type: 'post',
-                                data: { "phone": phone },
-                                success: function (cnt) {
-                                    if (cnt != 0) {
-                                        // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                                        //                        phoneValidated = false; // 예제에서는 간단히 true로 설정
-                                        //                        checkAllFields();
-                                        $('.phone_already').css("display", "inline-block");
-                                        $('.phone_ok').css("display", "none");
-                                    } else {
-                                        // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                                        phoneValidated = true; // 예제에서는 간단히 true로 설정
-                                        checkAllFields();
-                                        $('.phone_ok').css("display", "inline-block");
-                                        $('.phone_already').css("display", "none");
-                                    }
-
-                                },
-                                error: function () {
-                                    alert("에러입니다");
-                                }
-                            });
-                        }
-    }
-
-    function addressCheck() {
-        var address = addressInput.val();
-                var detailAddress = detailAddressInput.val();
-
-                $('.post_already').css("display", "none");
-                        if (address === "") {
-                            $('.address_already').css("display", "inline-block");
-                                addressValidated = false; // 예제에서는 간단히 true로 설정
-                                checkAllFields();
-                        } else {
-                            $('.address_already').css("display", "none");
-                            if (detailAddress === "") {
-                                $('.detail_already').css("display", "inline-block");
-                                addressValidated = false; // 예제에서는 간단히 true로 설정
-                                checkAllFields();
-                            } else {
-                                $('.detail_already').css("display", "none");
-                                // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                                addressValidated = true; // 예제에서는 간단히 true로 설정
-                                checkAllFields();
-                            }
-                        }
-    }
-
-    function nameCheck() {
-        var name = nameInput.val();
-                if(name === ""){
-                    nameValidated = false; // 예제에서는 간단히 true로 설정
-                }else {
-                    nameValidated = true; // 예제에서는 간단히 true로 설정
-                }
-                checkAllFields();
-    }
-
-    function checkAllFields() {
-        // 모든 필드가 true인 경우에만 버튼 활성화
-        if (phoneValidated && addressValidated && nameValidated) {
-            $('#submit-button').prop('disabled', false);
+        var validatePone = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+        if (!validatePone.test(phone)) {
+            $('.phone_expression').css("display", "inline-block");
+            $('.phone_already').css("display", "none");
+            $('.phone_ok').css("display", "none");
+            phoneValidated = false
+            checkAllFields();
         } else {
-            $('#submit-button').prop('disabled', true);
+            $('.phone_expression').css("display", "none");
+            $.ajax({
+                url: "/join/phoneCheck",
+                type: 'post',
+                data: { "phone": phone },
+                success: function (cnt) {
+                    if (cnt != 0) {
+                        $('.phone_already').css("display", "inline-block");
+                        $('.phone_ok').css("display", "none");
+                        phoneValidated = false;
+                        checkAllFields();
+                    } else {
+                        phoneValidated = true;
+                        checkAllFields();
+                        $('.phone_ok').css("display", "inline-block");
+                        $('.phone_already').css("display", "none");
+                    }
+                },
+                error: function () {
+                    alert("에러입니다");
+                }
+            });
         }
-    }
-});
-
-$(document).ready(function () {
-
-
-    var phoneValidated = false;
-    var addressValidated = false;
-    var nameValidated = false;
-
-    var phoneInput = $('#phone');
-    var addressInput = $('#address');
-    var detailAddressInput = $('#detailAddress');
-    var nameInput = $('#name');
-
-    // 이벤트 핸들러 수정
-    phoneInput.on('input', function () {
-        var currentValue = phoneInput.val();
-        if (currentValue !== "${memberDto.phone}") {
-            phoneValidated = false;
-            phoneCheck();
-        }else {
-            phoneValidated = true;
-            checkAllFields();
-        }
-    });
-
-    addressInput.on('input', function () {
-        var currentValue = addressInput.val();
-        if (currentValue !== "${memberDto.address}") {
-                     addressValidated = false;
-            addressCheck();
-        }else {
-            addressValidated = true;
-            checkAllFields();
-        }
-    });
-
-    detailAddressInput.on('input', function () {
-        var currentValue = detailAddressInput.val();
-        if (currentValue !== "${memberDto.detailAddress}") {
-                     addressValidated = false;
-            addressCheck();
-        }else {
-                     addressValidated = true;
-                     checkAllFields();
-                 }
-    });
-    nameInput.on('input', function () {
-        var nameValue = nameInput.val();
-        if (currentValue !== "${memberDto.name}") {
-            nameValidated = false;
-            nameCheck();
-        }else {
-            nameValidated = true;
-            checkAllFields();
-        }
-    });
-
-    function phoneCheck() {
-
     }
 
     function addressCheck() {
@@ -201,31 +225,35 @@ $(document).ready(function () {
         var detailAddress = detailAddressInput.val();
 
         $('.post_already').css("display", "none");
-                if (address === "") {
-                    $('.address_already').css("display", "inline-block");
-                        addressValidated = false; // 예제에서는 간단히 true로 설정
-                        checkAllFields();
-                } else {
-                    $('.address_already').css("display", "none");
-                    if (detailAddress === "") {
-                        $('.detail_already').css("display", "inline-block");
-                        addressValidated = false; // 예제에서는 간단히 true로 설정
-                        checkAllFields();
-                    } else {
-                        $('.detail_already').css("display", "none");
-                        // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                        addressValidated = true; // 예제에서는 간단히 true로 설정
-                        checkAllFields();
-                    }
-                }
+        if (address === "") {
+            $('.address_already').css("display", "inline-block");
+            addressValidated = false;
+            checkAllFields();
+        } else {
+            $('.address_already').css("display", "none");
+            if (detailAddress === "") {
+                $('.detail_already').css("display", "inline-block");
+                addressValidated = false;
+                checkAllFields();
+            } else {
+                $('.detail_already').css("display", "none");
+                addressValidated = true;
+                checkAllFields();
+            }
+        }
     }
-
-    function nameCheck(){
-
+    function nameCheck() {
+        if (nameInput.val().trim() === "") {
+            nameValidated = false;
+            checkAllFields();
+        } else {
+            nameValidated = true;
+            checkAllFields();
+        }
     }
 
     function checkAllFields() {
-        if (phoneValidated && addressValidated && nameValidated) {
+        if (emailValidated && emailCheckValidated && phoneValidated && addressValidated && nameValidated) {
             $('#submit-button').prop('disabled', false);
         } else {
             $('#submit-button').prop('disabled', true);

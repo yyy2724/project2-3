@@ -116,7 +116,7 @@ public class MemberService {
 
 
         MemberEntity memberEntity1 = memberEntity.get();
-        memberEntity1.setId(memberDto.getId());
+        memberEntity1.setEmail(memberDto.getEmail());
         memberEntity1.setName(memberDto.getName());
         memberEntity1.setPhone(memberDto.getPhone());
         memberEntity1.setGender(memberDto.getGender());

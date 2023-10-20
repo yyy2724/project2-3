@@ -5,6 +5,7 @@ $(document).ready(function () {
     var timeOff = new Date().getTimezoneOffset() * 60000;
     var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
     document.getElementById("birth").setAttribute("max", today);
+
     // 체크한 결과 확인을 위한 변수
     var emailValidated = false;
     var phoneValidated = false;
@@ -60,6 +61,8 @@ $(document).ready(function () {
             $('.email_expression').css("display", "inline-block");
             $('.member_ok').css("display", "none");
             $('.member_already').css("display", "none");
+            emailValidated = false;
+            checkAllFields();
         } else {
             $('.email_expression').css("display", "none");
             $.ajax({
@@ -95,6 +98,7 @@ $(document).ready(function () {
             $('.phone_expression').css("display", "inline-block");
             $('.phone_already').css("display", "none");
             $('.phone_ok').css("display", "none");
+            phoneValidated = false;
         } else {
             $('.phone_expression').css("display", "none");
             $.ajax({
@@ -104,8 +108,8 @@ $(document).ready(function () {
                 success: function (cnt) {
                     if (cnt != 0) {
                         // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                        //                        phoneValidated = false; // 예제에서는 간단히 true로 설정
-                        //                        checkAllFields();
+                        phoneValidated = false; // 예제에서는 간단히 true로 설정
+                        checkAllFields();
                         $('.phone_already').css("display", "inline-block");
                         $('.phone_ok').css("display", "none");
                     } else {
@@ -132,19 +136,22 @@ $(document).ready(function () {
         var passwordRules = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
         if (!passwordRules.test(password)) {
             $('.pw_string').css("display", "inline-block");
+             passwordValidated = false;
         } else {
             $('.pw_string').css("display", "none");
             if (checkNumber < 0 || checkEnglish < 0) {
                 $('.pw_length').css("display", "inline-block");
+                 passwordValidated = false;
             } else {
                 $('.pw_length').css("display", "none");
                 if (/(\w)\1\1/.test(password)) {
                     $('.pw_true').css("display", "inline-block");
+                     passwordValidated = false;
                 } else {
                     $('.pw_true').css("display", "none");
                     if (password.search(email) > 0) {
                         $('.pw_email').css("display", "inline-block");
-
+ passwordValidated = false;
                     } else {
                         $('.pw_email').css("display", "none");
                         if (password != passCheck) {
@@ -168,14 +175,18 @@ $(document).ready(function () {
         $('.post_already').css("display", "none");
         if (address === "") {
             $('.address_already').css("display", "inline-block");
+            addressValidated = false; // 예제에서는 간단히 true로 설정
+                            checkAllFields();
         } else {
             $('.address_already').css("display", "none");
             if (detailAddress === "") {
                 $('.detail_already').css("display", "inline-block");
+                addressValidated = false; // 예제에서는 간단히 true로 설정
+                                checkAllFields();
             } else {
                 $('.detail_already').css("display", "none");
                 // 유효할 경우 emailValidated를 true로 설정, 그렇지 않으면 false로 설정
-                addressValidated = true; // 예제에서는 간단히 true로 설정
+                addressValidated = false; // 예제에서는 간단히 true로 설정
                 checkAllFields();
             }
         }
@@ -195,10 +206,7 @@ $(document).ready(function () {
             }, error: function (e) {
                 alert('오류입니다. 잠시 후 다시 시도해주세요.');
             }
-
         });
-
-
     }
 
     function emailCertification() {
