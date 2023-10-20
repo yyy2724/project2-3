@@ -1,9 +1,9 @@
 # git 올릴때 빼고 올릴것
 server:
-  port: 8023
+  port: 8095
 
-navar.api.client-id: Fbdqhslq5uCCrvl6yQKk
-navar.api.client-secret: X3343HV9ZA
+
+
 
 spring:
   mail:
@@ -18,6 +18,10 @@ spring:
           timeout: 5000
           starttls:
             enable: true
+  config:
+    import: classpath:naver.yml
+
+
   # 여기까지
   main:
     allow-bean-definition-overriding: true
