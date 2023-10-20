@@ -2,10 +2,195 @@
 @import url(/css/common/header.css);
 @import url(/css/common/sidebar.css);
 
+body{
+    background-color: #fff;
+}
+
 .show {
     display: block;
 }
 
 .hide{
     display: none;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.detail{
+    flex-basis: 1200px;
+    height: auto;
+}
+
+.hr-text {
+    line-height: 1em;
+    position: relative;
+    outline: 0;
+    border: 0;
+    color: black;
+    text-align: start;
+    padding: 0px 30px;
+    height: 1.5em;
+    opacity: .5;
+  }
+  
+  .hr-text:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: #ccc;
+  }
+  
+  .hr-text:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 0 .5em;
+    line-height: 1.5em;
+    color: #157EFB;
+    background-color: #fcfcfa;
+  }
+
+.detail .detail-con{
+    display: flex;
+    justify-content: center;
+}
+
+/* table */
+table{
+    width: 1000px;
+    font-family: 'Gothic A1', sans-serif;
+}
+
+table td.td-title{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 40px 10px;
+}
+
+table td.td-writer{
+    font-size: 16px;
+    padding: 0 15px;
+    color: #666;
+}
+
+table tr.tr-con{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+table td.td-createTime{
+    width: 18%;
+    font-size: 16px;
+    padding: 0 15px;
+    color: #666;
+}
+
+table td.td-hit{
+    width: 51%;
+    font-size: 16px;
+    padding: 0 10px;
+    color: #666;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+}
+
+table td.td-hit span{
+    display: flex;
+}
+
+table td.td-hit img{
+    width: 24px;
+    height: 24px;
+}
+
+table td.td-duration{
+    font-size: 16px;
+    padding: 0 10px;
+    color: #666;
+    text-align: right;
+    gap: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: right;
+}
+
+table td.td-duration span{
+    display: flex;
+}
+
+table td.td-duration img{
+    width: 16px;
+    height: 16px;
+}
+
+table td.td-file{
+    font-size: 16px;
+    padding: 10px;
+    color: #666;
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    align-items: center;
+    text-align: center;
+}
+
+table td.td-file span{
+    display: flex;
+}
+
+table td.td-file img{
+    width: 24px;
+    height: 24px;
+}
+
+table td.td-file span{
+    display: flex;
+}
+
+table td.td-file span a{
+    text-decoration: underline;
+}
+
+table td.td-file span a:hover{
+    color: #157EFB;
+}
+
+table td.td-content{
+    font-size: 20px;
+    padding: 30px 10px;
+}
+
+table td.td-menu{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+table td.td-menu a{
+    background-color: #3483e1;
+    border-radius: 30px;
+    padding: 10px 30px 8px 30px;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: bold;
+}
+
+table td.td-menu a:hover{
+    background-color: #3277a9;;
+
 }

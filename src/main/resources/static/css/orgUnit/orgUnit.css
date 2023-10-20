@@ -1,0 +1,28 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+
+.container-con{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+}
+.container-con .container-header{
+    text-align: center;
+}
+.container-con .btn{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    height: 5vh;
+}
+button{
+    width: 10vw;
+    font-size: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+}

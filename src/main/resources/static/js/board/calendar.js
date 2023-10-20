@@ -1,11 +1,13 @@
-//브라우저가 HTML을 전부 읽고 DOM 트리를 완성하는 즉시 발생
+
     document.addEventListener('DOMContentLoaded', function () {
       let calendarEl = document.getElementById('calendar');
       let Calendar = FullCalendar.Calendar;
       let calendar = new FullCalendar.Calendar(calendarEl, {
-      // 형식
+
         initialView: 'dayGridMonth',
         defaultDate: new Date(),
+        displayEventTime: false,
+        eventColor: '#454863',
         customButtons: {
           prev: {
             text: "Prev month",
@@ -32,7 +34,7 @@
           // 이벤트 구현
           AddEventButton: {
             // 오른쪽 텍스트
-            text: "일정 추가",
+            text: "일정 추가하기",
             click: function () {
 
               $("#calendarModal").modal('show');

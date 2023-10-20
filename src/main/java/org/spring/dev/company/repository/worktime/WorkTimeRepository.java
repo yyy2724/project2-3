@@ -23,14 +23,21 @@ public interface WorkTimeRepository extends JpaRepository<WorkTimeEntity, Long> 
     @Query(value = "SELECT * " +
             "FROM c_work_time " +
             "WHERE DATE(work_time_in) = :date", nativeQuery = true)
-    WorkTimeEntity getDayTime(@Param("date") String date);
+    List<WorkTimeEntity> getDayTime(@Param("date") String date);
+
+    @Query(value = "SELECT * " +
+            "FROM c_work_time " +
+            "WHERE DATE(work_time_in) = :date " +
+            "AND member_entity = :memberId", nativeQuery = true)
+    WorkTimeEntity getDayTimeMember(@Param("date") String date,@Param("date") Long memberId);
 
 
     @Modifying
     @Query(value = "UPDATE c_work_time " +
             "SET work_time_total = :workTimeTotal " +
-            "WHERE DATE(work_time_in) = :date", nativeQuery = true)
-    void updateWorkTotalTime(@Param("workTimeTotal") Long workTimeTotal, @Param("date") String date);
+            "WHERE DATE(work_time_in) = :date " +
+            "AND id = :id", nativeQuery = true)
+    void updateWorkTotalTime(@Param("workTimeTotal") Long workTimeTotal, @Param("date") String date,  @Param("id") Long id);
 
 
     //    달 검색
