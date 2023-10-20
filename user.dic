@@ -1,7 +1,15 @@
 	NNP
 박정?��	NNP
 null	NNP
+<<<<<<< HEAD
 바뀐프리	NNP
+=======
+�??��34234sdfa	NNP
+�??��34234sdfasdf	NNP
+대표	NNP
+바뀐프리	NNP
+�??��34234	NNP
+>>>>>>> worktime
 대표자	NNP
 ȸ���???	NNP
 ?���???��	NNP
@@ -13,14 +21,23 @@ null	NNP
 0	NNP
 1	NNP
 프리	NNP
+<<<<<<< HEAD
 
+=======
+>>>>>>> worktime
 ?���??��	NNP
 rrr	NNP
 null	NNP
 123245	NNP
 123123	NNP
+<<<<<<< HEAD
 =======	NNP
 멤버	NNP
+=======
+?��?��	NNP
+멤버	NNP
+이지훈	NNP
+>>>>>>> worktime
 큰회사	NNP
 회사	NNP
 ȸ���?	NNP

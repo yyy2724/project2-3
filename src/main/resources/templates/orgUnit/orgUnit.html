@@ -10,12 +10,6 @@
     <script th:src="@{/js/workTime/commute.js}" defer="defer"></script>
 </head>
 <th:block layout:fragment="container">
-<<<<<<< HEAD
-    <h1>조직도 보여주어어어어어어어어~</h1>
-    <button id="getUnit">조직도 연동</button>
-
-
-=======
 <body>
     <div class="container-con">
         <div class="container-header">
@@ -27,19 +21,18 @@
             <button id="reToken" class="date">토큰 유효 기간 연장</button>
         </div>
         
-        <div id="unitList">
+        <div id="unitList" class="list">
     <!--        span -> 네이버에서 가져온 값-->
+            <ul id="parent">
+                
+            </ul>
         </div>
     </div>
->>>>>>> worktime
 
 
 
 
     <script>
-<<<<<<< HEAD
-
-=======
         let getUnit = document.getElementById("getUnit");
         let unitList = document.getElementById("unitList");
 
@@ -61,7 +54,6 @@
                 console.log("에러");
             });
         })
->>>>>>> worktime
 
         $.ajax({
                 url: "/naver/orgunit",
@@ -72,10 +64,30 @@
                     console.log(data.orgUnits);
 
                     if (element.orgUnitName != null) {
-                        var span = document.createElement("span"); // <span> 요소 생성
-                        span.className = "orgUnitName"; // 클래스 추가
-                        span.innerHTML = element.orgUnitName; // 내용 추가
-                        unitList.appendChild(span);
+                        // var span = document.createElement("span"); // <span> 요소 생성
+                        // span.className = "orgUnitName"; // 클래스 추가
+                        // span.innerHTML = element.orgUnitName; // 내용 추가
+                        // unitList.appendChild(span);
+
+                        list = "<ul>";
+                        list += "<li>" + element.orgUnitName + "</li>";
+                        list += "</ul>";
+                        $('#parent').append(list);
+
+<!--                        if(element.parentExternalKey == null){-->
+<!--                            list = "<ul>";-->
+<!--                            list += "<li>" + element.orgUnitName + "</li>";-->
+<!--                            list += "</ul>";-->
+<!--                            $('#parent').append(list);-->
+<!--                        }else{-->
+<!--                            list += "<div>";-->
+<!--                            list += "<ul>";-->
+<!--                            list += "<li>" + element.orgUnitName + "</li>";-->
+<!--                            list += "</li>";-->
+<!--                            list += "</div>";-->
+<!--                            $('#parent').append(list);-->
+<!--                        }-->
+
                     }
                 })
             }).fail(function (xhr, status, errorThrown) {
