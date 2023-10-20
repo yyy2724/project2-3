@@ -35,6 +35,5 @@ public class ReplyEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
-    @JsonIgnore
     private MemberEntity memberEntity;
 }

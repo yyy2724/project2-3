@@ -60,6 +60,8 @@ function replyListFn(boardIdVal){
                                 <input type="text" value='${el.id}' name="replyId2" id="replyId2" readonly>
                                <input type="text" value='${el.boardId}' readonly><br>
                                <input type="text" value='${el.email}' readonly><br>
+                               <input type="text" value='${el.approvalType}' readonly><br>
+                               <input type="text" value='${el.name}' readonly><br>
                                <input type="text" value="${el.writer}"  class="updateWriter" readonly ><br>
                                <input type="text" value="${el.content}"  class="updateContent" readonly><br>
                                    <span >${el.createTime}</span><br>
