@@ -1,7 +1,7 @@
 package org.spring.dev.company.controller.member;
 
 import lombok.RequiredArgsConstructor;
-import org.spring.dev.company.service.member.MemberService;
+import org.spring.dev.company.service.member.AdminMemberService;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/join")
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberCheckController {
 
-    private final MemberService memberService;
+    private final AdminMemberService memberService;
 
     @PostMapping("/emailCheck")
     public @ResponseBody int emailCheck(@RequestParam("email") String email){

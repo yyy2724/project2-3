@@ -24,6 +24,7 @@ $(document).ready(function () {
     var emailCheckValidated = true;
     var birthValidated = true;
 
+
     var initialValues = {
         email: emailInput.val(),
         phone: phoneInput.val(),
@@ -32,17 +33,27 @@ $(document).ready(function () {
         name: nameInput.val(),
         birth: birthInput.val()
     };
+
+    //   변한게있느냐
+
+    //   email =>  email
+
+    //    check =>
+    {email ,a }
+
     emailInput.on('input', function () {
+
         if (emailInput.val() !== initialValues.email) {
             emailValidated = false;
             emailCheckValidated = false;
-            checkAllFields();
+
             emailChange();
         } else {
             emailValidated = true;
             emailCheckValidated = true;
-            checkAllFields();
+
         }
+         checkAllFields();
     });
     emailClick.on('click', function () {
         if (emailInput.val() !== initialValues.email) {
@@ -109,6 +120,7 @@ $(document).ready(function () {
             checkAllFields();
         }
     });
+
     birthInput.on('input', function () {
         if (birthInput.val() !== initialValue.birth) {
             birthValidated = false;

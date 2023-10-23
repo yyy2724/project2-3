@@ -6,7 +6,7 @@ import org.spring.dev.company.dto.member.EmailPostDto;
 import org.spring.dev.company.dto.member.EmailResponseDto;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.service.member.EmailService;
-import org.spring.dev.company.service.member.MemberService;
+import org.spring.dev.company.service.member.AdminMemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class EmailController {
 
     private final EmailService emailService;
-    private final MemberService memberService;
+    private final AdminMemberService memberService;
 
 
     // 임시 비밀번호 발급

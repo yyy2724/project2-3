@@ -332,14 +332,7 @@ $(document).ready(function () {
     }
 
     function checkAllFields() {
-    console.log("============================================");
-    console.log(emailCheckValidated+"<<<emailCheckValidated");
-    console.log(emailValidated+"<<<emailValidated");
-    console.log(phoneValidated+"<<<phoneValidated");
-    console.log(addressValidated+"<<<addressValidated");
-    console.log(nameValidated+"<<<nameValidated");
-    console.log(companyValidated+"<<<companyValidated");
-    console.log(busNumValidated+"<<<busNumValidated");
+
         if (emailValidated && emailCheckValidated && phoneValidated && addressValidated && nameValidated && companyValidated && busNumValidated) {
             $('#submit-button').prop('disabled', false);
         } else {

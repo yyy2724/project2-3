@@ -29,7 +29,7 @@ public class EmailService {
     private final MemberRepository memberRepository;
 
 
-    private final MemberService memberService;
+    private final AdminMemberService memberService;
     private final SpringTemplateEngine templateEngine;
     private final JavaMailSender javaMailSender;
     private final JavaMailSenderImpl javaMailSenderImpl;
