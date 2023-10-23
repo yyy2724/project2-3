@@ -28,10 +28,6 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardRepository boardRepository;
 
-    @ModelAttribute("searchHistory") // 검색 이력을 세션에 저장하기 위한 모델 어트리뷰트
-    public List<String> initializeSearchHistory() {
-        return new ArrayList<>();
-    }
 
     @GetMapping("/calendar")
     public String calendar(BoardDto boardDto){
@@ -64,7 +60,6 @@ public class BoardController {
                        @RequestParam(value = "subject", required = false) String subject,
                        @RequestParam(value = "search", required = false) String search,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                       @ModelAttribute("searchHistory") List<String> searchHistory,
                        @RequestParam("boardType") String boardType2) {
 
         Page<BoardEntity> boardList;
@@ -127,9 +122,5 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/list";
     }
-
-
-
-
 
 }

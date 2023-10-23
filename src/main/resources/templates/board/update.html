@@ -12,41 +12,50 @@
 </head>
 <body>
 <th:block layout:fragment="container">
-<div class="container">
-    <div class="update">
-        <form th:action="@{/board/update}" method="post" enctype="multipart/form-data" th:object="${boardDto}">
-            <input type="hidden" name="id" th:value="${board.id}" id="id">
+    <div class="container">
+        <div class="update">
+            <form th:action="@{/board/update}" method="post" enctype="multipart/form-data" th:object="${boardDto}">
+                <table >
+                    <input type="hidden" name="id" th:value="${board.id}" id="id">
 
-            <label th:for = "title">제목</label>
-            <input type="text" name="title" th:value="${board.title}" id="title">
+                    <tr>
+                        <th scope="row"><label th:for="title">제목</label></th>
+                        <td>
+                            <input type="text" name="title" th:value="${board.title}" id="title" class="input-title">
+                        </td>
+                    </tr>
 
-            <label th:for = "content">내용</label>
-            <div id="editor" th:utext="${board.content}"></div>
-            <input type="hidden" name="content" th:value="${board.content}" id="content">
+                    <tr>
+                        <th scope="row"><label th:for="writer">작성자</label></th>
+                        <td>
+                            <input type="text" name="writer" th:value="${board.writer}" id="writer" class="input-title">
+                        </td>
+                    </tr>
 
-            <label th:for = "writer">작성자</label>
-            <input type="text" name="writer" th:value="${board.writer}" id="writer">
+                    <tr>
+                        <th scope="row"><label th:for="content">내용</label></th>
+                        <td>
+                            <div id="editor" th:utext="${board.content}"></div>
+                            <input type="hidden" name="content" th:value="${board.content}" id="content">
+                        </td>
+                    </tr>
 
+                    <tr>
+                        <th scope="row"><label th:for="boardFile">첨부파일</label></th>
+                        <td>
+                            <span th:if="${board.isFile}==1"><input type="file" name="boardFile" th:text="${board.getFileEntities().get(0).getOldName()}"></span>
+                            <span th:unless="${board.isFile}==1"><input type="file" name="boardFile"></span>
+                        </td>
+                    </tr>
 
-            <label th:for="boardFile">첨부파일</label>
-            <span th:if="${board.isFile}==1">
-                    <input type="file" name="boardFile" th:text="${board.getFileEntities().get(0).getOldName()}">
-                <!--                            <a th:href="@{/download/board/{file}(file=${board.getFileEntities().get(0).getNewName()})}"-->
-                <!--                               th:download="${board.getFileEntities().get(0).getOldName()}"-->
-                <!--                               th:text="${board.getFileEntities().get(0).getOldName()}"></a>-->
-                </span>
-            <span th:unless="${board.isFile}==1">
-                    <input type="file" name="boardFile">
-                </span>
-            </span>
+                </table>
 
-            <input type="submit" th:value="글쓰기">
-        </form>
-
+                <div class="submit">
+                    <input type="submit" th:value="글쓰기">
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-
 </th:block>
 </body>
 </html>

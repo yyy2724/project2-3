@@ -78,6 +78,9 @@ public class KomoranService {
             } else if (token.contains("회사")) {
                 MemberInfo company = analyzeTokenIsCompany(next);
                 answer.info(company);
+            } else if (token.contains("도움")){
+                AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
+                chatMessageDto.answer(help);
             }
 
             chatMessageDto.answer(answer);
