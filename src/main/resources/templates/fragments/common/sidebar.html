@@ -76,7 +76,7 @@
                             </th:block>
 
                             <li>
-                                <a th:href="@{/pay/}">월급내역</a>
+                                <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">월급내역</a>
                             </li>
 
                             <th:block sec:authorize="hasAnyRole('FREELANCER')">
