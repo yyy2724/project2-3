@@ -59,8 +59,8 @@ function pw_check() {
     } else {
         $('.password_already').css("display", "none");
     }
-
 }
+
 function check_pw() {
     pw_check();
 }

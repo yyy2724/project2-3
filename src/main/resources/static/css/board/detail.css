@@ -35,9 +35,9 @@ body{
     padding: 0px 30px;
     height: 1.5em;
     opacity: .5;
-  }
-  
-  .hr-text:before {
+}
+
+.hr-text:before {
     content: '';
     position: absolute;
     left: 0;
@@ -45,9 +45,9 @@ body{
     width: 100%;
     height: 2px;
     background: #ccc;
-  }
-  
-  .hr-text:after {
+}
+
+.hr-text:after {
     content: attr(data-content);
     position: relative;
     display: inline-block;
@@ -56,45 +56,45 @@ body{
     line-height: 1.5em;
     color: #157EFB;
     background-color: #fcfcfa;
-  }
+}
 
 .detail .detail-con{
     display: flex;
     justify-content: center;
 }
 
-/* table */
-table{
+/* table.detail-table */
+table.detail-table{
     width: 1000px;
     font-family: 'Gothic A1', sans-serif;
 }
 
-table td.td-title{
+table.detail-table td.td-title{
     font-size: 30px;
     font-weight: bold;
     padding: 40px 10px;
 }
 
-table td.td-writer{
+table.detail-table td.td-writer{
     font-size: 16px;
     padding: 0 15px;
     color: #666;
 }
 
-table tr.tr-con{
+table.detail-table tr.tr-con{
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-table td.td-createTime{
+table.detail-table td.td-createTime{
     width: 18%;
     font-size: 16px;
     padding: 0 15px;
     color: #666;
 }
 
-table td.td-hit{
+table.detail-table td.td-hit{
     width: 51%;
     font-size: 16px;
     padding: 0 10px;
@@ -106,16 +106,16 @@ table td.td-hit{
     text-align: center;
 }
 
-table td.td-hit span{
+table.detail-table td.td-hit span{
     display: flex;
 }
 
-table td.td-hit img{
+table.detail-table td.td-hit img{
     width: 24px;
     height: 24px;
 }
 
-table td.td-duration{
+table.detail-table td.td-duration{
     font-size: 16px;
     padding: 0 10px;
     color: #666;
@@ -127,16 +127,16 @@ table td.td-duration{
     text-align: right;
 }
 
-table td.td-duration span{
+table.detail-table td.td-duration span{
     display: flex;
 }
 
-table td.td-duration img{
+table.detail-table td.td-duration img{
     width: 16px;
     height: 16px;
 }
 
-table td.td-file{
+table.detail-table td.td-file{
     font-size: 16px;
     padding: 10px;
     color: #666;
@@ -147,33 +147,33 @@ table td.td-file{
     text-align: center;
 }
 
-table td.td-file span{
+table.detail-table td.td-file span{
     display: flex;
 }
 
-table td.td-file img{
+table.detail-table td.td-file img{
     width: 24px;
     height: 24px;
 }
 
-table td.td-file span{
+table.detail-table td.td-file span{
     display: flex;
 }
 
-table td.td-file span a{
+table.detail-table td.td-file span a{
     text-decoration: underline;
 }
 
-table td.td-file span a:hover{
+table.detail-table td.td-file span a:hover{
     color: #157EFB;
 }
 
-table td.td-content{
+table.detail-table td.td-content{
     font-size: 20px;
     padding: 30px 10px;
 }
 
-table td.td-menu{
+table.detail-table td.td-menu{
     display: flex;
     justify-content: flex-end;
     gap: 20px;
@@ -181,7 +181,7 @@ table td.td-menu{
     box-sizing: border-box;
 }
 
-table td.td-menu a{
+table.detail-table td.td-menu a{
     background-color: #3483e1;
     border-radius: 30px;
     padding: 10px 30px 8px 30px;
@@ -190,7 +190,77 @@ table td.td-menu a{
     font-weight: bold;
 }
 
-table td.td-menu a:hover{
+table.detail-table td.td-menu a:hover{
     background-color: #3277a9;;
 
+}
+
+
+.detail .reply-con{
+
+}
+
+.detail .reply-con{
+}
+
+.detail .reply-con .reply-write{
+    font-family: 'Gothic A1', sans-serif;
+    border: 1px solid #f4f4f4;
+    padding: 60px 160px 20px 100px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+}
+
+
+/* table.replyWrite-table */
+.detail .reply-con .reply-write table.reply-table{
+    
+    font-family: 'Gothic A1', sans-serif;
+}
+
+.detail .reply-con .reply-write table.reply-table tbody tr.tr1{
+
+}
+
+.detail .reply-con .reply-write table.reply-table tbody tr.tr2 td{
+    text-align: end;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+.detail .reply-con .reply-write table.reply-table tbody tr.tr2 td input{
+    background-color: #89bfff;
+    border-radius: 30px;
+    padding: 10px 30px 8px 30px;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.detail .reply-con .reply-write table.reply-table tbody tr.tr2 td input:hover{
+    background-color: #3483e1;
+}
+
+.detail .reply-con .reply-write table.reply-table tbody td span img{
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.detail .reply-con .reply-write table.reply-table tbody tr.tr1 td span img{
+    width: 80px;
+    height: 80px;
+}
+
+/* list-table */
+.detail .reply-con .reply-list table.list-table{
+    font-family: 'Gothic A1', sans-serif;
+}
+
+.detail .reply-con .reply-list table.list-table input{
+
+    border: none;
+    background-color: #fff;
 }

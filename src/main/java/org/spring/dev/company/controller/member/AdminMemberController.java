@@ -44,16 +44,16 @@ public class AdminMemberController {
     }
 
     @GetMapping("/companyLogin")
-    public String companyLogin(){
+    public String companyLogin() {
         // 회사로그인
         return "company/companyLogin";
     }
+
     @GetMapping("/freelancerLogin")
-    public String freelancerLogin(){
+    public String freelancerLogin() {
         // 프리렌서 로그인
         return "freelancer/freelancerLogin";
     }
-
 
 
     @GetMapping("/join")
@@ -64,10 +64,10 @@ public class AdminMemberController {
 
     @PostMapping("/adminJoin")
     public String memberJoin(@ModelAttribute MemberDto memberDto,
-                             @RequestParam(name = "memberImg", required = false)List<MultipartFile> memberImg) {
+                             @RequestParam(name = "memberImg", required = false) List<MultipartFile> memberImg) {
 //        System.out.println(memberDto.getEmail());
 
-            Long rs = memberService.memberJoin(memberDto);
+        Long rs = memberService.memberJoin(memberDto);
         if (rs == 0) {
             return "member/join";
         }
@@ -120,7 +120,7 @@ public class AdminMemberController {
             MemberDto memberDto = memberService.detailMember(memberId);
             model.addAttribute("memberDto", memberDto);
             return "member/detail";
-        }else {
+        } else {
             return "member/error";
         }
     }
@@ -133,7 +133,7 @@ public class AdminMemberController {
             MemberDto memberDto = memberService.detailMember(memberId);
             model.addAttribute("memberDto", memberDto);
             return "member/update";
-        }else {
+        } else {
             return "member/error";
         }
     }
@@ -196,19 +196,19 @@ public class AdminMemberController {
             MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
             model.addAttribute("memberDto", memberDto1);
             return "member/detail";
-        }else{
+        } else {
             return "member/error";
         }
     }
 
     @GetMapping("/disabled/{memberId}")
-    public String disabled(@PathVariable("memberId")Long memberId, Model model){
+    public String disabled(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-        MemberDto memberDto = memberService.detailMember(memberId);
-        model.addAttribute("memberDto", memberDto);
-        return "member/disabled";
-        }else{
+            MemberDto memberDto = memberService.detailMember(memberId);
+            model.addAttribute("memberDto", memberDto);
+            return "member/disabled";
+        } else {
             return "member/error";
         }
     }
@@ -218,14 +218,15 @@ public class AdminMemberController {
     public String disMember(@PathVariable("memberId") Long memberId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-        int rs = memberService.disabledMember(memberId);
-        if (rs != 0) {
-        return "member/detail";
-        }
-            return "member/m";
-        }else{
+            int rs = memberService.disabledMember(memberId);
+            if (rs != 0) {
+                return "member/detail";
+            }
+            return "redirect:/member/logout";
+        } else {
             return "member/error";
         }
+
     }
 
 
@@ -237,7 +238,7 @@ public class AdminMemberController {
             MemberDto memberDto = memberService.detailMember(id);
             model.addAttribute("memberDto", memberDto);
             return "member/pwChange";
-        }else {
+        } else {
             return "member/error";
         }
     }
@@ -253,7 +254,7 @@ public class AdminMemberController {
                 return "member/detail";
             }
             return "redirect:/member/logout";
-        }else {
+        } else {
             return "member/error";
         }
     }
@@ -302,7 +303,7 @@ public class AdminMemberController {
 
             model.addAttribute("memberDto", memberDto);
             return "freelancer/detail";
-        }else{
+        } else {
             return "member/error";
         }
     }
@@ -315,7 +316,7 @@ public class AdminMemberController {
             MemberDto memberDto = memberService.detailMember(memberId);
             model.addAttribute("memberDto", memberDto);
             return "freelancer/update";
-        }else{
+        } else {
             return "member/error";
         }
     }
@@ -328,7 +329,7 @@ public class AdminMemberController {
             MemberDto memberDto1 = memberService.freeUpdate(memberDto, memberId);
             model.addAttribute("memberDto", memberDto1);
             return "freelancer/detail";
-        }else {
+        } else {
             return "member/error";
         }
 
@@ -342,7 +343,7 @@ public class AdminMemberController {
             MemberDto memberDto = memberService.companyDetail(memberId);
             model.addAttribute("memberDto", memberDto);
             return "company/detail";
-        }else {
+        } else {
             return "member/error";
         }
 
@@ -355,7 +356,7 @@ public class AdminMemberController {
             MemberDto memberDto = memberService.companyDetail(memberId);
             model.addAttribute("memberDto", memberDto);
             return "company/update";
-        }else {
+        } else {
             return "member/error";
         }
     }

@@ -1,9 +1,6 @@
 # git 올릴때 빼고 올릴것
 server:
-  port: 8023
-
-navar.api.client-id: Fbdqhslq5uCCrvl6yQKk
-navar.api.client-secret: X3343HV9ZA
+  port: 8095
 
 spring:
   mail:
@@ -18,6 +15,7 @@ spring:
           timeout: 5000
           starttls:
             enable: true
+
   # 여기까지
   main:
     allow-bean-definition-overriding: true
@@ -32,8 +30,6 @@ spring:
 #    username: root
 #    password: 1234
 
-
-
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
@@ -44,7 +40,6 @@ spring:
         format_sql: true
 
   # yaml/yml ?? - Thymeleaf ??
-
   thymeleaf:
     cache: false
     check-template-location: true
@@ -58,29 +53,35 @@ spring:
     include: oauth2
   # 여기까지
 
-# spring.main.allow-bean-definition-overriding: true
+naver:
+  api:
+    client-id: Fbdqhslq5uCCrvl6yQKk
+    client-secret: X3343HV9ZA
 
-#---
-#spring:
-#  config:
-#    activate:
-#      on-profile: test
-#
-#
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/project02
-#    username: root
-#    password:
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: create-drop
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
-#
-#  sql:
-#    init:
-#      mode: never
+  auth-url: https://auth.worksmobile.com
+
+  org:
+    units: /v1.0/orgunits
+
+  auth:
+    uri:
+      authorize: /oauth2/v2.0/authorize
+      token: /oauth2/v2.0/token
+
+  scope: directory,directory.read,orgunit,orgunit.read,user,user.read
+
+  work-url : https://www.worksapis.com
+
+  redirect-url : http://localhost:8095/naver/token
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+
+server:
+  port: 8095
+
+naver:
+  redirect-url: http://13.209.250.6:8095/naver/token
+---

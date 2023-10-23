@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <div id="sidebar" class="sidebar" th:fragment="sidebarFragment">
     <div class="side">
-        <th:block sec:authorize="hasAnyRole('STAFF')">
+        <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
             <div class="admin">
                     <ul>
                         <li><span>관리자</span></li>
@@ -51,7 +51,7 @@
                                 </li>
                             </th:block>
 
-                            <th:block sec:authorize="hasAnyRole('STAFF')">
+                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
                             <li>
                                 <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">월급내역</a>
                             </li>
@@ -63,10 +63,10 @@
                             </th:block>
                         </ul>
                     </li>
-
+                    <th:block sec:authorize="hasAnyRole('STAFF','FREELANCER')">
                     <li><a href="#">근무/근태</a>
                         <ul class="small">
-                            <th:block sec:authorize="hasAnyRole('STAFF')">
+                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
                             <li>
                                 <a th:href="@{/work/commute}">출근/퇴근</a>
                             </li>
@@ -76,7 +76,7 @@
                             </th:block>
 
                             <li>
-                                <a th:href="@{/pay/}">월급내역</a>
+                                <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">월급내역</a>
                             </li>
 
                             <th:block sec:authorize="hasAnyRole('FREELANCER')">
@@ -86,11 +86,11 @@
                             </th:block>
                         </ul>
                     </li>
+                    </th:block>
 
                     <li><a href="#">공지사항</a>
                         <ul class="small">
                             <li>
-                                <!--security 관리자 권한 부여-->
                                 <a th:href="@{/board/calendar}">전체일정</a>
                             </li>
                             <li>
@@ -113,9 +113,11 @@
                             <li>
                                 <a th:href="@{/approval/list}">결재대기</a>
                             </li>
+                            <th:block sec:authorize="hasAnyRole('FREELANCER')">
                             <li>
                                 <a th:href="@{/approval/project}">진행 중인 프로젝트</a>
                             </li>
+                            </th:block>
                             <li>
                                 <a th:href="@{/approval/pay}">정산하기</a>
                             </li>
@@ -124,7 +126,7 @@
                     <li><a href="#">직원관리</a>
                         <ul class="small">
 
-                            <th:block sec:authorize="hasAnyRole('STAFF')">
+                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
                             <li>
                                 <a th:href="@{/member/staffList}">직원목록</a>
                             </li>
@@ -142,7 +144,7 @@
                             </li>
                             </th:block>
 
-                            <th:block sec:authorize="hasAnyRole('STAFF')">
+                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
                             <li>
                                 <a th:href="@{/}">조직도</a>
                             </li>
@@ -154,24 +156,26 @@
                     <li><a href="#">공고</a>
                         <ul class="small">
                             <li>
-                                <a th:href="@{/}">공고지원</a>
+                                <a th:href="@{/approval/create}">공고지원</a>
                             </li>
                             <li>
-                                <a th:href="@{/}">지원내역</a>
+                                <a th:href="@{/approval/project}">진행 중인 프로젝트</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/approval/list}">지원내역</a>
                             </li>
                         </ul>
                     </li>
                     </th:block>
 
                     <th:block sec:authorize="hasAnyRole('COMPANY')">
-                    <!--security 회사 권한 부여-->
                     <li><a href="#">공고</a>
                         <ul class="small">
                             <li>
-                                <a th:href="@{/}">공고올리기</a>
+                                <a th:href="@{/approval/create}">공고올리기</a>
                             </li>
                             <li>
-                                <a th:href="@{/}">공고요청</a>
+                                <a th:href="@//approval/list}">공고요청</a>
                             </li>
                         </ul>
                     </li>
