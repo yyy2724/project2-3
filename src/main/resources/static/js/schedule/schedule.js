@@ -143,7 +143,7 @@
         $.ajax({
           url: "/schedule/"+pathMemberId,
           method:"GET",
-          async: false, //기다림
+          async: false,
           data: dataToSend
         }).done(function (data){
           console.log(data);
