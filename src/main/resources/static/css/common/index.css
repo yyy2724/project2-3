@@ -75,7 +75,7 @@ table, th, td{
     display: block;
 }
 .left .detail table tbody{
-    display: block; 
+    display: block;
     overflow-x: hidden;
 }
 .left .detail table tbody tr{
