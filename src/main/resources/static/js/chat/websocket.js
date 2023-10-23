@@ -1,20 +1,20 @@
 
 let webSocket;
-let url = "localhost:8023";
+let url = "localhost:8095";
 
 
-    // 웹소켓 접속
-    webSocket = new WebSocket("ws://"+url+"/messenger");
+// 웹소켓 접속
+webSocket = new WebSocket("ws://"+url+"/messenger");
 
 
-    webSocket.onmessage = function(event) {
-        const message = event.data;
-        if (message.startsWith("notification:")) {
-            // 웹 알림을 표시
-            const notification = message.replace("notification:", "");
-            showNotification("Sole Manager🔔", notification);
-        }
-    };
+webSocket.onmessage = function(event) {
+    const message = event.data;
+    if (message.startsWith("notification:")) {
+        // 웹 알림을 표시
+        const notification = message.replace("notification:", "");
+        showNotification("Sole Manager🔔", notification);
+    }
+};
 
 
 
@@ -36,7 +36,7 @@ function requestNotificationPermission() {
 
 
 function showNotification(title, message) {
-    const iconPath = "/images/logo.png"; // 원하는 아이콘 이미지 URL로 대체
+    const iconPath = "/images/logo2.png"; // 원하는 아이콘 이미지 URL로 대체
     if (Notification.permission === 'granted') {
         // 알림 권한이 부여된 경우 알림 생성
         const notification = new Notification(title, {
@@ -48,7 +48,7 @@ function showNotification(title, message) {
         setTimeout(notification.close.bind(notification), 10000);
 
         notification.onclick = function () {
-            window.open('localhost:8023/board/list?boardType=GENERAL');
+            window.open('localhost:8095/board/list?boardType=GENERAL');
         };
     }
 }

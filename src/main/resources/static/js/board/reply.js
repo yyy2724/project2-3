@@ -77,21 +77,21 @@ function replyListFn(boardIdVal){
                            <td>
                                 <input type="hidden" value='${el.id}' name="replyId2" id="replyId2" readonly>
                                <input type="hidden" value='${el.boardId}' readonly><br>
-                               <input type="text" value='${el.name}' readonly class="replyName"><br>
+                               <input type="text" value='${el.name}' readonly class="replyName">
                                <input type="text" value='${el.approType}' readonly class="replyAppro"><br>
                                <span class="replyTime">${formatDate(el.createTime)}</span><br>
                                <input type="text" value="${contentHTML}"  class="updateContent" readonly><br>
                                <div class="list">
                                    <span>
-                                       <button type="button" value="${el.id}" onclick="showUpdate(event, ${el.id})">수정</button>
+                                       <button type="button" value="${el.id}" onclick="showUpdate(event, ${el.id})" class="reply-button">수정</button>
                                        <button type="button" value="${el.id}" class="replyDeleteBtn" onclick="replyDelete(${el.id})">삭제</button>
                                    </span>
                                </div>
                                <div class="update" style="display: none;">
-                                  <input type="button" value="수정완료" class="replyUpdateBtn" onclick="replyUpdate(${el.id})">
-
-                                   <button type="button" value="${el.id}" onclick="hideUpdate(event,${el.id})">취소</button>
+                                  <input type="button" value="수정완료" class="replyUpdateBtn" onclick="replyUpdate(${el.id})" >
+                                   <button type="button" value="${el.id}" onclick="hideUpdate(event,${el.id})" class="reply-button">취소</button>
                                </div>
+                              <hr class="divide">
                            </td>
                         </tr>`;
                });
@@ -128,7 +128,6 @@ function showUpdate(event, replyId) {
 
     replyRead.style.display = 'none';
     replyUpdate.style.display = 'block';
-    replyClass.querySelector('.updateWriter').readOnly = false;
     replyClass.querySelector('.updateContent').readOnly = false;
 }
 
@@ -147,7 +146,6 @@ function hideUpdate(event, replyId) {
 
     replyRead.style.display = 'block';
     replyUpdate.style.display = 'none';
-    replyClass.querySelector('.updateWriter').readOnly=true;
      replyClass.querySelector('.updateContent').readOnly=true;
 
 }
@@ -195,12 +193,10 @@ function replyUpdate(replyId) {
 
 
     const content = document.querySelector('.updateContent').value;
-    const writer = document.querySelector('.updateWriter').value;
 
     console.log("댓글 수정 데이터: ", {
         id: replyId,
         content: content,
-        writer: writer
     });
 
     if (confirm("댓글을 수정하시겠습니까?")) {
@@ -209,7 +205,6 @@ function replyUpdate(replyId) {
             body: JSON.stringify({
                 id: replyId,
                 content: content,
-                writer: writer
             }),
             headers: {
                 "Content-Type": "application/json"

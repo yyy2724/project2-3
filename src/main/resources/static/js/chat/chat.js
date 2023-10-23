@@ -1,25 +1,13 @@
-let data = {};
+
 let webSocket;
-let userId = document.querySelector('#userId');
 let connectBtn = document.querySelector('#connectBtn');
-let sendBtn = document.querySelector('#sendBtn');
-let chatWindowCon = document.querySelector('.window-con');
-//let msg = document.querySelector('#message');
-let url = "localhost:8023";
+
+let url = "localhost:8095";
+
 
 connectBtn.addEventListener('click', ()=>{
-
-
     // 웹소켓 접속
     webSocket = new WebSocket("ws://"+url+"/messenger");
-
-     if (userId.value.length <= 0 || userId.value == "") {
-           alert("접속자명을 입력하세요.");
-           userId.focus();
-           return false;
-       }
-
-      alert(userId.value + "님 접속했습니다.");
 
        webSocket.onopen = function(event) {
 
