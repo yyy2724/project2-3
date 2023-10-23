@@ -109,33 +109,37 @@ public class AdminMemberController {
 
     @GetMapping("/detail/{id}")
     public String detailMember(@PathVariable("id") Long memberId, Model model) {
+        // 로그인 정보 확인
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         MemberDto memberDto = memberService.detailMember(memberId);
-    if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))){
+        System.out.println(auth.getAuthorities().stream().noneMatch(a -> a.getAuthority().matches(memberDto.getName())));
+        System.out.println(auth.getAuthorities().stream().noneMatch(a -> a.getAuthority().matches(memberDto.getEmail())));
 
-        if (isUserAuthorized(auth, memberDto) == 1) {
-            model.addAttribute("memberDto", memberDto);
-            return "member/detail";
-        }else if (isUserAuthorized(auth, memberDto) == 2){
-            model.addAttribute("memberDto", memberDto);
-            return "member/staffDetail";
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffDetail";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffDetail";
+            }
+            return "member/authorityError";
         }
-    }
-
         return "member/authorityError";
     }
 
     private int isUserAuthorized(Authentication auth, MemberDto memberDto) {
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            if (memberDto.getGrade().toString().equals("STAFF")){
+            if (memberDto.getGrade().toString().equals("STAFF")) {
                 return 1;
             }
             return 0;
         } else if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
-            if (memberDto.getGrade().toString().equals("STAFF") || memberDto.getGrade().toString().equals("ADMIN")){
+            if (memberDto.getGrade().toString().equals("STAFF") || memberDto.getGrade().toString().equals("ADMIN")) {
                 return 0;
-            } else  {
+            } else {
                 return 2;
             }
 
@@ -147,13 +151,19 @@ public class AdminMemberController {
     @GetMapping("/up/{id}")
     public String updateMember(@PathVariable("id") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            MemberDto memberDto = memberService.detailMember(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "member/update";
-        } else {
+        MemberDto memberDto = memberService.detailMember(memberId);
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffUpdate";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffUpdate";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
     @GetMapping("/findPw")
@@ -206,45 +216,63 @@ public class AdminMemberController {
     }
 
 
-
     @PostMapping("/update/{id}")
     public String upMember(@ModelAttribute MemberDto memberDto, Model model, @PathVariable("id") Long memberId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
-            model.addAttribute("memberDto", memberDto1);
-            return "member/detail";
-        } else {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
+                model.addAttribute("memberDto", memberDto1);
+                return "member/staffDetail";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
+                model.addAttribute("memberDto", memberDto1);
+                return "member/staffDetail";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
     @GetMapping("/disabled/{memberId}")
     public String disabled(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
             MemberDto memberDto = memberService.detailMember(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "member/disabled";
-        } else {
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffDisabled";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffDisabled";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
 
     @PostMapping("/disabled/{memberId}")
-    public String disMember(@PathVariable("memberId") Long memberId) {
+    public String disMember(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            int rs = memberService.disabledMember(memberId);
-            if (rs != 0) {
-                return "member/detail";
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+            MemberDto memberDto1 = memberService.detailMember(memberId);
+            if (isUserAuthorized(auth, memberDto1) == 1) {
+            MemberDto memberDto = memberService.disabledMember(memberId);
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffDetail";
+            } else if (isUserAuthorized(auth, memberDto1) == 2) {
+            MemberDto memberDto = memberService.disabledMember(memberId);
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffDetail";
             }
-            return "redirect:/member/logout";
-        } else {
             return "member/authorityError";
         }
+        return "member/authorityError";
+
 
     }
 
@@ -253,29 +281,49 @@ public class AdminMemberController {
     @GetMapping("/pwChange/{memberId}")
     public String pwChange(@PathVariable("memberId") Long id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
             MemberDto memberDto = memberService.detailMember(id);
-            model.addAttribute("memberDto", memberDto);
-            return "member/pwChange";
-        } else {
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffPwChange";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "member/staffPwChange";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
     @PostMapping("/pwChange/{memberId}")
     public String pwChangePost(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            int rs = memberService.passwordChange(memberDto, memberId);
-            if (rs != 1) {
-                MemberDto memberDto1 = memberService.detailMember(memberId);
-                model.addAttribute("memberDto", memberDto1);
-                return "member/detail";
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
+                    MemberDto memberDto1 = memberService.detailMember(memberId);
+            if (isUserAuthorized(auth, memberDto1) == 1) {
+                int rs = memberService.passwordChange(memberDto, memberId);
+                if (rs == 1) {
+                    MemberDto memberDto2 = memberService.detailMember(memberId);
+                    model.addAttribute("memberDto", memberDto2);
+                    return "member/staffDetail";
+                } else {
+                    return "redirect:/member/pwChange/" + memberId;
+                }
+            } else if (isUserAuthorized(auth, memberDto1) == 2) {
+                int rs = memberService.passwordChange(memberDto1, memberId);
+                if (rs == 1) {
+                    MemberDto memberDto2 = memberService.detailMember(memberId);
+                    model.addAttribute("memberDto", memberDto2);
+                    return "member/staffDetail";
+                } else {
+                    return "redirect:/member/pwChange/" + memberId;
+                }
             }
-            return "redirect:/member/logout";
-        } else {
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
     @PostMapping("/passCheck")
@@ -318,40 +366,55 @@ public class AdminMemberController {
     @GetMapping("/freeDetail/{memberId}")
     public String freeDetail(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
-            MemberDto memberDto = memberService.detailMember(memberId);
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
 
-            model.addAttribute("memberDto", memberDto);
-            return "freelancer/detail";
-        } else {
+            MemberDto memberDto = memberService.detailMember(memberId);
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                return "member/authorityError";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "freelancer/staffDetail";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
 
     @GetMapping("/freeUp/{memberId}")
     public String freeUp(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
             MemberDto memberDto = memberService.detailMember(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "freelancer/update";
-        } else {
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                return "member/authorityError";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "freelancer/staffUpdate";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
 
     @PostMapping("/freeUpdate/{memberId}")
     public String freeUpdate(@ModelAttribute MemberDto memberDto, @PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
-            MemberDto memberDto1 = memberService.freeUpdate(memberDto, memberId);
-            model.addAttribute("memberDto", memberDto1);
-            return "freelancer/detail";
-        } else {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
+            MemberDto memberDto1 = memberService.detailMember(memberId);
+            if (isUserAuthorized(auth, memberDto1) == 1) {
+                return "member/authorityError";
+            } else if (isUserAuthorized(auth, memberDto1) == 2) {
+            MemberDto memberDto2 = memberService.freeUpdate(memberDto, memberId);
+                model.addAttribute("memberDto", memberDto2);
+                return "freelancer/staffDetail";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
 
     }
 
@@ -359,38 +422,49 @@ public class AdminMemberController {
     @GetMapping("/companyDetail/{memberId}")
     public String companyDetail(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
             MemberDto memberDto = memberService.companyDetail(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "company/detail";
-        } else {
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                return "member/authorityError";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "company/staffDetail";
+            }
             return "member/authorityError";
         }
-
+        return "member/authorityError";
     }
 
     @GetMapping("/companyUp/{memberId}")
     public String companyUp(@PathVariable("memberId") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+
             MemberDto memberDto = memberService.companyDetail(memberId);
-            model.addAttribute("memberDto", memberDto);
-            return "company/update";
-        } else {
+            if (isUserAuthorized(auth, memberDto) == 1) {
+                return "member/authorityError";
+            } else if (isUserAuthorized(auth, memberDto) == 2) {
+                model.addAttribute("memberDto", memberDto);
+                return "company/staffUpdate";
+            }
             return "member/authorityError";
         }
+        return "member/authorityError";
     }
 
     @PostMapping("/companyUpdate/{memberId}")
     public String companyUpdatePost(@PathVariable("memberId") Long memberId, @ModelAttribute MemberDto memberDto, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
-            MemberDto memberDto1 = memberService.companyUpdate(memberDto, memberId);
-            model.addAttribute("memberDto", memberDto1);
-            return "company/detail";
-        } else {
+        MemberDto memberDto1 = memberService.companyDetail(memberId);
+        if (isUserAuthorized(auth, memberDto1) == 1) {
             return "member/authorityError";
+        } else if (isUserAuthorized(auth, memberDto1) == 2) {
+            MemberDto memberDto2 = memberService.companyUpdate(memberDto, memberId);
+            model.addAttribute("memberDto", memberDto2);
+            return "company/staffUpdate";
         }
+        return "member/authorityError";
     }
 
 
