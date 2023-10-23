@@ -3,7 +3,7 @@
 
 .update-form-container {
     background-color: #f7f7f7;
-    max-width: 400px;
+    max-width: 530px;
     margin: 0 auto;
     padding: 0px 35px 20px 20px;
     border: 1px solid #ccc;
@@ -36,7 +36,7 @@
 }
 
 .input-field {
-    width: 100%;
+    width: 500px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -83,3 +83,12 @@
 }
 
 
+.form1-1{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+#emailCheck {
+    margin-left: 10px;
+}

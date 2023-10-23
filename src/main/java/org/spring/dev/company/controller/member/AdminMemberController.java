@@ -106,6 +106,7 @@ public class AdminMemberController {
         return "member/login";
     }
 
+
     @GetMapping("/detail/{id}")
     public String detailMember(@PathVariable("id") Long memberId, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -293,6 +294,7 @@ public class AdminMemberController {
 
         Long id = myUserDetails.getMemberEntity().getId();
 
+        System.out.println("아이고");
         System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getMemberEntity());
         System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getMemberEntity().getId());
 

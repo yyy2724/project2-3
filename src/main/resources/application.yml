@@ -2,6 +2,9 @@
 server:
   port: 8095
 
+navar.api.client-id: Fbdqhslq5uCCrvl6yQKk
+navar.api.client-secret: X3343HV9ZA
+
 spring:
   mail:
     host: smtp.gmail.com
@@ -23,12 +26,12 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-    username: admin
-    password: '00000000'
-#    url: jdbc:mysql://localhost:3306/project02
-#    username: root
-#    password: 1234
+#    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+#    username: admin
+#    password: '00000000'
+    url: jdbc:mysql://localhost:3306/project02
+    username: root
+    password: 1234
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -84,4 +87,5 @@ server:
 
 naver:
   redirect-url: http://13.209.250.6:8095/naver/token
+
 ---
