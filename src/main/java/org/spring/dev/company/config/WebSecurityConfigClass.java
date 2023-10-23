@@ -63,8 +63,7 @@ public class WebSecurityConfigClass {
         // 사용자 요청에 대한 페이지별 설정
         // 이건 나중에 하겠음
         http.authorizeHttpRequests()
-                // 로그인시
-                .antMatchers("/member/logout", "/member/m").authenticated()
+                // 로그인시                .antMatchers("/member/logout", "/member/m").authenticated()
                 // OAUTH 정보 추가 페이지
                 .antMatchers("/member/**").permitAll()
                 // 모두 허용
