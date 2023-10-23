@@ -29,7 +29,7 @@ public interface WorkTimeRepository extends JpaRepository<WorkTimeEntity, Long> 
             "FROM c_work_time " +
             "WHERE DATE(work_time_in) = :date " +
             "AND member_entity = :memberId", nativeQuery = true)
-    WorkTimeEntity getDayTimeMember(@Param("date") String date,@Param("date") Long memberId);
+    WorkTimeEntity getDayTimeMember(@Param("date") String date,@Param("memberId") Long memberId);
 
 
     @Modifying
