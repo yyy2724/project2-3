@@ -82,10 +82,17 @@ spring:
     activate:
       on-profile: prd
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+    username: admin
+    password: '00000000'
+
 server:
   port: 8095
 
 naver:
   redirect-url: http://13.209.250.6:8095/naver/token
+
 
 ---
