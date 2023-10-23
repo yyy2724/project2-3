@@ -24,8 +24,4 @@ public class ChatbotController {
 
     }
 
-    @GetMapping("/chatgo")
-    public String chatgo(){
-        return "/chatbot/chatgo";
-    }
 }
