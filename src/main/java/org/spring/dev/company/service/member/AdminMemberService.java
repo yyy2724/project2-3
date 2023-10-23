@@ -2,7 +2,6 @@ package org.spring.dev.company.service.member;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
-import org.spring.dev.company.config.MyUserDetails;
 import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.member.MemberRepository;
@@ -18,7 +17,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class AdminMemberService {
 
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
@@ -311,13 +310,13 @@ public class MemberService {
     public int passwordChange(MemberDto memberDto, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity
                 = Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(()->{
-                    return new IllegalArgumentException("아이디가 없습니다.");
+            return new IllegalArgumentException("아이디가 없습니다.");
         }));
 
         MemberEntity memberEntity = optionalMemberEntity.get();
         memberEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
-         String password = memberRepository.save(memberEntity).getPassword();
+        String password = memberRepository.save(memberEntity).getPassword();
         if (passwordEncoder.matches(memberDto.getPassword(), password)){
             return 1;
         }

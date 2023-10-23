@@ -33,9 +33,9 @@
                 <ul class="big">
                     <li><a href="#">내 정보</a>
                         <ul class="small">
-                            <th:block sec:authorize="hasAnyRole('STAFF')">
+                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
                                 <li>
-                                    <a th:href="@{/member/detail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
+                                    <a th:href="@{/common/detail}">마이페이지</a>
                                 </li>
                             </th:block>
 
