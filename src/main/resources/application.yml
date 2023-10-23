@@ -88,5 +88,4 @@ server:
 naver:
   redirect-url: http://13.209.250.6:8095/naver/token
 
-
 ---
