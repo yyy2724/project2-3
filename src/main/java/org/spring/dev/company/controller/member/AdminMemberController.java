@@ -106,10 +106,6 @@ public class AdminMemberController {
         return "member/login";
     }
 
-    @GetMapping("/m")
-    public String m() {
-        return "member/m";
-    }
 
 
     @GetMapping("/detail/{id}")
@@ -275,6 +271,7 @@ public class AdminMemberController {
 
         Long id = myUserDetails.getMemberEntity().getId();
 
+        System.out.println("아이고");
         System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getMemberEntity());
         System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getMemberEntity().getId());
 
