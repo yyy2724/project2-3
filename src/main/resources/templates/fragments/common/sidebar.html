@@ -41,13 +41,13 @@
 
                             <th:block sec:authorize="hasAnyRole('FREELANCER')">
                                 <li>
-                                    <a th:href="@{/member/freeDetail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
+                                    <a th:href="@{/member/freeDetail}">마이페이지</a>
                                 </li>
                             </th:block>
 
                             <th:block sec:authorize="hasAnyRole('COMPANY')">
                                 <li>
-                                    <a th:href="@{/member/companyDetail/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">마이페이지</a>
+                                    <a th:href="@{/member/companyDetail}">마이페이지</a>
                                 </li>
                             </th:block>
 
