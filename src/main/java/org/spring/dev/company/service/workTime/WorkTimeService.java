@@ -213,13 +213,9 @@ public class WorkTimeService {
      */
     @Transactional
     public void doWorkTotalcal() {
-
         String date = LocalDate.now().minusDays(1).toString();
-        System.out.println(date);
         List<WorkTimeEntity> workTimeEntityList = workTimeRepository.getDayTime(date);
-        if (workTimeEntityList == null) {
-
-        } else {
+        if (workTimeEntityList != null) {
             for (WorkTimeEntity workTimeEntity: workTimeEntityList) {
                 if (workTimeEntity.getWorkTimeStart() != null && workTimeEntity.getWorkTimeEnd() != null) {
                     Duration total = Duration.between(workTimeEntity.getWorkTimeStart(), workTimeEntity.getWorkTimeEnd());
@@ -227,7 +223,6 @@ public class WorkTimeService {
                     workTimeRepository.updateWorkTotalTime(workTimeTotal, date, workTimeEntity.getId());
                 }
             }
-
         }
     }
 }

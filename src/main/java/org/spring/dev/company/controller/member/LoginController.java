@@ -6,7 +6,7 @@ import org.spring.dev.company.dto.member.MemberDto;
 import org.spring.dev.company.repository.member.LoginRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.service.member.LoginService;
-import org.spring.dev.company.service.member.MemberService;
+import org.spring.dev.company.service.member.AdminMemberService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final MemberService memberService;
+    private final AdminMemberService memberService;
     private final MemberRepository memberRepository;
     private final LoginService loginService;
     private final LoginRepository loginRepository;

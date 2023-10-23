@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -90,7 +91,5 @@ public class MyUserDetails implements UserDetails, OAuth2User {
     public boolean isEnabled() {
         return is_display == 1;
     }
-
-
 
 }

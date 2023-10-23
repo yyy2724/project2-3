@@ -25,9 +25,6 @@ public class ReplyEntity extends BaseEntity {
     @Column(name = "reply_content")
     private String content;
 
-    @Column(name = "reply_writer")
-    private String writer;
-
     @ManyToOne
     @JoinColumn(name = "board_id")
 

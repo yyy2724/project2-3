@@ -84,6 +84,6 @@
 }
 
 .big >li:hover .small{
-    height: 180px;
+    height: 200px;
     transition-duration: 1s;
 }

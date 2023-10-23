@@ -39,7 +39,6 @@ public class ReplyDto {
     public static ReplyDto toReplyDto(ReplyEntity replyEntity) {
         ReplyDto replyDto = new ReplyDto();
         replyDto.setId(replyEntity.getId());
-        replyDto.setWriter(replyEntity.getWriter());
         replyDto.setContent(replyEntity.getContent());
         replyDto.setBoardEntity(replyEntity.getBoardEntity());
         replyDto.setMemberEntity(replyEntity.getMemberEntity());
