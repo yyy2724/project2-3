@@ -108,6 +108,7 @@ public class MemberController {
     @GetMapping("/detail/{id}")
     public String detailMamber(@PathVariable("id") Long memberId, Model model) {
 
+        System.out.println();
         MemberDto memberDto = memberService.detailMember(memberId);
         model.addAttribute("memberDto", memberDto);
         return "member/detail";
@@ -231,6 +232,7 @@ public class MemberController {
 
         Long id = myUserDetails.getMemberEntity().getId();
 
+        System.out.println("아이고");
         System.out.println("myUserDetails.getMemberEntity" + myUserDetails.getMemberEntity());
         System.out.println("myUserDetails.getMemberEntity.getId" + myUserDetails.getMemberEntity().getId());
 
