@@ -19,7 +19,7 @@
 
 <body>
 <th:block layout:fragment="container">
-    <form th:action="@{/common/update}" method="post">
+    <form th:action="@{/member/update/{memberId}(memberId=${memberDto.id})}" method="post">
         <div class="update-form-container">
             <h1>회원 정보 수정</h1>
             <ul class="update-form-list">
