@@ -109,7 +109,7 @@ public class AdminMemberController {
 
 
     @GetMapping("/detail/{id}")
-    public String detailMember(@PathVariable("id") Long memberId, Model model, MyUserDetails myUserDetails) {
+    public String detailMember(@PathVariable("id") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
@@ -123,7 +123,7 @@ public class AdminMemberController {
 
 
     @GetMapping("/up/{id}")
-    public String updateMember(@PathVariable("id") Long memberId, Model model, MyUserDetails myUserDetails) {
+    public String updateMember(@PathVariable("id") Long memberId, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
             MemberDto memberDto = memberService.detailMember(memberId);
