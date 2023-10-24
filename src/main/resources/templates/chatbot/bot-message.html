@@ -4,18 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>chatbot</title>
-    <script th:src="@{/js/chatbot/bot-message.js}" defer></script>
     <link rel="stylesheet" th:href="@{/css/chatbot/bot-message.css}">
 
 </head>
 <body>
 
-    <div class="flex center date" th:if="${msg.today}" th:text="${msg.today}"></div>
-    <div class="msg bot flex">
+    <div class="chat-date" th:if="${msg.today}" th:text="${msg.today}"></div>
+    <div class="bot-message">
         <div  class="icon">
-            <img th:src="@{/images/icon/chat.svg}">
+            <img th:src="@{/images/chatbot/chatbot_icon.png}">
         </div>
-        <div class="message" >
+        <div class="message">
             <div class="part" th:if="${msg.answer.keyword ne '프리랜서' or msg.answer.keyword ne '회사' or  msg.answer.info != null}">
                 <p th:utext="${msg.answer.content}"></p>
             </div>

@@ -3,10 +3,11 @@
 <div class="part" th:if="${msg.answer.info != null}" th:fragment="freelancerFragment">
   <div class="part" th:if="${msg.answer.info != null}">
     <p>
-      <span th:text="${msg.answer.info.userName}"></span>
-      <span th:text="${msg.answer.info.email}"></span>
-      <span th:text="${msg.answer.info.phone}"></span>
-      <span th:text="${msg.answer.info.career}"></span>
+      <br>
+      <span>이름: </span><span th:text="${msg.answer.info.userName}"></span><br>
+      <span>이메일: </span><span th:text="${msg.answer.info.email}"></span><br>
+      <span>전화번호: </span><span th:text="${msg.answer.info.phone}"></span><br>
+      <span>이력: </span><span th:text="${msg.answer.info.career}"></span>
     </p>
   </div>
   <div class="part" th:if="${msg.answer.info == null}">
