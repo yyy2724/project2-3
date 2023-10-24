@@ -116,7 +116,8 @@ public class AdminMemberController {
         System.out.println(auth.getAuthorities().stream().noneMatch(a -> a.getAuthority().matches(memberDto.getName())));
         System.out.println(auth.getAuthorities().stream().noneMatch(a -> a.getAuthority().matches(memberDto.getEmail())));
 
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))
+                || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
 
             if (isUserAuthorized(auth, memberDto) == 1) {
                 model.addAttribute("memberDto", memberDto);
@@ -150,6 +151,7 @@ public class AdminMemberController {
 
     @GetMapping("/up/{id}")
     public String updateMember(@PathVariable("id") Long memberId, Model model) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         MemberDto memberDto = memberService.detailMember(memberId);
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
@@ -219,16 +221,16 @@ public class AdminMemberController {
     @PostMapping("/update/{id}")
     public String upMember(@ModelAttribute MemberDto memberDto, Model model, @PathVariable("id") Long memberId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+        MemberDto memberDto1 = memberService.detailMember(memberId);
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"))) {
 
-            if (isUserAuthorized(auth, memberDto) == 1) {
-                MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
-                model.addAttribute("memberDto", memberDto1);
+            if (isUserAuthorized(auth, memberDto1) == 1) {
+                MemberDto memberDto2 = memberService.updateMember(memberDto, memberId);
+                model.addAttribute("memberDto", memberDto2);
                 return "member/staffDetail";
-            } else if (isUserAuthorized(auth, memberDto) == 2) {
-                MemberDto memberDto1 = memberService.updateMember(memberDto, memberId);
-                model.addAttribute("memberDto", memberDto1);
+            } else if (isUserAuthorized(auth, memberDto1) == 2) {
+                MemberDto memberDto2 = memberService.updateMember(memberDto, memberId);
+                model.addAttribute("memberDto", memberDto2);
                 return "member/staffDetail";
             }
             return "member/authorityError";
@@ -426,8 +428,10 @@ public class AdminMemberController {
 
             MemberDto memberDto = memberService.companyDetail(memberId);
             if (isUserAuthorized(auth, memberDto) == 1) {
+                System.out.println("시발");
                 return "member/authorityError";
             } else if (isUserAuthorized(auth, memberDto) == 2) {
+                System.out.println("시발2");
                 model.addAttribute("memberDto", memberDto);
                 return "company/staffDetail";
             }
@@ -462,7 +466,7 @@ public class AdminMemberController {
         } else if (isUserAuthorized(auth, memberDto1) == 2) {
             MemberDto memberDto2 = memberService.companyUpdate(memberDto, memberId);
             model.addAttribute("memberDto", memberDto2);
-            return "company/staffUpdate";
+            return "company/staffDetail";
         }
         return "member/authorityError";
     }
