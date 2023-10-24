@@ -3,10 +3,11 @@
 <div class="part" th:if="${msg.answer.info != null}" th:fragment="companyFragment">
     <div class="part" th:if="${msg.answer.info != null}">
         <p>
-            <span th:text="${msg.answer.info.companyName}"></span>
-            <span th:text="${msg.answer.info.businessNumber}"></span>
-            <span th:text="${msg.answer.info.email}"></span>&nbsp;
-            <span th:text="${msg.answer.info.phone}"></span>
+            <br>
+            <span>회사명: </span><span th:text="${msg.answer.info.companyName}"></span><br>
+            <span>사업자번호: </span><span th:text="${msg.answer.info.businessNumber}"></span><br>
+            <span>이메일: </span><span th:text="${msg.answer.info.email}"></span><br>
+            <span>전화번호: </span><span th:text="${msg.answer.info.phone}"></span>
         </p>
     </div>
     <div class="part" th:if="${msg.answer.info == null}">

@@ -6,7 +6,7 @@ function toggleDateFields() {
 
     if (boardType === "GENERAL") {
         dateFields.style.display = "block";
-        const today = new Date().toISOString().split('T')[0]; // 매번 새로운 오늘 날짜를 계산
+        const today = new Date().toISOString().split('T')[0]; // Calculate today's date
         startDateInput.value = today;
         endDateInput.value = today;
 
@@ -32,17 +32,16 @@ function toggleCalendar() {
     }
 }
 
-window.onload = toggleDateFields;
+document.addEventListener("DOMContentLoaded", function() {
+    toggleDateFields();
+});
 
-
-// Quill 초기화
+// Initialize Quill and handle form submission as you've already done.
 var quill = new Quill('#editor', {
-  theme: 'snow' // 에디터 테마 설정 (예: 'snow' 또는 'bubble')
+    theme: 'snow'
 });
 
-// 폼 제출 시 에디터 내용 저장
 document.querySelector('form').addEventListener('submit', function() {
-  var editorContent = document.querySelector('.ql-editor').innerHTML;
-  document.querySelector('#content').value = editorContent;
+    var editorContent = document.querySelector('.ql-editor').innerHTML;
+    document.querySelector('#content').value = editorContent;
 });
-
