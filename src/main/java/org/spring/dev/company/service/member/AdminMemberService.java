@@ -441,6 +441,7 @@ public class AdminMemberService {
                 .extraAddress(optionalMemberEntity.get().getExtraAddress())
                 .companyName(optionalMemberEntity.get().getCompanyName())
                 .businessNumber(optionalMemberEntity.get().getBusinessNumber())
+                .grade(optionalMemberEntity.get().getGrade())
                 .build();
     }
     @Transactional

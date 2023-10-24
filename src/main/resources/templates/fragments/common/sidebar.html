@@ -126,19 +126,19 @@
                     <li><a href="#">직원관리</a>
                         <ul class="small">
 
-                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
                             <li>
                                 <a th:href="@{/member/staffList}">직원목록</a>
                             </li>
                             </th:block>
 
-                            <th:block sec:authorize="hasAnyRole('COMPANY')">
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
                                 <a th:href="@{/member/freeList}">프리랜서목록</a>
                             </li>
                             </th:block>
 
-                            <th:block sec:authorize="hasAnyRole('FREELANCER')">
+                            <th:block sec:authorize="hasAnyRole('STAFF')">
                             <li>
                                 <a th:href="@{/member/companyList}">회사목록</a>
                             </li>
