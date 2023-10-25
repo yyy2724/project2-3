@@ -19,11 +19,7 @@
                         <img th:src="@{/images/mail.png}" alt="메일" class="mail">
                     </a>
                 </li>
-
-
-
-                    <li><a th:href="@{/member/logout}">로그아웃</a></li>
-<!--                로그인 시 회원 이름 보이게-->
+                <li><a th:href="@{/member/logout}">로그아웃</a></li>
                 <li><span th:text="${#authentication.principal.memberEntity.name}" class="name"></span> 님</li>
             </ul>
         </div>
