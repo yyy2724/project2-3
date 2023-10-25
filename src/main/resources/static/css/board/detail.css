@@ -197,13 +197,13 @@ table.detail-table td.td-menu a:hover{
 
 
 .detail .reply-con{
-
-}
-
-.detail .reply-con{
+    padding: 100px 0;
+    box-sizing: border-box;
 }
 
 .detail .reply-con .reply-write{
+    display: flex;
+    justify-content: center;
     font-family: 'Gothic A1', sans-serif;
     border: 1px solid #f4f4f4;
     padding: 60px 160px 20px 100px;
@@ -215,7 +215,6 @@ table.detail-table td.td-menu a:hover{
 
 /* table.replyWrite-table */
 .detail .reply-con .reply-write table.reply-table{
-    
     font-family: 'Gothic A1', sans-serif;
 }
 
@@ -254,13 +253,112 @@ table.detail-table td.td-menu a:hover{
     height: 80px;
 }
 
+
+/* reply-list */
+.detail .reply-con .reply-list{
+    padding: 100px;
+    box-sizing: border-box;
+    
+}
+
 /* list-table */
 .detail .reply-con .reply-list table.list-table{
     font-family: 'Gothic A1', sans-serif;
+    width: 100%;
 }
 
 .detail .reply-con .reply-list table.list-table input{
-
     border: none;
     background-color: #fff;
 }
+
+.detail .reply-con .reply-list table.list-table .replyName{
+    padding: 20px 0 0 0;
+    box-sizing: border-box;
+    font-size: 18px;
+    width: 6%;
+    font-weight: bold;
+}
+
+.detail .reply-con .reply-list table.list-table .replyAppro{
+    font-size: 18px;
+    color: #ccc;
+}
+
+.detail .reply-con .reply-list table.list-table .replyTime{
+    color: #ccc;
+}
+
+
+.detail .reply-con .reply-list table.list-table .updateContent{
+    font-size: 18px;
+    padding: 20px 0 30px 0;
+    box-sizing: border-box;
+}
+
+.detail .reply-con .reply-list table.list-table .list{
+    font-size: 18px;
+    padding: 20px 0;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+.detail .reply-con .reply-list table.list-table .list span{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.detail .reply-con .reply-list table.list-table .update{
+    font-size: 18px;
+    padding: 0 0 30px 0;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+.detail .reply-con .reply-list table.list-table .update span{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.detail .reply-con .reply-list table.list-table .reply-button{
+    background-color: #89bfff;
+    border-radius: 30px;
+    padding: 10px 30px 8px 30px;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.detail .reply-con .reply-list table.list-table .list .replyDeleteBtn{
+    background-color: #89bfff;
+    border-radius: 30px;
+    padding: 10px 30px 8px 30px;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.detail .reply-con .reply-list table.list-table .update .replyUpdateBtn{
+    background-color: #89bfff;
+    border-radius: 30px;
+    padding: 10px 30px 8px 30px;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.detail .reply-con .reply-list table.list-table hr.divide{
+    border: 1px solid #f8f8f8;
+    
+}
+

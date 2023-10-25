@@ -189,6 +189,7 @@ public class CommonMemberService {
                 .extraAddress(memberEntity.getExtraAddress())
                 .companyName(memberEntity.getCompanyName())
                 .businessNumber(memberEntity.getBusinessNumber())
+                .grade(memberEntity.getGrade())
                 .build();
     }
 }

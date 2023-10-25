@@ -11,6 +11,7 @@ import org.spring.dev.company.entity.chatbot.IntentionEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,9 +34,6 @@ public class KomoranService {
 
         // 메세지(문자열)에서 명사(nouns)추출 -> set에 저장
         Set<String> nouns = result.getNouns().stream().collect(Collectors.toSet());
-        nouns.forEach((noun)->{
-            System.out.println("명사추출테스트: " + noun);
-        });
 
         return analyzeToken(nouns);
     }
@@ -46,7 +44,6 @@ public class KomoranService {
 
     private ChatMessageDto analyzeToken(Set<String> nouns) {
 
-        // 시간 세팅 (오늘, 포멧설정)
         LocalDateTime today = LocalDateTime.now();
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("a h:m");
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
@@ -78,6 +75,9 @@ public class KomoranService {
             } else if (token.contains("회사")) {
                 MemberInfo company = analyzeTokenIsCompany(next);
                 answer.info(company);
+            } else if (token.contains("도움")){
+                AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
+                chatMessageDto.answer(help);
             }
 
             chatMessageDto.answer(answer);
@@ -94,7 +94,6 @@ public class KomoranService {
     private AnswerEntity analyzeToken(Set<String> next, Optional<IntentionEntity> upper) {
 
         for (String token : next) {
-            // 1차 의도를 부모로하는 토큰이 존재를 파악
             Optional<IntentionEntity> result = decisionTree(token, upper.get());
             if (result.isEmpty()) continue;
             return result.get().getAnswerEntity();
@@ -107,7 +106,11 @@ public class KomoranService {
 
         for (String name : next) {
             Optional<MemberEntity> member = memberRepository.findByName(name);
-            if (!member.isPresent() || !member.get().getGrade().toString().equals("FREELANCER")) continue;
+
+            if (!member.isPresent() || !member.get().getGrade().toString().equals("FREELANCER")) {
+
+                continue;
+            }
 
             String career = member.get().getCareer();
             String phone = member.get().getPhone();
@@ -123,10 +126,9 @@ public class KomoranService {
                     .build();
 
         }
-        return null;
+        return MemberInfo.builder().build();
     }
 
-    // 회사명면 프리랜서 권한을 가진 유저만 찾아 MemberInfo 객체로 반환
     private MemberInfo analyzeTokenIsCompany(Set<String> next) {
 
         for (String name : next) {
@@ -147,7 +149,7 @@ public class KomoranService {
                     .build();
 
         }
-        return null;
+        return MemberInfo.builder().build();
     }
 
 }

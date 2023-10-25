@@ -19,7 +19,7 @@
 </head>
 <body>
 <th:block layout:fragment="container">
-<form th:action="@{/common/freeUpdate}" method="post">
+<form th:action="@{/member/freeUpdate/{memberId}(memberId=${memberDto.id})}" method="post">
     <input type="hidden" name="id" th:value="${memberDto.id}">
     <ul class="mypage-list">
         <li>

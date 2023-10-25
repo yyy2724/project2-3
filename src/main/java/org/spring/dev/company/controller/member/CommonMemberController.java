@@ -23,20 +23,18 @@ public class CommonMemberController {
     @GetMapping("/detail")
     public String detailMember(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
-
-
-            MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
-            model.addAttribute("memberDto", memberDto);
-            return "member/detail";
+        MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
+        model.addAttribute("memberDto", memberDto);
+        return "member/detail";
 
     }
 
     @GetMapping("/up")
     public String updateMember(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
-            MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
-            model.addAttribute("memberDto", memberDto);
-            return "member/update";
+        MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
+        model.addAttribute("memberDto", memberDto);
+        return "member/update";
     }
 
     @PostMapping("/update")
@@ -47,7 +45,7 @@ public class CommonMemberController {
     }
 
     @GetMapping("/disabled")
-    public String disabled(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String disabled(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
         model.addAttribute("memberDto", memberDto);
@@ -66,28 +64,28 @@ public class CommonMemberController {
     }
 
     @GetMapping("/pwChange")
-    public String pwChange(@AuthenticationPrincipal MyUserDetails myUserDetails,Model model) {
+    public String pwChange(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
 
-            MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
-            model.addAttribute("memberDto", memberDto);
-            return "member/pwChange";
+        MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
+        model.addAttribute("memberDto", memberDto);
+        return "member/pwChange";
     }
 
     @PostMapping("/pwChange")
-    public String pwChangePost(@ModelAttribute MemberDto memberDto, MyUserDetails myUserDetails,Model model) {
-            int rs = commonMemberService.passwordChange(memberDto, myUserDetails);
-            if (rs != 1) {
-                MemberDto memberDto1 = commonMemberService.detailMember(myUserDetails);
-                model.addAttribute("memberDto", memberDto1);
-                return "member/detail";
-            }
-            return "redirect:/member/logout";
+    public String pwChangePost(@ModelAttribute MemberDto memberDto, MyUserDetails myUserDetails, Model model) {
+        int rs = commonMemberService.passwordChange(memberDto, myUserDetails);
+        if (rs != 1) {
+            MemberDto memberDto1 = commonMemberService.detailMember(myUserDetails);
+            model.addAttribute("memberDto", memberDto1);
+            return "member/detail";
+        }
+        return "redirect:/member/logout";
     }
 
     @GetMapping("/freeDetail")
-    public String freeDetail(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
+    public String freeDetail(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
         MemberDto memberDto = commonMemberService.detailMember(myUserDetails);
-        model.addAttribute("memberDto",memberDto);
+        model.addAttribute("memberDto", memberDto);
         return "freeDetail/detail";
     }
 
@@ -99,7 +97,7 @@ public class CommonMemberController {
     }
 
     @PostMapping("/freeUpdate")
-    public String freeUpdate(@ModelAttribute MemberDto memberDto,@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+    public String freeUpdate(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
 
         MemberDto memberDto1 = commonMemberService.freeUpdate(memberDto, myUserDetails);
         model.addAttribute("memberDto", memberDto1);

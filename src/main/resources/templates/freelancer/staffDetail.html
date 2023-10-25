@@ -59,9 +59,9 @@
             </li>
         </ul>
         <div class="button-container">
-            <a class="my-page-button" th:href="@{/common/freeUp}">회원정보 수정</a>
-            <a class="my-page-button" th:href="@{/common/pwChange}">비밀번호 변경</a>
-            <a class="my-page-button" th:href="@{/common/disabled}">계정비활성화</a>
+            <a class="my-page-button" th:href="@{/member/freeUp/{memberId}(memberId=${memberDto.id})}">회원정보 수정</a>
+            <a class="my-page-button" th:href="@{/member/pwChange/{memberId}(memberId=${memberDto.id})}">비밀번호 변경</a>
+            <a class="my-page-button" th:href="@{/member/disabled/{memberId}(memberId=${memberDto.id})}">계정비활성화</a>
         </div>
     </div>
 </th:block>

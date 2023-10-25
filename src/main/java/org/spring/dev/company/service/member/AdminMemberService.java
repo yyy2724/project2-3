@@ -167,18 +167,50 @@ public class AdminMemberService {
     }
 
     @Transactional
-    public int disabledMember(Long memberId) {
+    public MemberDto disabledMember(Long memberId) {
         Optional<MemberEntity> memberEntity =
                 Optional.ofNullable(memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new));
         if (memberEntity.get().getIs_display() != 0) {
 
             MemberEntity memberEntity1 = memberEntity.get();
             memberEntity1.setIs_display(0);
-            int rs = memberRepository.save(memberEntity1).getIs_display();
-            return rs;
+            memberRepository.save(memberEntity1);
+            return MemberDto.builder()
+                    .id(memberEntity1.getId())
+                    .name(memberEntity1.getName())
+                    .email(memberEntity1.getEmail())
+                    .password(memberEntity1.getPassword())
+                    .birth(memberEntity1.getBirth())
+                    .phone(memberEntity1.getPhone())
+                    .postcode(memberEntity1.getPostcode())
+                    .address(memberEntity1.getAddress())
+                    .detailAddress(memberEntity1.getDetailAddress())
+                    .extraAddress(memberEntity1.getExtraAddress())
+                    .gender(memberEntity1.getGender())
+                    .grade(memberEntity1.getGrade())
+                    .CreateTime(memberEntity1.getCreateTime())
+                    .is_display(memberEntity1.getIs_display())
+                    .build();
         }
 
-        return 0;
+        return MemberDto.builder()
+                .id(memberEntity.get().getId())
+                .name(memberEntity.get().getName())
+                .email(memberEntity.get().getEmail())
+                .password(memberEntity.get().getPassword())
+                .birth(memberEntity.get().getBirth())
+                .phone(memberEntity.get().getPhone())
+                .postcode(memberEntity.get().getPostcode())
+                .address(memberEntity.get().getAddress())
+                .detailAddress(memberEntity.get().getDetailAddress())
+                .extraAddress(memberEntity.get().getExtraAddress())
+                .gender(memberEntity.get().getGender())
+                .grade(memberEntity.get().getGrade())
+                .CreateTime(memberEntity.get().getCreateTime())
+                .is_display(memberEntity.get().getIs_display())
+                .CreateTime(memberEntity.get().getCreateTime())
+                .UpdateTime(memberEntity.get().getUpdateTime())
+                .build();
     }
 
     public Page<MemberDto> pageFreeList(Pageable pageable, String subject, String search) {
@@ -409,6 +441,7 @@ public class AdminMemberService {
                 .extraAddress(optionalMemberEntity.get().getExtraAddress())
                 .companyName(optionalMemberEntity.get().getCompanyName())
                 .businessNumber(optionalMemberEntity.get().getBusinessNumber())
+                .grade(optionalMemberEntity.get().getGrade())
                 .build();
     }
     @Transactional

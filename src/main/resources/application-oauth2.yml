@@ -14,7 +14,8 @@ spring:
             client-id: Uy8FgIaBU7CLicC1tvxY
             #            client-secret: 4UZgAHM9s8  예전꺼임
             client-secret: i_tuDiPx1C
-            redirect-uri: "http://localhost:8095/login/oauth2/code/naver"
+#            redirect-uri: "http://localhost:8095/login/oauth2/code/naver"
+            redirect-uri: "http://13.209.250.6:8095/naver/token"
             authorization-grant-type: authorization_code
             scope: email, name
             client-name: Naver
@@ -22,7 +23,8 @@ spring:
           kakao:
             client-id: 943a711bf05346e1b0d9d53f15158cc4
             client-secret: H2uAiJwdmhFZV86PCqKI2qk88eT9VdZ8
-            redirect-uri: "http://localhost:8095/login/oauth2/code/kakao"
+#            redirect-uri: "http://localhost:8095/login/oauth2/code/kakao"
+            redirect-uri: "http://13.209.250.6:8095/kakao/token"
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope: profile_nickname, account_email #동의 항목
