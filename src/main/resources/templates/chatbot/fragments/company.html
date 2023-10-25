@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="part" th:if="${msg.answer.info != null}" th:fragment="companyFragment">
-    <div class="part" th:if="${msg.answer.info != null}">
+    <div class="part" th:if="${msg.answer.info.companyName != null}">
         <p>
             <br>
             <span>회사명: </span><span th:text="${msg.answer.info.companyName}"></span><br>
@@ -10,7 +10,7 @@
             <span>전화번호: </span><span th:text="${msg.answer.info.phone}"></span>
         </p>
     </div>
-    <div class="part" th:if="${msg.answer.info == null}">
+    <div class="part" th:if="${msg.answer.info.companyName == null}">
         <p>
             존재하지 않는 회사입니다.
         </p>
