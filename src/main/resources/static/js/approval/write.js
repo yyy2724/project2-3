@@ -25,7 +25,7 @@ function connectBtn2() {
     };
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8023/api/v1/approval/create', true);
+    xhr.open('POST', 'http://localhost:8095/api/v1/approval/create', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onreadystatechange = function () {

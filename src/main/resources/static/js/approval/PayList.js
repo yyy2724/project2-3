@@ -70,7 +70,7 @@ function searchApprovals() {
     const size = 10;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:8023/api/v1/pay?page=${page}&size=${size}`, true);
+    xhr.open('GET', `http://localhost:8095/api/v1/pay?page=${page}&size=${size}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onreadystatechange = function () {
@@ -90,7 +90,7 @@ function searchApprovals() {
 
 function viewPost(postId) {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:8023/api/v1/approval/${postId}`, true);
+    xhr.open('GET', `http://localhost:8095/api/v1/approval/${postId}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onreadystatechange = function () {
@@ -129,7 +129,7 @@ closeBtn.addEventListener('click', closeModal);
 function pay() {
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://localhost:8023/pay/free/${modalId.innerText}`, true);
+    xhr.open('POST', `http://localhost:8095/pay/free/${modalId.innerText}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onreadystatechange = function () {
