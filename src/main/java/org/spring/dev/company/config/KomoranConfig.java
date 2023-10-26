@@ -40,7 +40,7 @@ public class KomoranConfig {
                     if (data.startsWith("#"))
                         continue;
                     String[] str = data.split("\\t");
-                    keys.add(str[0]); // set에 저장
+                    keys.add(str[0]);
                 }
                 br.close();
             }
@@ -69,8 +69,8 @@ public class KomoranConfig {
             e1.printStackTrace();
         }
 
-
     }
-
-
 }
+
+
+

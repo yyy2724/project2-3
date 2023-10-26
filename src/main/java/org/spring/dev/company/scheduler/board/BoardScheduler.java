@@ -15,7 +15,6 @@ public class BoardScheduler {
 
     private final BoardRepository boardRepository;
 
-    /* 매일 자정에 실행, 만료된 게시글 삭제*/
     @Scheduled(cron = "0 0 0 * * ?")
     public void deleteExpiredBoard() {
         Date currentDate = new Date();
