@@ -70,7 +70,7 @@ function searchApprovals() {
     const size = 10;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:8023/api/v1/project?page=${page}&size=${size}`, true);
+    xhr.open('GET', `http://localhost:8095/api/v1/project?page=${page}&size=${size}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onreadystatechange = function () {
