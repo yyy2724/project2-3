@@ -64,11 +64,17 @@ public class WebSecurityConfigClass {
         // 이건 나중에 하겠음
         http.authorizeHttpRequests()
 //                 로그인시
-                .antMatchers("/member/logout").authenticated()
-                // OAUTH 정보 추가 페이지
-                .antMatchers("/member/**").permitAll()
+                .antMatchers("/member/logout","/chatbot/**").authenticated()
+                // STAFF
+                .antMatchers("/chat/**").hasAnyRole("STAFF")
+                // ADMIN
+                .antMatchers("/member/**").hasAnyRole("ADMIN","STAFF")
+                // FREELANCER
+                .antMatchers("/schedule/**").hasAnyRole("FREELANCER")
+                // COMPANY
+                .antMatchers().hasAnyRole("COMPANY")
                 // 모두 허용
-                .anyRequest().permitAll()
+                .antMatchers("/member/join","/member/freeJoin","/member/companyJoin","/member/login","/member/companyLogin","/member/freelancerLogin").permitAll()
         ;
 
 
