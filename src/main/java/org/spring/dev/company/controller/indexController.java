@@ -30,6 +30,11 @@ public class indexController {
 
     private final BoardRepository boardRepository;
 
+    @GetMapping("/bus")
+    public String bus() {
+        return "/bus/bus";
+    }
+
     // 로그인 페이지
     @GetMapping({"","/","//"})
     public String login(){
