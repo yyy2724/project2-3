@@ -1,0 +1,11 @@
+/*right*/
+.right-menu{
+  flex:1;
+  min-height: auto;
+  /* border:1px solid; */
+  box-sizing: border-box;
+  background-color: #e7ede7;
+}
+.right-menu .right-con{
+   min-height: 100vh;
+}
