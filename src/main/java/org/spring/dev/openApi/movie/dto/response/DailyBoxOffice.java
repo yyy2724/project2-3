@@ -1,13 +1,13 @@
-package org.spring.dev.openApi.movie.dto;
+package org.spring.dev.openApi.movie.dto.response;
 
+import lombok.*;
 
-import lombok.Builder;
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class MovieDto {
-
+public class DailyBoxOffice {
 
     private String rnum;
     private String rank;

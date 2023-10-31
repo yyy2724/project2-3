@@ -32,42 +32,24 @@ public class MovieQueryDslCustom implements MovieQueryDsl {
                 .select(qMovieEntity)
                 .from(qMovieEntity)
                 .where(
-                        movieCodeEq(movieDto.getMovieCd()),
-                        movieNmEnEq(movieDto.getMovieNmEn()),
-                        movieNmEq(movieDto.getMovieNm()),
-                        nationAltEq(movieDto.getNationAlt()),
-                        openDtEq(movieDto.getOpenDt()),
-                        prdtYearEq(movieDto.getPrdtYear())
+                        MovieNmEq(movieDto.getMovieNm()),
+                        openDtEq(movieDto.getOpenDt())
                 )
                 .fetch();
 
     }
 
-    private BooleanExpression movieCodeEq(String movieCd) {
-        return movieCd != null ? qMovieEntity.movieCd.eq(movieCd) : null;
+    private BooleanExpression openDtEq(String openDt) {
+        return openDt != null ? qMovieEntity.openDt.eq(openDt) : null;
 
     }
 
-    private BooleanExpression movieNmEnEq(String color) {
-        return hasText(color) ? qMovieEntity.movieNmEn.eq(color) : null;
-    }
+    private BooleanExpression MovieNmEq(String movieNmEq) {
+        return movieNmEq != null ? qMovieEntity.movieNm.eq(movieNmEq) : null;
 
-    private BooleanExpression movieNmEq(String content) {
-        return hasText(content) ? qMovieEntity.movieNm.eq(content) : null;
-    }
-
-    private BooleanExpression nationAltEq(String content) {
-        return hasText(content) ? qMovieEntity.nationAlt.eq(content) : null;
-    }
-
-    private BooleanExpression openDtEq(String content) {
-        return hasText(content) ? qMovieEntity.openDt.eq(content) : null;
-    }
-
-    private BooleanExpression prdtYearEq(String content) {
-        return hasText(content) ? qMovieEntity.prdtYear.eq(content) : null;
     }
 }
+
 
 //    private BooleanExpression colorEq(String color) {
 //        return hasText(color) ? qScheduleEntity.color.eq(color) : null;

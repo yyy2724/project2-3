@@ -9,5 +9,5 @@ import lombok.*;
 @Builder
 public class MovieResponse {
 
-    private movieListResult movieListResult;
+    private BoxOfficeResult boxOfficeResult;
 }

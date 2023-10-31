@@ -1,5 +1,6 @@
 package org.spring.dev.openApi.movie.dto.response;
 
+
 import lombok.*;
 
 import java.util.List;
@@ -9,10 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class movieListResult {
+public class BoxOfficeResult {
 
-    private Integer totCnt;
-    private String source;
-    private List<movieList> movieList;
+    private String boxofficeType;
+    private String showRange;
+    private List<DailyBoxOffice> dailyBoxOfficeList;
+
 
 }
