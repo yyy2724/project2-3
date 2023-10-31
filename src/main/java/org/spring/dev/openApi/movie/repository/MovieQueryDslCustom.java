@@ -35,6 +35,21 @@ public class MovieQueryDslCustom implements MovieQueryDsl {
 
     }
 
+    @Override
+    public MovieEntity findByDetailMovie(String movieCd) {
+        return jpaQueryFactory
+                .select(qMovieEntity)
+                .from(qMovieEntity)
+                .where(
+                        movieCdEq(movieCd)
+                )
+                .fetchOne();
+    }
+
+    private BooleanExpression movieCdEq(String movieCd) {
+        return movieCd != null ? qMovieEntity.movieCd.eq(movieCd) : null;
+    }
+
     private BooleanExpression openDtEq(String openDt) {
         return openDt != null ? qMovieEntity.openDt.eq(openDt) : null;
 
