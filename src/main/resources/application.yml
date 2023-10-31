@@ -26,12 +26,14 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
-#    username: admin
-#    password: '00000000'
-    url: jdbc:mysql://localhost:3306/project02
-    username: root
-    password: 1234
+    
+    url: jdbc:mysql://project1.cxg8vdlfu0la.ap-southeast-2.rds.amazonaws.com:3306/dev
+    username: admin
+    password: '00000000'
+  #    url: jdbc:mysql://localhost:3306/project02
+  #    username: root
+  #    password: 1234
+
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -41,6 +43,9 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        globally_quoted_identifiers: true # 예약어 컬럼 사용
+
+
 
   # yaml/yml ?? - Thymeleaf ??
   thymeleaf:
@@ -73,9 +78,9 @@ naver:
 
   scope: directory,directory.read,orgunit,orgunit.read,user,user.read
 
-  work-url : https://www.worksapis.com
+  work-url: https://www.worksapis.com
 
-  redirect-url : http://localhost:8095/naver/token
+  redirect-url: http://localhost:8095/naver/token
 ---
 spring:
   config:
