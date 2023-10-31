@@ -32,7 +32,7 @@ public class indexController {
 
     @GetMapping("/bus")
     public String bus() {
-        return "/bus/bus";
+        return "/bus/index";
     }
 
     // 로그인 페이지

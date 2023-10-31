@@ -1,7 +1,7 @@
 // 버스 노선
 const url = 'https://cors-anywhere.herokuapp.com/http://ws.bus.go.kr/api/rest/';
+//const url = 'http://ws.bus.go.kr/api/rest/';
 const serviceKey='NVJloZDa5SGDsI8Fh%2FRFvsncmFGpdbR2XZwJvhXquRiyzanDEWAHfz1LWFl4rhZV%2BSAttNUPMUmnVcuuk7AfxQ%3D%3D';
-
 
 const busDetail=document.querySelector('.bus-detail')
 let tbodyTag=document.querySelector('#bus1');
@@ -11,18 +11,40 @@ function busSearch(){
 
   let html1="";
 
-
   let search=document.querySelector('#search')
   let type='busRouteInfo/getBusRouteList?';
   let strSrch=search.value;
+  console.log(strSrch +' < - strSrch2222 ')
+
+  let apiUrl2 = `/api/busList?strSrch=${encodeURIComponent(strSrch)}`;
+
+  fetch(apiUrl2, {
+    method: 'GET',  // GET 메서드 사용
+    headers: {
+      'Content-Type': 'application/json',  // 요청 헤더 설정
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('서버 오류');
+      }
+    })
+    .then(data => {
+      // 서버 응답 처리
+      console.log('서버 응답:', data);
+    })
+    .catch(error => {
+      console.error('오류 발생:', error);
+    });
 
   let apiUrl=`${url}busRouteInfo/getBusRouteList?serviceKey=${serviceKey}&strSrch=${strSrch}&resultType=json`;
 
 
      fetch(apiUrl)
     .then(response => response.json())
-
-    .then(function (msg) {
+     .then(function (msg) { //아래부터는 html로 가져오기 위한 코드-->
               console.log(msg)
 
                msg.msgBody.itemList.forEach(el=>{
@@ -35,20 +57,19 @@ function busSearch(){
                                                  <td>${el.firstBusTm}</td>
                                                  <td>${el.lastBusTm}</td>
                                                  <td>${el.term}</td>
-                            <td onclick='stationPost(event.target.innerText)' style="background-color:#ff0000">${el.busRouteId}</td>
+                            <td onclick='stationPost(event.target.innerText)' style="background-color:#ffff00">${el.busRouteId}</td>
                               <td>${el.routeType}</td>
                         `;
                          html1 += "</tr>";
                   });
+                 // console.log(html1+" << ")
                   tbodyTag.innerHTML=html1;
     });
 
 
 }
 
-
 // 버스 정류장 조회
-
 const stationNm=document.querySelector('.bus-station');
 
 function stationPost(busId){
@@ -58,20 +79,44 @@ function stationPost(busId){
   let type='busRouteInfo/getStaionByRoute?';
   let busRouteId=busId;
 
+   let apiUrl3 = `/api/busStationPost?busRouteId=${encodeURIComponent(busId)}`;
+
+    fetch(apiUrl3, {
+      method: 'GET',  // GET 메서드 사용
+      headers: {
+        'Content-Type': 'application/json',  // 요청 헤더 설정
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('서버 오류');
+        }
+      })
+      .then(data => {
+        // 서버 응답 처리
+        console.log('서버 응답:', data);
+      })
+      .catch(error => {
+        console.error('오류 발생:', error);
+      });
+
+
+
   let apiUrl=`${url}busRouteInfo/getStaionByRoute?serviceKey=${serviceKey}&busRouteId=${busRouteId}&resultType=json`;
-
-
 
  fetch(apiUrl)
     .then(response => response.json())
-     .then(function (msg) {
+     .then(function (msg) { //아래부터는 html로 가져오기 위한 코드-->
 
               console.log(msg)
               console.log(msg.msgBody)
               console.log(msg.msgBody.itemList)
 
                msg.msgBody.itemList.forEach(el=>{
-                    console.log(el.gpsX, el.gpsY,el.stationNm);
+                    //   console.log(el);
+                    console.log(el.gpsX, el.gpsY,el.stationNm); // kakao map 표시
                     html1+=`<div>${el.stationNm}</div>`;
                })
 
@@ -82,6 +127,9 @@ function stationPost(busId){
     });
 
 }
+
+
+
 
    function positionFn(dataVal) {
 
@@ -115,10 +163,10 @@ function stationPost(busId){
 
      // 마커 이미지의 이미지 주소입니다
      //let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-      let imageSrc = "/images/bus/marker.png";
+      let imageSrc = "/image/marker.png";
      for (let i = 0; i < dataVal.length; i++) {
        // 마커 이미지의 이미지 크기 입니다
-       let imageSize = new kakao.maps.Size(24, 24);
+       let imageSize = new kakao.maps.Size(24, 35);
        // 마커 이미지를 생성합니다
        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
        // 마커를 생성합니다
@@ -131,7 +179,5 @@ function stationPost(busId){
      } //for
 
      map.setCenter(positions[0].latlng); //기점 을 중심좌표
-
-
    }
 
