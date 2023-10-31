@@ -26,15 +26,11 @@ public class MovieQueryDslCustom implements MovieQueryDsl {
     QMovieEntity qMovieEntity = QMovieEntity.movieEntity;
 
     @Override
-    public List<MovieEntity> findScheduleSearch(MovieDto movieDto) {
+    public List<MovieEntity> findScheduleSearch() {
 
         return jpaQueryFactory
                 .select(qMovieEntity)
                 .from(qMovieEntity)
-                .where(
-                        MovieNmEq(movieDto.getMovieNm()),
-                        openDtEq(movieDto.getOpenDt())
-                )
                 .fetch();
 
     }

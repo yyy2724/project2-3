@@ -106,13 +106,41 @@ public class MovieService {
 
 
     //가져옴
-    public List<MovieDto> getMovieList(MovieDto movieDto) {
+    public List<MovieDto> getMovieList() {
         List<MovieDto> movieDtoList = new ArrayList<MovieDto>();
-        List<MovieEntity> movieEntityList = movieQueryDsl.findScheduleSearch(movieDto);
+        List<MovieEntity> movieEntityList = movieQueryDsl.findScheduleSearch();
 
         for (MovieEntity movieEntity : movieEntityList) {
             movieDtoList.add(toDto(movieEntity));
         }
         return movieDtoList;
+    }
+
+    public List<MovieDto> getMovieDetail(String movieCd) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://www.kobis.or.kr")
+                .path("/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json")
+                .queryParam("key", "103cdc548e41a2c19cad71203ccf15f8")
+                .queryParam("targetDt", LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .encode()
+                .build()
+                .toUri();
+
+        ResponseEntity<MovieResponse> result = restTemplate.exchange(uri, HttpMethod.GET, entity, MovieResponse.class);
+        if (result.getStatusCode() == HttpStatus.OK) {
+            MovieEntity movieEntity;
+            for (DailyBoxOffice movie : result.getBody().getBoxOfficeResult().getDailyBoxOfficeList()) {
+                movieEntity = toMovie(movie);
+                movieRepository.save(movieEntity);
+            }
+        } else {
+            System.out.println(result.getStatusCode());
+        }
+        return null;
     }
 }

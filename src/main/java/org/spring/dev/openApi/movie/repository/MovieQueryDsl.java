@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface MovieQueryDsl {
 
-    List<MovieEntity> findScheduleSearch(MovieDto movieDto);
+    List<MovieEntity> findScheduleSearch();
 
 }
