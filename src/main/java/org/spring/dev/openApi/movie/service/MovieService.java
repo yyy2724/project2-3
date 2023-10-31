@@ -1,10 +1,14 @@
 package org.spring.dev.openApi.movie.service;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.entity.member.MemberEntity;
+import org.spring.dev.company.entity.schedule.ScheduleEntity;
 import org.spring.dev.openApi.movie.dto.MovieDto;
 import org.spring.dev.openApi.movie.dto.response.MovieResponse;
 import org.spring.dev.openApi.movie.dto.response.movieList;
 import org.spring.dev.openApi.movie.entity.MovieEntity;
+import org.spring.dev.openApi.movie.repository.MovieQueryDsl;
 import org.spring.dev.openApi.movie.repository.MovieRepository;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -19,10 +25,11 @@ import java.net.URI;
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final MovieQueryDsl movieQueryDsl;
 
 
     // 디비에서 단순 데이터를 가져옴
-    public void getMovieList(MovieDto movieDto) {
+    public void linkMovieList() {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -61,5 +68,29 @@ public class MovieService {
                 .repNationNm(movie.getRepNationNm())
                 .repGenreNm(movie.getRepGenreNm())
                 .build();
+    }
+
+
+    public MovieDto toDto(MovieEntity movieEntity) {
+        return MovieDto.builder()
+                .movieCd(movieEntity.getMovieCd())
+                .movieNm(movieEntity.getMovieNm())
+                .openDt(movieEntity.getOpenDt())
+                .prdtYear(movieEntity.getPrdtYear())
+                .nationAlt(movieEntity.getNationAlt())
+                .genreAlt(movieEntity.getGenreAlt())
+                .build();
+    }
+
+
+    //가져옴
+    public List<MovieDto> getMovieList(MovieDto movieDto) {
+        List<MovieDto> movieDtoList = new ArrayList<MovieDto>();
+        List<MovieEntity> movieEntityList = movieQueryDsl.findScheduleSearch(movieDto);
+
+        for (MovieEntity movieEntity: movieEntityList) {
+            movieDtoList.add(toDto(movieEntity));
+        }
+        return movieDtoList;
     }
 }

@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Table(name = "movie_tb")
 @Entity
