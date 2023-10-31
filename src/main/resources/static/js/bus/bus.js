@@ -21,7 +21,8 @@ function busSearch(){
 
      fetch(apiUrl)
     .then(response => response.json())
-     .then(function (msg) { //아래부터는 html로 가져오기 위한 코드-->
+
+    .then(function (msg) {
               console.log(msg)
 
                msg.msgBody.itemList.forEach(el=>{
@@ -34,7 +35,7 @@ function busSearch(){
                                                  <td>${el.firstBusTm}</td>
                                                  <td>${el.lastBusTm}</td>
                                                  <td>${el.term}</td>
-                            <td onclick='stationPost(event.target.innerText)' style="background-color:#ffff00">${el.busRouteId}</td>
+                            <td onclick='stationPost(event.target.innerText)' style="background-color:#ff0000">${el.busRouteId}</td>
                               <td>${el.routeType}</td>
                         `;
                          html1 += "</tr>";
@@ -44,6 +45,7 @@ function busSearch(){
 
 
 }
+
 
 // 버스 정류장 조회
 
@@ -69,7 +71,7 @@ function stationPost(busId){
               console.log(msg.msgBody.itemList)
 
                msg.msgBody.itemList.forEach(el=>{
-                    console.log(el.gpsX, el.gpsY,el.stationNm); // kakao map 표시
+                    console.log(el.gpsX, el.gpsY,el.stationNm);
                     html1+=`<div>${el.stationNm}</div>`;
                })
 
