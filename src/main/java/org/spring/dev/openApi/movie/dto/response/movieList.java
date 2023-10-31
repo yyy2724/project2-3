@@ -1,0 +1,25 @@
+package org.spring.dev.openApi.movie.dto.response;
+
+import lombok.*;
+
+import java.util.List;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class movieList {
+    private String movieCd;
+    private String movieNm;
+    private String movieNmEn;
+    private String prdtYear;
+    private String openDt;
+    private String typeNm;
+    private String prdtStatNm;
+    private String nationAlt;
+    private String genreAlt;
+    private String repNationNm;
+    private String repGenreNm;
+    private List<directors> directors;
+    private List<companys> companys;
+}
