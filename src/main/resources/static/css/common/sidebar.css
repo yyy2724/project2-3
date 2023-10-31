@@ -75,7 +75,6 @@
 }
 .small > li a{
     color: white;
-    /* 이거 색깔 바꾸기 */
 }
 .small > li a:hover{
     transition: all 0.5s;
