@@ -57,13 +57,7 @@ public class WeatherService {
 
 
     public WeatherInfo weatherList(String city) {
-        Optional<WeatherEntity> optionalWeatherEntity1 = weatherRepository.findByName(city);
-
-            DecimalFormat df = new DecimalFormat("#.#");
-
-
-
-
+        DecimalFormat df = new DecimalFormat("#.#");
 
         String appid = "b6616c0963212986998cdd8cf346c479";
         // ³¯¾¾
@@ -103,7 +97,7 @@ public class WeatherService {
         if (!optionalWeatherEntity.isPresent()) {
             weatherRepository.save(weatherEntity);
 
-            WeatherInfo weatherInfo = WeatherInfo.builder()
+            return WeatherInfo.builder()
                     .id(weatherEntity.getId())
                     .city(weatherEntity.getName())
                     .country(weatherEntity.getCountry())
@@ -111,19 +105,19 @@ public class WeatherService {
                     .temp_min(weatherEntity.getTemp_min())
                     .temp_max(weatherEntity.getTemp_max())
                     .build();
-            return weatherInfo;
-        }else {
-            WeatherInfo weatherInfo = WeatherInfo.builder()
+
+        } else {
+            return WeatherInfo.builder()
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
                     .country(optionalWeatherEntity.get().getCountry())
                     .temp_min(optionalWeatherEntity.get().getTemp_min())
                     .temp_max(optionalWeatherEntity.get().getTemp_max())
                     .build();
-            return weatherInfo;
+
         }
 
-
+    }
 }
 
 
