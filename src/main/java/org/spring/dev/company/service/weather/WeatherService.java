@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.weather.Weather;
 import org.spring.dev.company.dto.weather.WeatherApiDto;
+import org.spring.dev.company.dto.weather.WeatherInfo;
 import org.spring.dev.company.entity.weather.WeatherEntity;
 import org.spring.dev.company.repository.weather.WeatherRepository;
 import org.springframework.stereotype.Service;
@@ -53,8 +54,20 @@ public class WeatherService {
     }
 
 
-
-
+    public WeatherInfo weatherList(String city) {
+        Optional<WeatherEntity> optionalWeatherEntity = weatherRepository.findByName(city);
+        if (optionalWeatherEntity.isPresent()){
+            WeatherInfo weatherInfo = WeatherInfo.builder()
+                    .id(optionalWeatherEntity.get().getId())
+                    .city(optionalWeatherEntity.get().getName())
+                    .country(optionalWeatherEntity.get().getCountry())
+                    .temp_min(optionalWeatherEntity.get().getTemp_min())
+                    .temp_max(optionalWeatherEntity.get().getTemp_max())
+                    .build();
+            return weatherInfo;
+        }
+        return null;
+    }
 }
 
 

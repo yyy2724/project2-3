@@ -4,6 +4,7 @@ import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.repository.member.MemberRepository;
+import org.spring.dev.company.repository.weather.WeatherRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +18,7 @@ public class KomoranConfig {
 
     private String USER_DIC = "user.dic";
     private final MemberRepository memberRepository;
+    private final WeatherRepository weatherRepository;
 
     @Bean
     Komoran komoran(){
@@ -52,6 +54,16 @@ public class KomoranConfig {
             keys.add(e.getName());
             keys.add(e.getCompanyName());
         });
+        weatherRepository.findAll().forEach(e->{
+            keys.add(e.getName());
+        });
+
+        keys.add("¼­¿ï");
+        keys.add("ºÎ»ê");
+        keys.add("±¤ÁÖ");
+        keys.add("ÃáÃµ");
+        keys.add("³¯¾¾");
+
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(USER_DIC));

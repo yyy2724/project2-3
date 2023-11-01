@@ -76,6 +76,7 @@ public class PayController {
         return result;
     }
 
+
 // 해당 멤버에 모든 월급내역 보여주기
     @GetMapping("/free/{memberId}/list")
     @ResponseBody

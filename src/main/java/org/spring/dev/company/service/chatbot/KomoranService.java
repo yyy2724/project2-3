@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.chatbot.AnswerDto;
 import org.spring.dev.company.dto.chatbot.ChatMessageDto;
 import org.spring.dev.company.dto.chatbot.MemberInfo;
+import org.spring.dev.company.dto.weather.WeatherInfo;
 import org.spring.dev.company.entity.chatbot.AnswerEntity;
 import org.spring.dev.company.entity.chatbot.IntentionEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
-import org.spring.dev.company.entity.weather.WeatherEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
-import org.springframework.beans.factory.annotation.Value;
+import org.spring.dev.company.service.weather.WeatherService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +28,7 @@ public class KomoranService {
     private final Komoran komoran;
     private final IntentionRepository intentionRepository;
     private final MemberRepository memberRepository;
+    private final WeatherService weatherService;
 
     public ChatMessageDto analyze(String message) {
 
