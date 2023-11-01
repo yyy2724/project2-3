@@ -12,4 +12,5 @@ public interface MovieQueryDsl {
 
     List<MovieEntity> findScheduleSearch();
 
+    MovieEntity findByDetailMovie(String movieCd);
 }

@@ -116,31 +116,13 @@ public class MovieService {
         return movieDtoList;
     }
 
-    public List<MovieDto> getMovieDetail(String movieCd) {
+    public MovieDto getMovieDetail(String movieCd) {
 
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        MovieEntity movieEntity = movieQueryDsl.findByDetailMovie(movieCd);
 
-        URI uri = UriComponentsBuilder
-                .fromUriString("http://www.kobis.or.kr")
-                .path("/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json")
-                .queryParam("key", "103cdc548e41a2c19cad71203ccf15f8")
-                .queryParam("targetDt", LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
-                .encode()
-                .build()
-                .toUri();
+        return toDto(movieEntity);
 
-        ResponseEntity<MovieResponse> result = restTemplate.exchange(uri, HttpMethod.GET, entity, MovieResponse.class);
-        if (result.getStatusCode() == HttpStatus.OK) {
-            MovieEntity movieEntity;
-            for (DailyBoxOffice movie : result.getBody().getBoxOfficeResult().getDailyBoxOfficeList()) {
-                movieEntity = toMovie(movie);
-                movieRepository.save(movieEntity);
-            }
-        } else {
-            System.out.println(result.getStatusCode());
-        }
-        return null;
     }
+
+
 }

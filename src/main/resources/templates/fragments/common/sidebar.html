@@ -63,19 +63,17 @@
                             </th:block>
                         </ul>
                     </li>
-                    <th:block sec:authorize="hasAnyRole('STAFF','FREELANCER')">
-                        <li>
-                            <a href="#">근무/근태</a>
-                            <ul class="small">
-                                <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
-                                    <li>
-                                        <a th:href="@{/work/commute}">출근/퇴근</a>
-                                    </li>
-                                    <li>
-                                        <a th:href="@{/work}">근무기록</a>
-                                    </li>
-                                </th:block>
-
+                    <th:block sec:authorize="hasAnyRole('STAFF','FREELANCER','ADMIN')">
+                    <li><a href="#">근무/근태</a>
+                        <ul class="small">
+                            <th:block sec:authorize="hasAnyRole('STAFF','ADMIN')">
+                            <li>
+                                <a th:href="@{/work/commute}">출근/퇴근</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/work}">근무기록</a>
+                            </li>
+                            </th:block>
                                 <li>
                                     <a th:href="@{/pay/payList/{memberId}(memberId=${#authentication.principal.memberEntity.id})}">월급내역</a>
                                 </li>
@@ -165,17 +163,30 @@
                     </th:block>
 
                     <th:block sec:authorize="hasAnyRole('COMPANY')">
-                        <li><a href="#">공고</a>
-                            <ul class="small">
-                                <li>
-                                    <a th:href="@{/approval/create}">공고올리기</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/approval/list}">공고요청</a>
-                                </li>
-                            </ul>
-                        </li>
+                    <li><a href="#">공고</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/approval/create}">공고올리기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/approval/list}">공고요청</a>
+                            </li>
+                        </ul>
+                    </li>
                     </th:block>
+                    <li><a href="#">API</a>
+                        <ul class="small">
+                            <li>
+                                <a th:href="@{/}">날씨보기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}">버스노선보기</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/movie/list}">영화보기</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
