@@ -6,11 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.chatbot.AnswerDto;
 import org.spring.dev.company.dto.chatbot.ChatMessageDto;
 import org.spring.dev.company.dto.chatbot.MemberInfo;
+import org.spring.dev.company.dto.weather.WeatherInfo;
 import org.spring.dev.company.entity.chatbot.AnswerEntity;
 import org.spring.dev.company.entity.chatbot.IntentionEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
+import org.spring.dev.company.repository.weather.WeatherRepository;
+import org.spring.dev.company.service.weather.WeatherService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,7 @@ public class KomoranService {
     private final Komoran komoran;
     private final IntentionRepository intentionRepository;
     private final MemberRepository memberRepository;
+    private final WeatherService weatherService;
 
     public ChatMessageDto analyze(String message) {
 
@@ -78,6 +82,20 @@ public class KomoranService {
             } else if (token.contains("도움")){
                 AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
                 chatMessageDto.answer(help);
+            } else if (token.contains("날씨")) {
+                System.out.println("======================날씨====================");
+                String city = "";
+                if (token.contains("서울")){
+                    city = "Seoul";
+                } else if (token.contains("부산")) {
+                    city = "Busan";
+                } else if (token.contains("광주")) {
+                    city = "Gwangju";
+                } else if (token.contains("춘천")) {
+                    city = "ChunCheon";
+                }
+                WeatherInfo weatherInfo = weatherService.weatherList(city);
+                answer.weatherInfo(weatherInfo);
             }
 
             chatMessageDto.answer(answer);
