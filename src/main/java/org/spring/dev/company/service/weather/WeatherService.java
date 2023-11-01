@@ -58,10 +58,9 @@ public class WeatherService {
 
     public WeatherInfo weatherList(String city) {
         Optional<WeatherEntity> optionalWeatherEntity1 = weatherRepository.findByName(city);
-        if (optionalWeatherEntity1.isPresent()){
+
             DecimalFormat df = new DecimalFormat("#.#");
-            double tempMinCelsius = optionalWeatherEntity1.get().getTemp_min() - 273.15;
-            double tempMaxCelsius = optionalWeatherEntity1.get().getTemp_max() - 273.15;
+
 
 
 
@@ -93,8 +92,9 @@ public class WeatherService {
                 .lat(response.getCoord().getLat())
                 .lon(response.getCoord().getLon())
                 .name(response.getName())
-                .temp_max(response.getMain().getTemp_max())
-                .temp_min(response.getMain().getTemp_min())
+                .temp(Double.parseDouble(df.format(response.getMain().getTemp() - 273.15)))
+                .temp_max(Double.parseDouble(df.format(response.getMain().getTemp_max() - 273.15)))
+                .temp_min(Double.parseDouble(df.format(response.getMain().getTemp_min() - 273.15)))
                 .country(response.getSys().getCountry())
                 .build();
 
@@ -107,8 +107,9 @@ public class WeatherService {
                     .id(weatherEntity.getId())
                     .city(weatherEntity.getName())
                     .country(weatherEntity.getCountry())
-                    .temp_min(String.valueOf(df.format(tempMinCelsius))
-                    .temp_max(String.valueOf(df.format(tempMinCelsius))
+                    .temp(weatherEntity.getTemp())
+                    .temp_min(weatherEntity.getTemp_min())
+                    .temp_max(weatherEntity.getTemp_max())
                     .build();
             return weatherInfo;
         }else {
@@ -116,13 +117,13 @@ public class WeatherService {
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
                     .country(optionalWeatherEntity.get().getCountry())
-                    .temp_min(String.valueOf(df.format(tempMinCelsius)))
-                    .temp_max(String.valueOf(df.format(tempMaxCelsius)))
+                    .temp_min(optionalWeatherEntity.get().getTemp_min())
+                    .temp_max(optionalWeatherEntity.get().getTemp_max())
                     .build();
             return weatherInfo;
         }
 
-    }
+
 }
 
 

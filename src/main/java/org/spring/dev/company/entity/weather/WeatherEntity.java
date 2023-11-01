@@ -28,6 +28,8 @@ public class WeatherEntity {
 
     private String country;
 
+    private double temp;
+
     private double temp_max;
 
     private double temp_min;
