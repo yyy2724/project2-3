@@ -12,9 +12,7 @@ import org.spring.dev.company.entity.chatbot.IntentionEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
-import org.spring.dev.company.repository.weather.WeatherRepository;
 import org.spring.dev.company.service.weather.WeatherService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

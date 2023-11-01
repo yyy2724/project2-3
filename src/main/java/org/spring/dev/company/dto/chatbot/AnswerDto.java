@@ -21,11 +21,9 @@ public class AnswerDto {
     private String keyword;
 
     private MemberInfo info;
-
     private WeatherInfo weatherInfo;
 
     private List<MemberInfo> memberInfoList;
-
     private List<WeatherInfo> weatherInfoList;
 
     public AnswerDto info(MemberInfo info){
@@ -37,5 +35,6 @@ public class AnswerDto {
         this.weatherInfo=weatherInfo;
         return this;
     }
+
 
 }

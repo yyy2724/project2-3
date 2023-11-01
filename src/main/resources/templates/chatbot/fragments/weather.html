@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="part" th:if="${msg.answer.weatherInfo != null}" th:fragment="weatherFragment">
+
   <div class="part" th:if="${msg.answer.weatherInfo.city != null}">
     <p>
       <br>

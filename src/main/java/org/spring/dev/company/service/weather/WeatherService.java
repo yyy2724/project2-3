@@ -10,6 +10,7 @@ import org.spring.dev.company.entity.weather.WeatherEntity;
 import org.spring.dev.company.repository.weather.WeatherRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,8 @@ public class WeatherService {
                 .lat(weatherApiDto.getCoord().getLat())
                 .lon(weatherApiDto.getCoord().getLon())
                 .name(weatherApiDto.getName())
-                .temp_max(weatherApiDto.getMain().getTemp_max())
-                .temp_min(weatherApiDto.getMain().getTemp_min())
+                .temp_max(weatherApiDto.getMain().getTemp_max() - 273.15)
+                .temp_min(weatherApiDto.getMain().getTemp_min() - 273.15)
                 .country(weatherApiDto.getSys().getCountry())
                 .build();
 
@@ -56,7 +57,7 @@ public class WeatherService {
 
 
     public WeatherInfo weatherList(String city) {
-
+        DecimalFormat df = new DecimalFormat("#.#");
 
         String appid = "b6616c0963212986998cdd8cf346c479";
         // ³¯¾¾
@@ -85,8 +86,9 @@ public class WeatherService {
                 .lat(response.getCoord().getLat())
                 .lon(response.getCoord().getLon())
                 .name(response.getName())
-                .temp_max(response.getMain().getTemp_max())
-                .temp_min(response.getMain().getTemp_min())
+                .temp(Double.parseDouble(df.format(response.getMain().getTemp() - 273.15)))
+                .temp_max(Double.parseDouble(df.format(response.getMain().getTemp_max() - 273.15)))
+                .temp_min(Double.parseDouble(df.format(response.getMain().getTemp_min() - 273.15)))
                 .country(response.getSys().getCountry())
                 .build();
 
@@ -95,23 +97,24 @@ public class WeatherService {
         if (!optionalWeatherEntity.isPresent()) {
             weatherRepository.save(weatherEntity);
 
-            WeatherInfo weatherInfo = WeatherInfo.builder()
+            return WeatherInfo.builder()
                     .id(weatherEntity.getId())
                     .city(weatherEntity.getName())
                     .country(weatherEntity.getCountry())
+                    .temp(weatherEntity.getTemp())
                     .temp_min(weatherEntity.getTemp_min())
                     .temp_max(weatherEntity.getTemp_max())
                     .build();
-            return weatherInfo;
-        }else {
-            WeatherInfo weatherInfo = WeatherInfo.builder()
+
+        } else {
+            return WeatherInfo.builder()
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
                     .country(optionalWeatherEntity.get().getCountry())
                     .temp_min(optionalWeatherEntity.get().getTemp_min())
                     .temp_max(optionalWeatherEntity.get().getTemp_max())
                     .build();
-            return weatherInfo;
+
         }
 
     }
