@@ -15,7 +15,7 @@
             <img th:src="@{/images/chatbot/chatbot_icon.png}">
         </div>
         <div class="message">
-            <div class="part" th:if="${msg.answer.keyword ne '프리랜서' or msg.answer.keyword ne '회사' or  msg.answer.info != null}">
+            <div class="part" th:if="${msg.answer.keyword ne '프리랜서' or msg.answer.keyword ne '회사' or  msg.answer.info or msg.answer.weatherInfo != null}">
                 <p th:utext="${msg.answer.content}"></p>
             </div>
             <div th:if="${msg.answer.keyword eq '프리랜서'}" >
