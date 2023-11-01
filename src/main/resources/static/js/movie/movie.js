@@ -21,8 +21,11 @@ $.ajax({
         result.salesChange
         result.salesInten
         result.salesShare
+<<<<<<< Updated upstream
         result.scrnCnt
         result.showCnt
+=======
+>>>>>>> Stashed changes
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
         alert("통신 실패.")

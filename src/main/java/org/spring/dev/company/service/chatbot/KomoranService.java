@@ -13,6 +13,14 @@ import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.service.weather.WeatherService;
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+import org.spring.dev.openApi.movie.service.MovieService;
+import org.springframework.beans.factory.annotation.Value;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +37,10 @@ public class KomoranService {
     private final IntentionRepository intentionRepository;
     private final MemberRepository memberRepository;
     private final WeatherService weatherService;
+<<<<<<< Updated upstream
+=======
+    private final MovieService movieService;
+>>>>>>> Stashed changes
 
     public ChatMessageDto analyze(String message) {
 
@@ -102,6 +114,11 @@ public class KomoranService {
                 }
 
                 answer.weatherInfo(weatherInfo);
+<<<<<<< Updated upstream
+=======
+            } else if(token.contains("영화")){
+
+>>>>>>> Stashed changes
             }
 
             chatMessageDto.answer(answer);
