@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>영화API</title>
+    <link rel="stylesheet" th:href="@{/css/movie/movie.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script th:src="@{/js/movie/movie.js}" defer></script>
+</head>
+<th:block layout:fragment="container">
+    <div class="section">
+        <div class="title">
+            <h1>어제의 Top 10</h1>
+        </div>
+        <div class="list">
+            <table>
+                <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>제목</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="list:${movieList}">
+                    <td th:text="${list.rank}"></td>
+                    <td th:text="${list.movieNm}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>
+</html>
