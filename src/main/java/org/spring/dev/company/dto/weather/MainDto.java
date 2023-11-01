@@ -8,7 +8,7 @@ public class MainDto {
     private int humidity;
     private int pressure;
     private String temp;
-    private String temp_max;
-    private String temp_min;
+    private double temp_max;
+    private double temp_min;
 
 }

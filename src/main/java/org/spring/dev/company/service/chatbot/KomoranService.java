@@ -62,7 +62,9 @@ public class KomoranService {
 
             // 1차 목록 복사
             Set<String> next = nouns.stream().collect(Collectors.toSet());
+            System.out.println(next);
             next.remove(token);
+            System.out.println(next);
 
             // 2차 분석
             AnswerDto answer = analyzeToken(next, result).toAnswerDto();
@@ -83,16 +85,22 @@ public class KomoranService {
             } else if (token.contains("날씨")){
                 System.out.println("======================날씨====================");
                 String city = "";
-                if (token.contains("서울")){
+                WeatherInfo weatherInfo = new WeatherInfo();
+                if (nouns.contains("서울")){
+                    System.out.println("서울");
                     city = "Seoul";
-                } else if (token.contains("부산")) {
+                       weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("부산")) {
                     city = "Busan";
-                } else if (token.contains("광주")) {
+                       weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("광주")) {
                     city = "Gwangju";
-                } else if (token.contains("춘천")) {
+                       weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("춘천")) {
                     city = "ChunCheon";
+                       weatherInfo = weatherService.weatherList(city);
                 }
-                WeatherInfo weatherInfo = weatherService.weatherList(city);
+
                 answer.weatherInfo(weatherInfo);
             }
 

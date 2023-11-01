@@ -9,6 +9,7 @@ import org.spring.dev.company.entity.weather.WeatherEntity;
 import org.spring.dev.company.repository.weather.WeatherRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,8 @@ public class WeatherService {
                 .lat(weatherApiDto.getCoord().getLat())
                 .lon(weatherApiDto.getCoord().getLon())
                 .name(weatherApiDto.getName())
-                .temp_max(weatherApiDto.getMain().getTemp_max())
-                .temp_min(weatherApiDto.getMain().getTemp_min())
+                .temp_max(weatherApiDto.getMain().getTemp_max() - 273.15)
+                .temp_min(weatherApiDto.getMain().getTemp_min() - 273.15)
                 .country(weatherApiDto.getSys().getCountry())
                 .build();
 
@@ -57,16 +58,21 @@ public class WeatherService {
     public WeatherInfo weatherList(String city) {
         Optional<WeatherEntity> optionalWeatherEntity = weatherRepository.findByName(city);
         if (optionalWeatherEntity.isPresent()){
+            DecimalFormat df = new DecimalFormat("#.#");
+            double tempMinCelsius = optionalWeatherEntity.get().getTemp_min() - 273.15;
+            double tempMaxCelsius = optionalWeatherEntity.get().getTemp_max() - 273.15;
+
+
             WeatherInfo weatherInfo = WeatherInfo.builder()
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
                     .country(optionalWeatherEntity.get().getCountry())
-                    .temp_min(optionalWeatherEntity.get().getTemp_min())
-                    .temp_max(optionalWeatherEntity.get().getTemp_max())
+                    .temp_min(String.valueOf(df.format(tempMinCelsius)))
+                    .temp_max(String.valueOf(df.format(tempMaxCelsius)))
                     .build();
             return weatherInfo;
         }
-        return null;
+        return WeatherInfo.builder().build();
     }
 }
 
