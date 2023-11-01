@@ -84,7 +84,7 @@ public class KomoranService {
             } else if (token.contains("도움")){
                 AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
                 chatMessageDto.answer(help);
-            } else if (token.contains("날씨")) {
+            } else if (nouns.contains("날씨")) {
                 System.out.println("======================날씨====================");
                 String city = "";
                 WeatherInfo weatherInfo = new WeatherInfo();

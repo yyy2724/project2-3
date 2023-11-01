@@ -2,6 +2,7 @@ package org.spring.dev.company.service.weather;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.spring.dev.company.config.OpenApiUtil;
 import org.spring.dev.company.dto.weather.Weather;
 import org.spring.dev.company.dto.weather.WeatherApiDto;
 import org.spring.dev.company.dto.weather.WeatherInfo;
@@ -55,8 +56,54 @@ public class WeatherService {
 
 
     public WeatherInfo weatherList(String city) {
-        Optional<WeatherEntity> optionalWeatherEntity = weatherRepository.findByName(city);
-        if (optionalWeatherEntity.isPresent()){
+
+
+        String appid = "b6616c0963212986998cdd8cf346c479";
+        // 날씨
+        String apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid; // JSON 결과
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("Content-type", "application/json");
+
+        String responseBody = OpenApiUtil.get(apiURL, requestHeaders);
+        System.out.println(" <<  return " + responseBody);
+
+        // JSON -> DB
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(" <<  responseBody " + responseBody);
+
+        WeatherApiDto response = null;
+        try {
+            // json 문자열데이터를 -> 클래스에 매핑
+            response = objectMapper.readValue(responseBody, WeatherApiDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(" <<  WeatherApiDto " + response);
+
+        WeatherEntity weatherEntity = WeatherEntity.builder()
+                .lat(response.getCoord().getLat())
+                .lon(response.getCoord().getLon())
+                .name(response.getName())
+                .temp_max(response.getMain().getTemp_max())
+                .temp_min(response.getMain().getTemp_min())
+                .country(response.getSys().getCountry())
+                .build();
+
+        Optional<WeatherEntity> optionalWeatherEntity
+                = weatherRepository.findByName(response.getName());
+        if (!optionalWeatherEntity.isPresent()) {
+            weatherRepository.save(weatherEntity);
+
+            WeatherInfo weatherInfo = WeatherInfo.builder()
+                    .id(weatherEntity.getId())
+                    .city(weatherEntity.getName())
+                    .country(weatherEntity.getCountry())
+                    .temp_min(weatherEntity.getTemp_min())
+                    .temp_max(weatherEntity.getTemp_max())
+                    .build();
+            return weatherInfo;
+        }else {
             WeatherInfo weatherInfo = WeatherInfo.builder()
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
@@ -66,7 +113,7 @@ public class WeatherService {
                     .build();
             return weatherInfo;
         }
-        return WeatherInfo.builder().build();
+
     }
 }
 

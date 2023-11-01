@@ -40,7 +40,10 @@ function weatherFn(cityVal) {
             console.log(result);
             let lon = result.coord.lon; // 경도
             let lat = result.coord.lat; //위도
-
+            result.main.temp.value = Math.floor(result.main.temp - 273.15);
+            result.main.temp_max.value = Math.floor(result.main.temp_max - 273.15)+ 'º';
+            result.main.temp_max.value = Math.floor(result.main.temp_max - 273.15)+ 'º';
+            console.log(result.main.temp_max);
             weatherCreate(result);
 
             console.log(lon, lat);
