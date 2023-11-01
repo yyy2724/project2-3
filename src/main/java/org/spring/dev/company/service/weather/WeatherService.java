@@ -66,7 +66,7 @@ public class WeatherService {
                     .build();
             return weatherInfo;
         }
-        return null;
+        return WeatherInfo.builder().build();
     }
 }
 
