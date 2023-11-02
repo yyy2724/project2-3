@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="part" th:if="${msg.answer.weatherInfo != null}" th:fragment="weatherFragment">
+<script th:src="@{/js/weather/weatherCust.js}" defer></script>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-  <div class="part" th:if="${msg.answer.weatherInfo.city != null}">
-    <div class="right-con">
-      <div class="map-con">
-        <div id="map" style="width:100%;height:350px;"></div>
-      </div>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=95e2a555b3d507a2e61f27a2afd5fd0d&libraries=services,clusterer,drawing" async></script>
+</head>
+<div class="part" th:if="${msg.answer.weatherInfo != null}" th:fragment="weatherFragment">
+    <div class="part" th:if="${msg.answer.weatherInfo.city != null}">
+        <div>
+            <input type="hidden" id="lat" th:value="${msg.answer.weatherInfo.lat}">
+            <input type="hidden" id="lon" th:value="${msg.answer.weatherInfo.lon}">
+            <div class="right-con">
+                <div class="map-con">
+                    <div id="map" style="width:250px;height:150px;"></div>
+                </div>
+            </div>
+            <p>
+                <br>
+                <span id="search" th:text="${msg.answer.weatherInfo.city}"></span><br>
+                <span th:text="${msg.answer.weatherInfo.country}"></span><br>
+                <span>최고기온: </span><span th:text="${msg.answer.weatherInfo.temp_max}"></span><br>
+                <span>최저기온: </span><span th:text="${msg.answer.weatherInfo.temp_min}"></span>
+                <!--            <span>최저기온: </span><span th:text="${msg.answer.weatherInfo.lat}"></span>-->
+                <!--            <span>최저기온: </span><span th:text="${msg.answer.weatherInfo.lon}"></span>-->
+            </p>
+        </div>
+        <!--         java-->
     </div>
-    <p>
-      <br>
-      <span th:text="${msg.answer.weatherInfo.city}"></span><br>
-      <span th:text="${msg.answer.weatherInfo.country}"></span><br>
-      <span>최고기온: </span><span th:text="${msg.answer.weatherInfo.temp_max}"></span><br>
-      <span>최저기온: </span><span th:text="${msg.answer.weatherInfo.temp_min}"></span>
-    </p>
-  </div>
-  <div class="part" th:if="${msg.answer.weatherInfo.city == null}">
-    <p>
-      날씨정보를 조회할 수 없습니다.
-    </p>
-  </div>
+    <div class="part" th:if="${msg.answer.weatherInfo.city == null}">
+        <p>
+            날씨정보를 조회할 수 없습니다.
+        </p>
+    </div>
 </div>
+
 </html>
