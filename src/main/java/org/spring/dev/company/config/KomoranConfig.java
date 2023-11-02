@@ -64,11 +64,11 @@ public class KomoranConfig {
         });
 
 
-        keys.add("¼­¿ï");
-        keys.add("ºÎ»ê");
-        keys.add("±¤ÁÖ");
-        keys.add("ÃáÃµ");
-        keys.add("³¯¾¾");
+        keys.add("ì„œìš¸");
+        keys.add("ë¶€ì‚°");
+        keys.add("ê´€ì£¼");
+        keys.add("ì¶˜ì²œ");
+        keys.add("ë‚ ì”¨");
 
 
         try {
