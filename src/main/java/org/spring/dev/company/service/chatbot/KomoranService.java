@@ -57,7 +57,7 @@ public class KomoranService {
                 .build();
 
 
-        for(String token: nouns){
+        for (String token : nouns) {
 
             // 1차 의도 존재 파악
             Optional<IntentionEntity> result = decisionTree(token, null);
@@ -72,7 +72,6 @@ public class KomoranService {
 
             // 2차 분석
             AnswerDto answer = analyzeToken(next, result).toAnswerDto();
-
             // 탐색
             if (token.contains("프리랜서")) {
                 MemberInfo freelancer = analyzeTokenIsUser(next);
@@ -83,41 +82,40 @@ public class KomoranService {
             } else if (token.contains("회사")) {
                 MemberInfo company = analyzeTokenIsCompany(next);
                 answer.info(company);
-            } else if (token.contains("도움")){
+            } else if (token.contains("도움")) {
                 AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
                 chatMessageDto.answer(help);
-            } else if (nouns.contains("날씨")) {
-                System.out.println("======================날씨====================");
-                String city = "";
-                WeatherInfo weatherInfo = new WeatherInfo();
-                if (nouns.contains("서울")){
-                    System.out.println("서울");
-                    city = "Seoul";
-                       weatherInfo = weatherService.weatherList(city);
-                } else if (nouns.contains("부산")) {
-                    city = "Busan";
-                       weatherInfo = weatherService.weatherList(city);
-                } else if (nouns.contains("광주")) {
-                    city = "Gwangju";
-                       weatherInfo = weatherService.weatherList(city);
-                } else if (nouns.contains("춘천")) {
-                    city = "ChunCheon";
-                       weatherInfo = weatherService.weatherList(city);
-                }
-
-                answer.weatherInfo(weatherInfo);
-            }
-
+            }else if(token.contains("영화")){
                 String movie = "";
                 List<MovieDto> movieInfo = null;
 //                if (nouns.contains("목록")) {
 //                    System.out.println("목록");
 //                    movie = "목록";
-                  movieInfo = movieService.getMovieList();
+                movieInfo = movieService.getMovieList();
 //                }
                 answer.movieInfoList(movieInfo);
+                chatMessageDto.answer(answer);
+            }else if (nouns.contains("날씨")) {
+                System.out.println("======================날씨====================");
+                String city = "";
+                WeatherInfo weatherInfo = new WeatherInfo();
+                if (nouns.contains("서울")) {
+                    System.out.println("서울");
+                    city = "Seoul";
+                    weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("부산")) {
+                    city = "Busan";
+                    weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("광주")) {
+                    city = "Gwangju";
+                    weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("춘천")) {
+                    city = "ChunCheon";
+                    weatherInfo = weatherService.weatherList(city);
+                }
 
-
+                answer.weatherInfo(weatherInfo);
+            }
             chatMessageDto.answer(answer);
             return chatMessageDto;
 
