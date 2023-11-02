@@ -15,7 +15,9 @@
             <input type="hidden" id="lat" th:value="${msg.answer.weatherInfo.lat}">
             <input type="hidden" id="lon" th:value="${msg.answer.weatherInfo.lon}">
             <div class="right-con">
-                <div class="map-con">
+                <div class="map-con"
+                     th:attr="data-class=${msg.answer.weatherInfo.name}"
+                     th:classappend="${msg.answer.weatherInfo.name}">
                     <div id="map" style="width:250px;height:150px;"></div>
                 </div>
             </div>
