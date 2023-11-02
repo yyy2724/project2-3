@@ -13,10 +13,13 @@ import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.service.weather.WeatherService;
+import org.spring.dev.openApi.movie.dto.MovieDto;
+import org.spring.dev.openApi.movie.service.MovieService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,6 +32,7 @@ public class KomoranService {
     private final IntentionRepository intentionRepository;
     private final MemberRepository memberRepository;
     private final WeatherService weatherService;
+    private final MovieService movieService;
 
     public ChatMessageDto analyze(String message) {
 
@@ -103,6 +107,16 @@ public class KomoranService {
 
                 answer.weatherInfo(weatherInfo);
             }
+
+                String movie = "";
+                List<MovieDto> movieInfo = null;
+//                if (nouns.contains("목록")) {
+//                    System.out.println("목록");
+//                    movie = "목록";
+                  movieInfo = movieService.getMovieList();
+//                }
+                answer.movieInfoList(movieInfo);
+
 
             chatMessageDto.answer(answer);
             return chatMessageDto;

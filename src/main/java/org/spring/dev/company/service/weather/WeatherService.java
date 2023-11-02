@@ -66,11 +66,9 @@ public class WeatherService {
         requestHeaders.put("Content-type", "application/json");
 
         String responseBody = OpenApiUtil.get(apiURL, requestHeaders);
-        System.out.println(" <<  return " + responseBody);
 
         // JSON -> DB
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(" <<  responseBody " + responseBody);
 
         WeatherApiDto response = null;
         try {

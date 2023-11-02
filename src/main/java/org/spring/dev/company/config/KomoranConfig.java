@@ -5,6 +5,7 @@ import kr.co.shineware.nlp.komoran.core.Komoran;
 import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.repository.weather.WeatherRepository;
+import org.spring.dev.openApi.movie.repository.MovieRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,7 @@ public class KomoranConfig {
     private String USER_DIC = "user.dic";
     private final MemberRepository memberRepository;
     private final WeatherRepository weatherRepository;
+    private final MovieRepository movieRepository;
 
     @Bean
     Komoran komoran(){
@@ -57,10 +59,14 @@ public class KomoranConfig {
         weatherRepository.findAll().forEach(e->{
             keys.add(e.getName());
         });
+        movieRepository.findAll().forEach(e->{
+            keys.add(e.getMovieNm());
+        });
+
 
         keys.add("서울");
-        keys.add("광주");
         keys.add("부산");
+        keys.add("관주");
         keys.add("춘천");
         keys.add("날씨");
 

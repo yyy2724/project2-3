@@ -26,10 +26,52 @@
                 <tbody>
                 <tr th:each="list:${movieList}">
                     <td th:text="${list.rank}"></td>
-                    <td th:text="${list.movieNm}"></td>
+                    <td th:text="${list.movieNm}" class="movieName" th:value="${list.movieCd}"></td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="modal">
+        <div class="modal-content">
+            <div class="btn">
+                <span class="red">
+                    <a th:href="@{/movie/list}" class="btn-close"></a>
+                </span>
+                <span class="yellow">
+                    <a th:href="@{/movie/list}"></a>
+                </span>
+                <span class="green">
+                    <a th:href="@{/movie/list}"></a>
+                </span>
+            </div>
+            <div class="modal-header">
+                <div class="name">
+
+                </div>
+                <h1>의 정보✨</h1>
+            </div>
+            <div class="modal-main">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>제목</th>
+                        <th>개봉일자</th>
+                        <th>누적관객수</th>
+                        <th>영화코드</th>
+                    </tr>
+                    </thead>
+                    <tbody class="modal-table">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="close">
+                    <a th:href="@{/movie/list}" class="btn-close">닫기</a>
+                </div>
+            </div>
         </div>
     </div>
 </th:block>

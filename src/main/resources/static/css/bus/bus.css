@@ -1,0 +1,164 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bus{
+    flex-basis: 1200px;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.bus .bus-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.bus .bus-header h2{
+    color: #777777;
+}
+
+.bus .bus-header .search{
+    padding: 50px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.bus .bus-header .search input{
+    width: 300px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 10px 10px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.bus .bus-header .search button{
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.bus .bus-header .search button:hover{
+    background-color: #000;
+    color: #fff;
+}
+
+/* table */
+table.bus-table{
+    width: 100%;
+    height: auto;
+    border: 1px #fff solid;
+    font-size: .9em;
+    border-collapse: collapse;
+    table-layout: fixed;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #fff;
+    text-align: center;
+    color: #222;
+    border-bottom: 2px solid #222;
+}
+
+td, th {
+    padding: 1em .5em;
+    vertical-align: middle;
+
+}
+
+td {
+    background: #fff;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.th1{
+    width: 15%;
+}
+
+.th2{
+    width: 20%;
+}
+
+.th3{
+    width: 20%;
+}
+
+.th4{
+    width: 10%;
+}
+
+.th5{
+    width: 10%;
+}
+
+.th6{
+    width: 5%;
+}
+
+.th7{
+    width: 10%;
+}
+
+.th8{
+    width: 10%;
+}
+
+
+
+td.td-station{
+    color: #4F86C6;
+    cursor: pointer;
+}
+
+td.td-station:hover{
+    text-decoration: underline;
+}
+
+/* bus-map */
+.bus-map h1.bus-title{
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.bus-map{
+    padding: 50px 0;
+    box-sizing: border-box;
+    
+}
+
+.bus-map .left-bus{
+    padding: 50px 0;
+    box-sizing: border-box;
+}
+
+.bus-map .left-bus .bus-station{
+    height: 500px;
+    overflow: auto;
+}
+
+.bus-map .right-map .mymap{
+    width: 100%;
+}
+
+
