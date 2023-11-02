@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout/writeLayout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BUS API</title>
+  <script th:src="@{/js/bus/bus.js}" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea70efe392b67a8dc82148d7ac6f0e06&libraries=services,clusterer,drawing"></script>
+  <link rel="stylesheet" th:href="@{/css/bus/bus.css}">
+</head>
+
+<body>
+<th:block layout:fragment="container">
+  <div class="container">
+        <div class="bus">
+            <div class="bus-header">
+              <h1 class="bus-title">버스노선</h1>
+              <h2 class="bus-title">버스노선을 조회하세요</h2>
+              <div class="search">
+                <input type="text" name="search" id="search" placeholder="버스 노선을 입력해 주세요.">
+                <button id="busBtn" onclick="busSearch()">조회</button>
+              </div>
+            </div>
+            <div class="list">
+              <table class="bus-table" border="1">
+                <thead>
+                <tr>
+                  <th class="th1">노선명</th>
+                  <th class="th2">기점</th>
+                  <th class="th3">종점</th>
+                  <th class="th4">첫차시간</th>
+                  <th class="th5">막차시간</th>
+                  <th class="th6">배차간격</th>
+                  <th class="th7">버스위치정보</th>
+                  <th class="th8">버스타입</th>
+                </tr>
+                </thead>
+                <tbody id="bus1">
+
+
+                </tbody>
+              </table>
+            </div>
+
+          <div class="bus-map">
+            <h1 class="bus-title">정류장 정보</h1>
+
+            <div class="left-bus">
+              <div class="bus-station">
+              </div>
+            </div>
+            <div class="right-map">
+              <section id="mymap" style="width: 100%;">
+                <div class="wrap" id="map" style="width:100%;height:100vh;">
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+</body>
+
+</html>
