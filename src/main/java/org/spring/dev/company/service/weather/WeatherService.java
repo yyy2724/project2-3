@@ -82,41 +82,45 @@ public class WeatherService {
 
         System.out.println(" <<  WeatherApiDto " + response);
 
-        WeatherEntity weatherEntity = WeatherEntity.builder()
-                .lat(response.getCoord().getLat())
-                .lon(response.getCoord().getLon())
-                .name(response.getName())
-                .temp(Double.parseDouble(df.format(response.getMain().getTemp() - 273.15)))
-                .temp_max(Double.parseDouble(df.format(response.getMain().getTemp_max() - 273.15)))
-                .temp_min(Double.parseDouble(df.format(response.getMain().getTemp_min() - 273.15)))
-                .country(response.getSys().getCountry())
-                .build();
-
-        Optional<WeatherEntity> optionalWeatherEntity
-                = weatherRepository.findByName(response.getName());
-        if (!optionalWeatherEntity.isPresent()) {
-            weatherRepository.save(weatherEntity);
-
-            return WeatherInfo.builder()
-                    .id(weatherEntity.getId())
-                    .city(weatherEntity.getName())
-                    .country(weatherEntity.getCountry())
-                    .temp(weatherEntity.getTemp())
-                    .temp_min(weatherEntity.getTemp_min())
-                    .temp_max(weatherEntity.getTemp_max())
+        WeatherEntity weatherEntity = null;
+        if (response != null) {
+            weatherEntity = WeatherEntity.builder()
+                    .lat(response.getCoord().getLat())
+                    .lon(response.getCoord().getLon())
+                    .name(response.getName())
+                    .temp(Double.parseDouble(df.format(response.getMain().getTemp() - 273.15)))
+                    .temp_max(Double.parseDouble(df.format(response.getMain().getTemp_max() - 273.15)))
+                    .temp_min(Double.parseDouble(df.format(response.getMain().getTemp_min() - 273.15)))
+                    .country(response.getSys().getCountry())
                     .build();
 
-        } else {
-            return WeatherInfo.builder()
-                    .id(optionalWeatherEntity.get().getId())
-                    .city(optionalWeatherEntity.get().getName())
-                    .country(optionalWeatherEntity.get().getCountry())
-                    .temp_min(optionalWeatherEntity.get().getTemp_min())
-                    .temp_max(optionalWeatherEntity.get().getTemp_max())
-                    .build();
 
+            Optional<WeatherEntity> optionalWeatherEntity
+                    = weatherRepository.findByName(response.getName());
+            if (!optionalWeatherEntity.isPresent()) {
+                weatherRepository.save(weatherEntity);
+
+                return WeatherInfo.builder()
+                        .id(weatherEntity.getId())
+                        .city(weatherEntity.getName())
+                        .country(weatherEntity.getCountry())
+                        .temp(weatherEntity.getTemp())
+                        .temp_min(weatherEntity.getTemp_min())
+                        .temp_max(weatherEntity.getTemp_max())
+                        .build();
+
+            } else {
+                return WeatherInfo.builder()
+                        .id(optionalWeatherEntity.get().getId())
+                        .city(optionalWeatherEntity.get().getName())
+                        .country(optionalWeatherEntity.get().getCountry())
+                        .temp_min(optionalWeatherEntity.get().getTemp_min())
+                        .temp_max(optionalWeatherEntity.get().getTemp_max())
+                        .build();
+
+            }
         }
-
+        return null;
     }
 }
 
