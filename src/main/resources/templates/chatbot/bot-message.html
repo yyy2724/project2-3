@@ -27,6 +27,9 @@
             <div th:if="${msg.answer.keyword eq '날씨'}">
                 <div th:replace="~{chatbot/fragments/weather :: weatherFragment}"></div>
             </div>
+            <div th:if="${msg.answer.keyword eq '영화'}">
+                <div th:replace="~{chatbot/fragments/movie :: movieFragment}"></div>
+            </div>
 
             <div class="time" th:text="${msg.time}">메세지 작성 시간</div>
         </div>

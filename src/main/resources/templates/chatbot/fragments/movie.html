@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="part" th:if="${msg.answer.movieInfoList != null}" th:fragment="movieFragment">
+
+  <div class="part" th:if="${msg.answer.movieInfoList != null}">
+    <p>
+      <br>
+          <span>영화 best 10 : </span>
+          <table>
+          <thead>
+          <tr>
+            <th>영화 목록</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="movie:${msg.answer.movieInfoList}">
+            <td th:text="${movie.movieNm}"></td>
+          </tr>
+          </tbody>
+          </table>
+<!--          <th:block each="movie:${msg.answer.movieInfoList}">-->
+    <!--            <span th:text="${movie.rank}"> | </span>-->
+    <!--          </th:block>-->
+    </p>
+  </div>
+  <div class="part" th:if="${msg.answer.movieInfoList == null}">
+    <p>
+      영화를 조회할 수 없습니다.
+    </p>
+  </div>
+</div>
+</html>
