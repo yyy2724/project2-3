@@ -26,10 +26,10 @@ public class BasiController {
     return "movie/index";
   }
 
-  @GetMapping("/bus")
-  public String bus() {
-    return "bus/index";
-  }
+//  @GetMapping("/bus")
+//  public String bus() {
+//    return "bus/index";
+//  }
 
 
   @GetMapping("/chat")

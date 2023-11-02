@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.spring.dev.company.dto.weather.WeatherInfo;
+import org.spring.dev.openApi.bus.BusInfo;
 import org.spring.dev.openApi.movie.dto.MovieDto;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class AnswerDto {
     private List<MemberInfo> memberInfoList;
     private List<WeatherInfo> weatherInfoList;
     private List<MovieDto> movieInfoList;
+    private List<BusInfo> busInfos;
 
 
     public AnswerDto info(MemberInfo info){
