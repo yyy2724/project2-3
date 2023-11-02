@@ -3,6 +3,11 @@
 <div class="part" th:if="${msg.answer.weatherInfo != null}" th:fragment="weatherFragment">
 
   <div class="part" th:if="${msg.answer.weatherInfo.city != null}">
+    <div class="right-con">
+      <div class="map-con">
+        <div id="map" style="width:100%;height:350px;"></div>
+      </div>
+    </div>
     <p>
       <br>
       <span th:text="${msg.answer.weatherInfo.city}"></span><br>
