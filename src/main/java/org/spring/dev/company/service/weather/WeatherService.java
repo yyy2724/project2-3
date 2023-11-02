@@ -28,8 +28,8 @@ public class WeatherService {
                 .lat(weatherApiDto.getCoord().getLat())
                 .lon(weatherApiDto.getCoord().getLon())
                 .name(weatherApiDto.getName())
-                .temp_max(weatherApiDto.getMain().getTemp_max() - 273.15)
-                .temp_min(weatherApiDto.getMain().getTemp_min() - 273.15)
+                .temp_max(weatherApiDto.getMain().getTemp_max())
+                .temp_min(weatherApiDto.getMain().getTemp_min())
                 .country(weatherApiDto.getSys().getCountry())
                 .build();
 
@@ -57,7 +57,6 @@ public class WeatherService {
 
 
     public WeatherInfo weatherList(String city) {
-        DecimalFormat df = new DecimalFormat("#.#");
 
         String appid = "b6616c0963212986998cdd8cf346c479";
         // ³¯¾¾
@@ -84,9 +83,9 @@ public class WeatherService {
                 .lat(response.getCoord().getLat())
                 .lon(response.getCoord().getLon())
                 .name(response.getName())
-                .temp(Double.parseDouble(df.format(response.getMain().getTemp() - 273.15)))
-                .temp_max(Double.parseDouble(df.format(response.getMain().getTemp_max() - 273.15)))
-                .temp_min(Double.parseDouble(df.format(response.getMain().getTemp_min() - 273.15)))
+                .temp(response.getMain().getTemp())
+                .temp_max(response.getMain().getTemp_max())
+                .temp_min(response.getMain().getTemp_min())
                 .country(response.getSys().getCountry())
                 .build();
 
@@ -109,6 +108,7 @@ public class WeatherService {
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
                     .country(optionalWeatherEntity.get().getCountry())
+                    .temp(weatherEntity.getTemp())
                     .temp_min(optionalWeatherEntity.get().getTemp_min())
                     .temp_max(optionalWeatherEntity.get().getTemp_max())
                     .build();

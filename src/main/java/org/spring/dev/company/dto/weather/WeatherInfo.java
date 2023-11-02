@@ -15,10 +15,10 @@ public class WeatherInfo {
 
     private String country;
 
-    private double temp;
+    private String temp;
 
-    private double temp_max;
+    private String temp_max;
 
-    private double temp_min;
+    private String temp_min;
 
 }
