@@ -13,20 +13,14 @@ import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
 import org.spring.dev.company.service.weather.WeatherService;
-import org.spring.dev.openApi.bus.BusDto;
-import org.spring.dev.openApi.bus.BusEntity;
-import org.spring.dev.openApi.bus.BusInfo;
-import org.spring.dev.openApi.bus.BusRepository;
+import org.spring.dev.openApi.bus.*;
 import org.spring.dev.openApi.movie.dto.MovieDto;
 import org.spring.dev.openApi.movie.service.MovieService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +32,7 @@ public class KomoranService {
     private final MemberRepository memberRepository;
     private final WeatherService weatherService;
     private final MovieService movieService;
-    private final BusRepository busRepository;
+    private final BusService busService;
 
     public ChatMessageDto analyze(String message) {
 
@@ -61,6 +55,7 @@ public class KomoranService {
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
                 .time(today.format(timeFormatter))
                 .build();
+        List<BusInfo> busInfos = new ArrayList<>();
 
 
         for(String token: nouns){
@@ -93,10 +88,10 @@ public class KomoranService {
                 AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
                 chatMessageDto.answer(help);
             } else if (token.contains("버스")) {
-                BusInfo busInfo = new BusInfo();
-                if (nouns.contains("노선")) {
-                    busInfo = analyzeTokenIsBusRouteNm("370");
-                }
+                String rs = next.toString();
+                rs = rs.replaceAll("\\[|\\]", "");
+                busInfos = busService.getBusList(rs);
+                answer.busInfoList(busInfos);
             }
             else if (nouns.contains("날씨")) {
                 System.out.println("======================날씨====================");
@@ -120,14 +115,14 @@ public class KomoranService {
                 answer.weatherInfo(weatherInfo);
             }
 
-                String movie = "";
-                List<MovieDto> movieInfo = null;
-//                if (nouns.contains("목록")) {
-//                    System.out.println("목록");
-//                    movie = "목록";
-                  movieInfo = movieService.getMovieList();
-//                }
-                answer.movieInfoList(movieInfo);
+//                String movie = "";
+//                List<MovieDto> movieInfo = null;
+////                if (nouns.contains("목록")) {
+////                    System.out.println("목록");
+////                    movie = "목록";
+//                  movieInfo = movieService.getMovieList();
+////                }
+//                answer.movieInfoList(movieInfo);
 
 
             chatMessageDto.answer(answer);
@@ -202,76 +197,6 @@ public class KomoranService {
         return MemberInfo.builder().build();
     }
 
-    private BusInfo analyzeTokenIsBusRouteNm(String busId) {
-
-        Optional<BusEntity> bus = busRepository.findByBusRouteNm(busId);
-
-        if (!bus.isPresent()) return BusInfo.builder().build();
-
-        String busRouteNm = bus.get().getBusRouteNm();  // 버스 노선
-        String firstBusTm = bus.get().getFirstBusTm(); //첫차
-        String lastLowTm = bus.get().getLastLowTm(); // 막차
-        String term = bus.get().getTerm(); // 배차시간
-        String busRouteId = bus.get().getBusRouteId();// 버스 기본 ID
-
-        return BusInfo.builder()
-                .busRouteNm(busRouteNm)
-                .firstBusTm(firstBusTm)
-                .lastLowTm(lastLowTm)
-                .term(term)
-                .busRouteId(busRouteId)
-                .build();
-    }
-
-
-
-    private BusInfo analyzeTokenIsLastLowTm(Set<String> next) {
-
-        for (String name : next) {
-            Optional<BusEntity> bus = busRepository.findByLastLowTm(name);
-            if (!bus.isPresent()) continue;
-
-            String busRouteNm = bus.get().getBusRouteNm();  // 버스 노선
-            String firstBusTm = bus.get().getFirstBusTm(); //첫차
-            String lastLowTm = bus.get().getLastLowTm(); // 막차
-            String term = bus.get().getTerm(); // 배차시간
-            String busRouteId = bus.get().getBusRouteId();// 버스 기본 ID
-
-            return BusInfo.builder()
-                    .busRouteNm(busRouteNm)
-                    .firstBusTm(firstBusTm)
-                    .lastLowTm(lastLowTm)
-                    .term(term)
-                    .busRouteId(busRouteId)
-                    .build();
-        }
-
-        return BusInfo.builder().build();
-    }
-
-    private BusInfo analyzeTokenIsTerm(Set<String> next) {
-
-        for (String name : next) {
-            Optional<BusEntity> bus = busRepository.findByTerm(name);
-            if (!bus.isPresent()) continue;
-
-            String busRouteNm = bus.get().getBusRouteNm();  // 버스 노선
-            String firstBusTm = bus.get().getFirstBusTm(); //첫차
-            String lastLowTm = bus.get().getLastLowTm(); // 막차
-            String term = bus.get().getTerm(); // 배차시간
-            String busRouteId = bus.get().getBusRouteId();// 버스 기본 ID
-
-            return BusInfo.builder()
-                    .busRouteNm(busRouteNm)
-                    .firstBusTm(firstBusTm)
-                    .lastLowTm(lastLowTm)
-                    .term(term)
-                    .busRouteId(busRouteId)
-                    .build();
-        }
-
-        return BusInfo.builder().build();
-    }
 
 
 }
