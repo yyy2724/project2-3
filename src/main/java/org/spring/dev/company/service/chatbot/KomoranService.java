@@ -6,16 +6,20 @@ import lombok.RequiredArgsConstructor;
 import org.spring.dev.company.dto.chatbot.AnswerDto;
 import org.spring.dev.company.dto.chatbot.ChatMessageDto;
 import org.spring.dev.company.dto.chatbot.MemberInfo;
+import org.spring.dev.company.dto.weather.WeatherInfo;
 import org.spring.dev.company.entity.chatbot.AnswerEntity;
 import org.spring.dev.company.entity.chatbot.IntentionEntity;
 import org.spring.dev.company.entity.member.MemberEntity;
 import org.spring.dev.company.repository.chatbot.IntentionRepository;
 import org.spring.dev.company.repository.member.MemberRepository;
-import org.springframework.beans.factory.annotation.Value;
+import org.spring.dev.company.service.weather.WeatherService;
+import org.spring.dev.openApi.movie.dto.MovieDto;
+import org.spring.dev.openApi.movie.service.MovieService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +31,8 @@ public class KomoranService {
     private final Komoran komoran;
     private final IntentionRepository intentionRepository;
     private final MemberRepository memberRepository;
+    private final WeatherService weatherService;
+    private final MovieService movieService;
 
     public ChatMessageDto analyze(String message) {
 
@@ -60,7 +66,9 @@ public class KomoranService {
 
             // 1차 목록 복사
             Set<String> next = nouns.stream().collect(Collectors.toSet());
+            System.out.println(next);
             next.remove(token);
+            System.out.println(next);
 
             // 2차 분석
             AnswerDto answer = analyzeToken(next, result).toAnswerDto();
@@ -78,7 +86,37 @@ public class KomoranService {
             } else if (token.contains("도움")){
                 AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
                 chatMessageDto.answer(help);
+            } else if (nouns.contains("날씨")) {
+                System.out.println("======================날씨====================");
+                String city = "";
+                WeatherInfo weatherInfo = new WeatherInfo();
+                if (nouns.contains("서울")){
+                    System.out.println("서울");
+                    city = "Seoul";
+                       weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("부산")) {
+                    city = "Busan";
+                       weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("광주")) {
+                    city = "Gwangju";
+                       weatherInfo = weatherService.weatherList(city);
+                } else if (nouns.contains("춘천")) {
+                    city = "ChunCheon";
+                       weatherInfo = weatherService.weatherList(city);
+                }
+
+                answer.weatherInfo(weatherInfo);
             }
+
+                String movie = "";
+                List<MovieDto> movieInfo = null;
+//                if (nouns.contains("목록")) {
+//                    System.out.println("목록");
+//                    movie = "목록";
+                  movieInfo = movieService.getMovieList();
+//                }
+                answer.movieInfoList(movieInfo);
+
 
             chatMessageDto.answer(answer);
             return chatMessageDto;

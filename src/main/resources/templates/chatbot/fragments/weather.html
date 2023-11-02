@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="part" th:if="${msg.answer.weatherInfo != null}" th:fragment="weatherFragment">
+
+  <div class="part" th:if="${msg.answer.weatherInfo.city != null}">
+    <p>
+      <br>
+      <span th:text="${msg.answer.weatherInfo.city}"></span><br>
+      <span th:text="${msg.answer.weatherInfo.country}"></span><br>
+      <span>최고기온: </span><span th:text="${msg.answer.weatherInfo.temp_max}"></span><br>
+      <span>최저기온: </span><span th:text="${msg.answer.weatherInfo.temp_min}"></span>
+    </p>
+  </div>
+  <div class="part" th:if="${msg.answer.weatherInfo.city == null}">
+    <p>
+      날씨정보를 조회할 수 없습니다.
+    </p>
+  </div>
+</div>
+</html>

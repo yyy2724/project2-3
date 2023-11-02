@@ -1,0 +1,160 @@
+@import url(/css/common/reset.css);
+@import url(/css/common/header.css);
+@import url(/css/common/sidebar.css);
+body{
+    overflow: hidden;
+}
+.section{
+    width: 1720px;
+    text-align: center;
+}
+.section .title{
+    padding: 20px;
+    padding-bottom: 40px;
+    color: darkblue;
+}
+.section .list{
+    display: flex;
+    justify-content: center;
+}
+* table */
+table, th, td{
+    border-collapse: collapse;
+    border: 1px solid #9e9e9e;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    padding: 10px;
+    color: gray;
+}
+.section .list table{
+    width: 800px;
+}
+.section .list table tbody{
+    height: 60vh;
+    font-size: 20px;
+}
+.section .list table thead tr th{
+    border-bottom: double 3px #152161;
+    font-size: 22px;
+    padding: 10px;
+}
+.section .list table tbody tr td{
+    padding: 15px 10px 15px 10px;
+}
+.section .list table tbody tr td.movieName:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+/* modal */
+.modal{
+    position: fixed;
+    background-color: #eaeaf07b;
+    top:0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+    display: none;
+}
+.modal-content{
+    background-color: #282c34;
+    border-radius: 10px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    color: #abb2bf;
+    gap: 20px;
+}
+/* modal-btn */
+.modal-content .btn{
+    display: flex;
+    padding: 10px;
+    background-color: #434041;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.modal-content .btn span{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 5px;
+    line-height: 23px;
+}
+.modal-content .btn span:hover{
+    opacity: 0.3;
+}
+span.red{
+    background-color: #f5655b;
+}
+span.yellow{
+    background-color: #f6bd3b;
+}
+span.green{
+    background-color: #43c645;
+}
+/* modal-header */
+.modal .modal-content .modal-header{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+    gap: 5px;
+    line-height: 40px;
+}
+.modal .modal-content .modal-header .name{
+    color: #CBEB08;
+}
+/* modal-main */
+.modal .modal-content .modal-main{
+    height: 200px;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+}
+/* modal table */
+.modal .modal-content .modal-main table{
+    padding: 80px;
+}
+.modal .modal-content .modal-main table thead{
+    font-weight: bold;
+}
+.modal .modal-content .modal-main table tbody{
+    font-size: 20px;
+}
+.modal .modal-content .modal-main table thead tr th{
+    border-bottom: 3px solid #ffffff;
+    font-size: 25px;
+    padding: 10px;
+}
+.modal .modal-content .modal-main table tbody tr td{
+    padding: 15px 10px 15px 10px;
+}
+/* modal-footer */
+.modal .modal-content .modal-footer{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 23px;
+ }
+ .modal .modal-content .modal-footer .close{
+    padding: 10px;
+    background-color: #4e5169;
+    width: 150px;
+    border-radius: 10px;
+    transition: all 0.5s;
+}
+.modal .modal-content .modal-footer .close a{
+    color: white;
+}
+.modal .modal-content .modal-footer .close:hover{
+    background-color: #4e51697c;
+    font-weight: 20px;
+}
