@@ -9,18 +9,21 @@
           <table>
           <thead>
           <tr>
-            <th>영화 목록</th>
+              <th>순위</th>
+              <th>영화 목록</th>
           </tr>
           </thead>
           <tbody>
           <tr th:each="movie:${msg.answer.movieInfoList}">
-            <td th:text="${movie.movieNm}"></td>
+              <td th:text="${movie.rank}"></td>
+              <td th:text="${movie.movieNm}"></td>
           </tr>
           </tbody>
           </table>
 <!--          <th:block each="movie:${msg.answer.movieInfoList}">-->
     <!--            <span th:text="${movie.rank}"> | </span>-->
     <!--          </th:block>-->
+    <a th:href="@{/movie/list}">자세한 내용은 api를 확인해주세요🎞</a>
     </p>
   </div>
   <div class="part" th:if="${msg.answer.movieInfoList == null}">
