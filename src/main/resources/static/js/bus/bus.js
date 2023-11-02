@@ -45,25 +45,32 @@ function busSearch(){
      fetch(apiUrl)
     .then(response => response.json())
      .then(function (msg) { //아래부터는 html로 가져오기 위한 코드-->
-              console.log(msg)
+              console.log(msg);
 
-               msg.msgBody.itemList.forEach(el=>{
-                       html1 += "<tr>";
-                        html1+=`
-                           <td>${el.busRouteNm}</td>
-                                                 <td>${el.routeType}</td>
-                                                 <td>${el.edStationNm}</td>
-                                                 <td>${el.stStationNm}</td>
-                                                 <td>${el.firstBusTm}</td>
-                                                 <td>${el.lastBusTm}</td>
-                                                 <td>${el.term}</td>
-                            <td onclick='stationPost(event.target.innerText)' style="background-color:#ffff00">${el.busRouteId}</td>
-                              <td>${el.routeType}</td>
-                        `;
-                         html1 += "</tr>";
-                  });
-                 // console.log(html1+" << ")
-                  tbodyTag.innerHTML=html1;
+              function formatBusTime(time) {
+                  const hours = time.substring(0, 2);
+                  const minutes = time.substring(2, 4);
+                  return `${hours}:${minutes}`;
+              }
+
+               msg.msgBody.itemList.forEach(el => {
+                   html1 += "<tr>";
+                   const firstBusTime = formatBusTime(el.firstBusTm);
+                   const lastBusTime = formatBusTime(el.lastBusTm);
+                   html1 += `
+                       <td>${el.busRouteNm}</td>
+                       <td>${el.edStationNm}</td>
+                       <td>${el.stStationNm}</td>
+                       <td>${firstBusTime}</td>
+                       <td>${lastBusTime}</td>
+                       <td>${el.term} <span>분</span></td>
+                       <td onclick='stationPost(event.target.innerText)' class="td-station">${el.busRouteId}</td>
+                       <td>${el.routeType}</td>
+                   `;
+                   html1 += "</tr>";
+               });
+
+               tbodyTag.innerHTML=html1;
     });
 
 
@@ -115,7 +122,6 @@ function stationPost(busId){
               console.log(msg.msgBody.itemList)
 
                msg.msgBody.itemList.forEach(el=>{
-                    //   console.log(el);
                     console.log(el.gpsX, el.gpsY,el.stationNm); // kakao map 표시
                     html1+=`<div>${el.stationNm}</div>`;
                })
@@ -160,13 +166,12 @@ function stationPost(busId){
      let map = new kakao.maps.Map(mapContainer, mapOption);
      // 주소-좌표 변환 객체를 생성합니다
      let geocoder = new kakao.maps.services.Geocoder();
-
      // 마커 이미지의 이미지 주소입니다
-     //let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-      let imageSrc = "/image/marker.png";
+      let imageSrc = "/images/bus/marker.png";
+
      for (let i = 0; i < dataVal.length; i++) {
        // 마커 이미지의 이미지 크기 입니다
-       let imageSize = new kakao.maps.Size(24, 35);
+       let imageSize = new kakao.maps.Size(24, 24);
        // 마커 이미지를 생성합니다
        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
        // 마커를 생성합니다
