@@ -15,4 +15,5 @@ import javax.persistence.Embeddable;
 public class Wind {
     private String deg;
     private String speed;
+    private String gust;
 }
