@@ -55,7 +55,7 @@ public class KomoranService {
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
                 .time(today.format(timeFormatter))
                 .build();
-        List<BusInfo> busInfos = new ArrayList<>();
+        List<BusInfo> busInfo = new ArrayList<>();
 
 
         for(String token: nouns){
@@ -88,10 +88,12 @@ public class KomoranService {
                 AnswerDto help = decisionTree("도움", null).get().getAnswerEntity().toAnswerDto();
                 chatMessageDto.answer(help);
             } else if (token.contains("버스")) {
-                String rs = next.toString();
-                rs = rs.replaceAll("\\[|\\]", "");
-                busInfos = busService.getBusList(rs);
-                answer.busInfoList(busInfos);
+//                String rs = next.toString();
+//                rs = rs.replaceAll("\\[|\\]", "");
+                for (String rs : next) {
+                    busInfo = busService.getBusList(rs);
+                    answer.busInfoList(busInfo);
+                }
             }
             else if (nouns.contains("날씨")) {
                 System.out.println("======================날씨====================");
@@ -115,14 +117,14 @@ public class KomoranService {
                 answer.weatherInfo(weatherInfo);
             }
 
-//                String movie = "";
-//                List<MovieDto> movieInfo = null;
-////                if (nouns.contains("목록")) {
-////                    System.out.println("목록");
-////                    movie = "목록";
-//                  movieInfo = movieService.getMovieList();
-////                }
-//                answer.movieInfoList(movieInfo);
+                String movie = "";
+                List<MovieDto> movieInfo = null;
+//                if (nouns.contains("목록")) {
+//                    System.out.println("목록");
+//                    movie = "목록";
+                  movieInfo = movieService.getMovieList();
+//                }
+                answer.movieInfoList(movieInfo);
 
 
             chatMessageDto.answer(answer);

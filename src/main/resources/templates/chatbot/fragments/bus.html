@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="part" th:if="${msg.answer.busInfos != null}" th:fragment="busFragment">
 
-  <div class="part" th:if="${msg.answer.busInfos != null}">
+<div class="part" th:if="${msg.answer.busInfoList != null}" th:fragment="busFragment">
+
+  <div class="part" th:if="${msg.answer.busInfoList != null}">
 <!--    <p>-->
 <!--      <br>-->
 <!--      <span th:text="${msg.answer.busInfoList.busRouteNm}"></span><br>-->
@@ -15,15 +16,15 @@
     <table>
       <thead>
       <tr>
-        <th>ㅇ</th>
-        <th>ㅐ</th>
-        <th>ㅐ</th>
-        <th>ㅐ</th>
-        <th>ㅐ</th>
+        <th>버스노선번호</th>
+        <th>첫차</th>
+        <th>막차</th>
+        <th>배차</th>
+        <th>버스번호</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="bus:${msg.answer.busInfos}">
+      <tr th:each="bus:${msg.answer.busInfoList}">
         <td th:text="${bus.busRouteNm}"></td>
         <td th:text="${bus.firstBusTm}"></td>
         <td th:text="${bus.lastLowTm}"></td>
@@ -33,7 +34,7 @@
       </tbody>
     </table>
   </div>
-  <div class="part" th:if="${msg.answer.busInfos == null}">
+  <div class="part" th:if="${msg.answer.busInfoList == null}">
     <p>
       버스정보를 조회할 수 없습니다.
     </p>

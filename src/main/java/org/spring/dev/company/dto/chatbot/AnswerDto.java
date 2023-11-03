@@ -26,7 +26,7 @@ public class AnswerDto {
     private MemberInfo info;
     private WeatherInfo weatherInfo;
     private MovieDto movieInfo;
-    private BusInfo busInfos;
+    private BusInfo busInfo;
 
     private List<MemberInfo> memberInfoList;
     private List<WeatherInfo> weatherInfoList;
