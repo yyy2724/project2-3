@@ -69,6 +69,7 @@ public class KomoranConfig {
         keys.add("관주");
         keys.add("춘천");
         keys.add("날씨");
+        keys.add("영화");
 
 
         try {

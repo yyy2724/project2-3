@@ -59,8 +59,7 @@ public class WeatherService {
     public WeatherInfo weatherList(String city) {
 
         String appid = "b6616c0963212986998cdd8cf346c479";
-        // ³¯¾¾
-        String apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid; // JSON °á°ú
+        String apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid; // JSON ï¿½ï¿½ï¿½
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("Content-type", "application/json");
 
@@ -71,13 +70,13 @@ public class WeatherService {
 
         WeatherApiDto response = null;
         try {
-            // json ¹®ÀÚ¿­µ¥ÀÌÅÍ¸¦ -> Å¬·¡½º¿¡ ¸ÅÇÎ
+            // json ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ -> Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             response = objectMapper.readValue(responseBody, WeatherApiDto.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println(" <<  WeatherApiDto " + response);
+//        System.out.println(" <<  WeatherApiDto " + response);
 
         WeatherEntity weatherEntity = WeatherEntity.builder()
                 .lat(response.getCoord().getLat())
