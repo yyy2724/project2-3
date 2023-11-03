@@ -57,6 +57,7 @@ public class WeatherService {
 
 
     public WeatherInfo weatherList(String city) {
+        DecimalFormat format = new DecimalFormat("#.#");
 
         String appid = "b6616c0963212986998cdd8cf346c479";
         String apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid; // JSON ���
@@ -82,9 +83,9 @@ public class WeatherService {
                 .lat(response.getCoord().getLat())
                 .lon(response.getCoord().getLon())
                 .name(response.getName())
-                .temp(response.getMain().getTemp())
-                .temp_max(response.getMain().getTemp_max())
-                .temp_min(response.getMain().getTemp_min())
+                .temp(Double.parseDouble(format.format(response.getMain().getTemp() - 273.15)))
+                .temp_max(Double.parseDouble(format.format(response.getMain().getTemp_max() - 273.15)))
+                .temp_min(Double.parseDouble(format.format(response.getMain().getTemp_min() - 273.15)))
                 .country(response.getSys().getCountry())
                 .build();
 
@@ -97,6 +98,8 @@ public class WeatherService {
                     .id(weatherEntity.getId())
                     .city(weatherEntity.getName())
                     .country(weatherEntity.getCountry())
+                    .lat(weatherEntity.getLat())
+                    .lon(weatherEntity.getLon())
                     .temp(weatherEntity.getTemp())
                     .temp_min(weatherEntity.getTemp_min())
                     .temp_max(weatherEntity.getTemp_max())
@@ -107,6 +110,8 @@ public class WeatherService {
                     .id(optionalWeatherEntity.get().getId())
                     .city(optionalWeatherEntity.get().getName())
                     .country(optionalWeatherEntity.get().getCountry())
+                    .lat(weatherEntity.getLat())
+                    .lon(weatherEntity.getLon())
                     .temp(weatherEntity.getTemp())
                     .temp_min(optionalWeatherEntity.get().getTemp_min())
                     .temp_max(optionalWeatherEntity.get().getTemp_max())

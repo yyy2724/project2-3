@@ -28,11 +28,11 @@ public class WeatherEntity {
 
     private String country;
 
-    private String temp;
+    private double temp;
 
-    private String temp_max;
+    private double temp_max;
 
-    private String temp_min;
+    private double temp_min;
 
 }
 
