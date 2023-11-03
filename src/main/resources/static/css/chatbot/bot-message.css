@@ -35,4 +35,19 @@ body{
     padding: 10px;
     box-sizing: border-box;
 }
-
+/* movie */
+.part table{
+    width: 300px;
+    text-align: center;
+}
+.part table thead tr th{
+    border-bottom: double 3px black;
+    font-size: 16px;
+}
+.part table tbody{
+    font-size: 15px;
+}
+.part a:hover{
+    cursor: pointer;
+    font-weight: bold;
+}

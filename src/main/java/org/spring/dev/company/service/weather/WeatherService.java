@@ -28,8 +28,8 @@ public class WeatherService {
                 .lat(weatherApiDto.getCoord().getLat())
                 .lon(weatherApiDto.getCoord().getLon())
                 .name(weatherApiDto.getName())
-                .temp_max(weatherApiDto.getMain().getTemp_max() - 273.15)
-                .temp_min(weatherApiDto.getMain().getTemp_min() - 273.15)
+                .temp_max(weatherApiDto.getMain().getTemp_max())
+                .temp_min(weatherApiDto.getMain().getTemp_min())
                 .country(weatherApiDto.getSys().getCountry())
                 .build();
 
@@ -60,27 +60,24 @@ public class WeatherService {
         DecimalFormat df = new DecimalFormat("#.#");
 
         String appid = "b6616c0963212986998cdd8cf346c479";
-        // ³¯¾¾
-        String apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid; // JSON °á°ú
+        String apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid; // JSON ï¿½ï¿½ï¿½
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("Content-type", "application/json");
 
         String responseBody = OpenApiUtil.get(apiURL, requestHeaders);
-        System.out.println(" <<  return " + responseBody);
 
         // JSON -> DB
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(" <<  responseBody " + responseBody);
 
         WeatherApiDto response = null;
         try {
-            // json ¹®ÀÚ¿­µ¥ÀÌÅÍ¸¦ -> Å¬·¡½º¿¡ ¸ÅÇÎ
+            // json ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ -> Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             response = objectMapper.readValue(responseBody, WeatherApiDto.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println(" <<  WeatherApiDto " + response);
+//        System.out.println(" <<  WeatherApiDto " + response);
 
         WeatherEntity weatherEntity = null;
         if (response != null) {
@@ -104,6 +101,8 @@ public class WeatherService {
                         .id(weatherEntity.getId())
                         .city(weatherEntity.getName())
                         .country(weatherEntity.getCountry())
+                        .lon(weatherEntity.getLon())
+                        .lat(weatherEntity.getLat())
                         .temp(weatherEntity.getTemp())
                         .temp_min(weatherEntity.getTemp_min())
                         .temp_max(weatherEntity.getTemp_max())
@@ -114,6 +113,9 @@ public class WeatherService {
                         .id(optionalWeatherEntity.get().getId())
                         .city(optionalWeatherEntity.get().getName())
                         .country(optionalWeatherEntity.get().getCountry())
+                        .lat(weatherEntity.getLat())
+                        .lon(weatherEntity.getLon())
+                        .temp(weatherEntity.getTemp())
                         .temp_min(optionalWeatherEntity.get().getTemp_min())
                         .temp_max(optionalWeatherEntity.get().getTemp_max())
                         .build();
