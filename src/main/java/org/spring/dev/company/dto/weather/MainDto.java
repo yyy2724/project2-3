@@ -10,5 +10,7 @@ public class MainDto {
     private double temp;
     private double temp_max;
     private double temp_min;
+    private double sea_level;
+    private double grnd_level;
 
 }
