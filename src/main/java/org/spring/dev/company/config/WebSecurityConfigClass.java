@@ -68,7 +68,7 @@ public class WebSecurityConfigClass {
                 // STAFF
                 .antMatchers("/chat/**").hasAnyRole("STAFF")
                 // ADMIN
-                .antMatchers("/member/**").hasAnyRole("ADMIN","STAFF")
+//                .antMatchers("/member/**").hasAnyRole("ADMIN","STAFF")
                 // FREELANCER
                 .antMatchers("/schedule/**").hasAnyRole("FREELANCER")
                 // COMPANY
