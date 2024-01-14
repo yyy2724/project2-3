@@ -18,12 +18,12 @@
 
 ### 🏃‍♀️ 맴버 구성
 
-* 김예진(팀장) : 근무/근태(R), 급여(C,R), BaseLayout디자인, 모달디자인, PPT, 영화 API
+* 김OO : 근무/근태(R), 급여(C,R), BaseLayout디자인, 모달디자인, PPT, 영화 API
 * 김양현 : 로그인, 이메일 인증, 비밀번호 재설정, 권한별 LIST, 로그인&회원가입 디자인, 날씨 API
-* 박정현 : 게시판(CRUD), 댓글, 파일, FUllCalendar일정추가, 웹소캣 알림 챗봇, 메인페이지디자인, PPT, 버스 API
-* 방효빈 : 회원(CRUD), 회원페이지 디자인, 날씨 API
-* 안윤기 : 결재(CRUD), 버스 API
-* 이지훈 : 근무/근태(CUD), FUllCalendar(근무,프리랜서일정), 네이버웍스 구현, CI/CD, 영화 API
+* 박OO : 게시판(CRUD), 댓글, 파일, FUllCalendar일정추가, 웹소캣 알림 챗봇, 메인페이지디자인, PPT, 버스 API
+* 방OO : 회원(CRUD), 회원페이지 디자인, 날씨 API
+* 안OO : 결재(CRUD), 버스 API
+* 이OO : 근무/근태(CUD), FUllCalendar(근무,프리랜서일정), 네이버웍스 구현, CI/CD, 영화 API
 
 ### 🛠️ 개발 환경
 
